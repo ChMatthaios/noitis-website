@@ -58,7 +58,7 @@ const principles = [
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'light'
-  const saved = window.localStorage.getItem('noetis-theme')
+  const saved = window.localStorage.getItem('noitis-theme')
   if (saved === 'light' || saved === 'dark') return saved
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -69,7 +69,7 @@ export function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
-    window.localStorage.setItem('noetis-theme', theme)
+    window.localStorage.setItem('noitis-theme', theme)
   }, [theme])
 
   const closeMenu = () => setMenuOpen(false)
@@ -79,7 +79,7 @@ export function App() {
       <a className="skip-link" href="#main">Skip to main content</a>
 
       <header className="site-header">
-        <a className="brand-link" href="#top" aria-label="Noetis home" onClick={closeMenu}>
+        <a className="brand-link" href="#top" aria-label="Noitis home" onClick={closeMenu}>
           <BrandMark compact />
         </a>
 
@@ -121,7 +121,7 @@ export function App() {
             <p className="eyebrow">From Greece. Built for the world.</p>
             <h1>Technology people can trust.</h1>
             <p className="hero__lead">
-              Noetis builds intelligent software for the systems people and businesses depend on every day.
+              Noitis builds intelligent software for the systems people and businesses depend on every day.
             </p>
             <p className="hero__support">
               Powerful without feeling confusing. Clear enough to understand. Controlled enough to trust.
@@ -132,7 +132,7 @@ export function App() {
                 Discover our products <FiArrowRight aria-hidden="true" />
               </a>
               <a className="button button--secondary" href="#about">
-                Meet Noetis
+                Meet Noitis™
               </a>
             </div>
           </div>
@@ -198,15 +198,13 @@ export function App() {
 
           <div className="origin__copy">
             <p>
-              Noetis is being built in Greece with an international horizon. Our name is inspired by the Greek idea
-              of <em>noesis</em>: understanding, thought, and intellectual perception.
+              Noitis is being built in Greece with an international horizon. Our name is inspired by the Greek intellectual tradition around <em>nous</em> and <em>noesis</em>: mind, thought, understanding, and the conception of an idea.
             </p>
             <p>
-              For us, that becomes a practical standard: technology should help people understand better,
-              decide with confidence, and act with greater control.
+              For us, Noitis is the one who sees what could exist before it exists - and engineers it into reality. That becomes a practical standard: technology should help people understand better, decide with confidence, and act with greater control.
             </p>
             <p>
-              Noetis began with a builder&apos;s question: where are businesses still accepting friction, uncertainty,
+              Noitis began with a builder&apos;s question: where are businesses still accepting friction, uncertainty,
               or unnecessary manual work simply because better software has not been built yet?
             </p>
           </div>
@@ -218,7 +216,7 @@ export function App() {
           <h2 id="future-title">Between human intention and machine capability.</h2>
           <p>
             As software becomes more capable of reasoning, coordinating, and acting, trust will matter more—not less.
-            We want Noetis to build the systems that make that future understandable, useful, and safe to rely on.
+            We want Noitis to build the systems that make that future understandable, useful, and safe to rely on.
           </p>
         </section>
       </main>
@@ -236,7 +234,7 @@ export function App() {
           <a href="./privacy.html">Privacy</a>
         </div>
 
-        <p className="site-footer__legal">© {new Date().getFullYear()} Noetis. All rights reserved.</p>
+        <p className="site-footer__legal">© {new Date().getFullYear()} Noitis™. All rights reserved.</p>
       </footer>
     </div>
   )

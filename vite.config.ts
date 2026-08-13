@@ -4,7 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   // Relative asset paths make the build work both on a github.io project URL
-  // and later on a custom Noetis domain without changing application code.
+  // and later on a custom Noitis domain without changing application code.
   base: './',
   plugins: [react()],
   build: {

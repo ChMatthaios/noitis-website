@@ -1,8 +1,8 @@
-# Noetis Website
+# Noitis Website
 
 > **Intelligence, engineered.**
 
-Official company website for **Noetis**, a Greece-based technology company building intelligent systems people can trust.
+Official company website for **Noitis**, a Greece-based technology company building intelligent systems people can trust.
 
 ## Stack
 
@@ -44,14 +44,14 @@ After pushing the repository to GitHub:
 
 Until a custom domain is connected, GitHub will provide a Pages URL.
 
-## Custom Noetis domain
+## Custom Noitis domain
 
 The site intentionally does **not** include a `CNAME` file. This project deploys with a custom GitHub Actions workflow, and GitHub documents that a `CNAME` file is ignored for this deployment method.
 
 When the final domain is registered and its DNS is under your control:
 
-1. Open **GitHub → noetis-website → Settings → Pages**.
-2. Enter the final domain under **Custom domain** (for example `noetis.gr`).
+1. Open **GitHub → noitis-website → Settings → Pages**.
+2. Enter the final domain under **Custom domain** (for example `noitis.gr`).
 3. At the domain registrar, add the DNS records GitHub Pages requires for that domain.
 4. Wait for GitHub's DNS check to succeed.
 5. Enable **Enforce HTTPS**.
@@ -59,15 +59,15 @@ When the final domain is registered and its DNS is under your control:
 Preferred public address:
 
 ```text
-https://noetis.gr
+https://noitis.gr
 ```
 
-If you also control `www.noetis.gr`, configure it consistently so visitors end up on one canonical address.
+If you also control `www.noitis.gr`, configure it consistently so visitors end up on one canonical address.
 
 ## Pages
 
-- `index.html` — Noetis company website
-- `privacy.html` — Noetis privacy notice
+- `index.html` — Noitis company website
+- `privacy.html` — Noitis privacy notice
 
 The privacy notice is intentionally marked as pre-production until verified controller and data-processing details are available.
 
@@ -102,13 +102,13 @@ Create the repository on GitHub first, then from this folder:
 ```bash
 git init
 git add .
-git commit -m "Launch Noetis company website"
+git commit -m "Launch Noitis company website"
 git branch -M main
-git remote add origin https://github.com/ChMatthaios/noetis-website.git
+git remote add origin https://github.com/ChMatthaios/noitis-website.git
 git push -u origin main
 ```
 
-Create the `noetis-website` repository under the `ChMatthaios` GitHub account before adding this remote.
+Create the `noitis-website` repository under the `ChMatthaios` GitHub account before adding this remote.
 
 ## Status
 
@@ -118,3 +118,8 @@ The website is ready to build and deploy. A custom public URL requires ownership
 ## Recommended next hardening step
 
 After the first successful local `npm install`, commit the generated `package-lock.json` and change the workflow install step from `npm install` to `npm ci` for deterministic deployments.
+
+
+## Trade mark status
+
+**NOITIS™** is currently used as a claimed trade mark. The TM symbol does not mean registration has been granted. Do not use the registered symbol unless and until formal registration is granted in the relevant territory.

@@ -6,7 +6,7 @@ export function PrivacyPage() {
       <a className="skip-link" href="#privacy-main">Skip to main content</a>
 
       <header className="site-header">
-        <a className="brand-link" href="./index.html" aria-label="Return to Noetis home">
+        <a className="brand-link" href="./index.html" aria-label="Return to Noitis home">
           <BrandMark compact />
         </a>
         <nav className="privacy-nav" aria-label="Privacy navigation">
@@ -16,10 +16,10 @@ export function PrivacyPage() {
 
       <main className="privacy-page" id="privacy-main">
         <header className="privacy-hero">
-          <p className="eyebrow">Noetis privacy notice</p>
+          <p className="eyebrow">Noitis™ privacy notice</p>
           <h1>Privacy should be understandable.</h1>
           <p className="privacy-hero__lead">
-            This page explains the structure Noetis intends to use for privacy across its products.
+            This page explains the structure Noitis intends to use for privacy across its products.
             It is currently a pre-production notice and must be completed with verified legal and operational details before launch.
           </p>
           <p className="privacy-meta"><strong>Draft effective date:</strong> 13 August 2026</p>
@@ -28,14 +28,14 @@ export function PrivacyPage() {
         <aside className="privacy-alert" role="note" aria-label="Important draft status">
           <strong>Pre-production notice</strong>
           <p>
-            Before public production use, Noetis must add the registered legal entity, postal address, privacy contact,
+            Before public production use, Noitis must add the registered legal entity, postal address, privacy contact,
             real data flows, processors, retention periods, international-transfer safeguards, and product-specific lawful bases.
           </p>
         </aside>
 
         <section className="privacy-section">
           <h2>1. Who is responsible for your data?</h2>
-          <p><strong>Noetis</strong> is the parent brand for its products.</p>
+          <p><strong>Noitis™</strong> is the parent brand for its products.</p>
           <dl className="privacy-details">
             <div><dt>Data controller</dt><dd>[TO COMPLETE: registered legal entity]</dd></div>
             <div><dt>Registered address</dt><dd>[TO COMPLETE: full postal address, Greece]</dd></div>
@@ -47,8 +47,8 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>2. What information may we process?</h2>
           <p>
-            The exact information depends on the Noetis product and the features a customer chooses to use.
-            Noetis intends to follow a data-minimisation approach: collect what a feature needs, not everything that could be collected.
+            The exact information depends on the Noitis product and the features a customer chooses to use.
+            Noitis intends to follow a data-minimisation approach: collect what a feature needs, not everything that could be collected.
           </p>
           <ul>
             <li>Account, organization, role, and contact information.</li>
@@ -62,7 +62,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>3. Why may we process personal data?</h2>
           <ul>
-            <li>To provide and operate a requested Noetis product.</li>
+            <li>To provide and operate a requested Noitis product.</li>
             <li>To authenticate users and protect accounts and systems.</li>
             <li>To perform requested workflows and maintain understandable activity history.</li>
             <li>To provide support and respond to requests.</li>
@@ -77,7 +77,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>4. AI and automated processing</h2>
           <p>
-            Noetis builds products around understandable control. If a production product uses automated processing that materially
+            Noitis builds products around understandable control. If a production product uses automated processing that materially
             affects individuals, the final notice will describe what it does, why it is used, and the safeguards that apply.
           </p>
         </section>
@@ -85,7 +85,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>5. Service providers and transfers</h2>
           <p>
-            Noetis may rely on selected providers for services such as hosting, authentication, communications, monitoring,
+            Noitis may rely on selected providers for services such as hosting, authentication, communications, monitoring,
             customer support, or regulated connectivity. Before production, the actual providers, processing locations,
             and relevant international-transfer safeguards must be verified and disclosed where required.
           </p>
@@ -94,7 +94,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>6. Retention</h2>
           <p>
-            Noetis intends to keep personal data only for as long as necessary for the purpose for which it was collected,
+            Noitis intends to keep personal data only for as long as necessary for the purpose for which it was collected,
             including legitimate security, contractual, audit, and legal requirements. Final retention periods or criteria
             will be published before production use.
           </p>
@@ -126,7 +126,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>9. Cookies and analytics</h2>
           <p>
-            Noetis will describe any cookies, local storage, analytics, or similar technologies actually used by its production website
+            Noitis will describe any cookies, local storage, analytics, or similar technologies actually used by its production website
             and products. Non-essential tracking should not be introduced silently.
           </p>
         </section>
@@ -134,7 +134,7 @@ export function PrivacyPage() {
         <section className="privacy-section">
           <h2>10. Changes to this notice</h2>
           <p>
-            This notice may change as Noetis products, legal requirements, and verified data practices evolve.
+            This notice may change as Noitis products, legal requirements, and verified data practices evolve.
             The current effective date will be shown whenever a production notice is updated.
           </p>
         </section>
@@ -145,7 +145,7 @@ export function PrivacyPage() {
           <BrandMark />
           <p>Privacy should be understandable.</p>
         </div>
-        <a href="./index.html">Back to Noetis</a>
+        <a href="./index.html">Back to Noitis™</a>
       </footer>
     </div>
   )

@@ -1,4 +1,4 @@
-name: Deploy Noetis to GitHub Pages
+name: Deploy Noitis to GitHub Pages
 
 on:
   push:
