@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Noetis mark">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="1" y2="0">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <radialGradient id="c" cx="28%" cy="22%" r="55%">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="38" fill="url(#g)"/>
+  <rect width="128" height="128" rx="38" fill="url(#c)"/>
+  <path d="M35 92V36h15l29 35V36h14v56H80L49 55v37H35Z" fill="#EAF2FF"/>
+</svg>
