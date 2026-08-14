@@ -11,29 +11,83 @@ import {
 } from 'react-icons/fi'
 import { BrandMark } from './BrandMark'
 
+import noitisLogoLight from '../media/Noitis Logo - Light.png'
+import noitisLogoDark from '../media/Noitis Logo - Dark.png'
+
+import agentGateLogoLight from '../media/AgentGate Light.png'
+import agentGateLogoDark from '../media/AgentGate Dark.png'
+
+import autoPaylotLogoLight from '../media/Autopaylot Light.png'
+import autoPaylotLogoDark from '../media/Autopaylot Dark.png'
+
+import brsLogoLight from '../media/BRS Light.png'
+import brsLogoDark from '../media/BRS Dark.png'
+
+import elogLogoLight from '../media/EarnLogic Light.png'
+import elogLogoDark from '../media/EarnLogic Dark.png'
+
+import fosLogoLight from '../media/FamilyOS Light.png'
+import fosLogoDark from '../media/FamilyOS Dark.png'
+
+import lciLogoLight from '../media/LegacyCI Light.png'
+import lciLogoDark from '../media/LegacyCI Dark.png'
+
 type Theme = 'light' | 'dark'
 
 const products = [
   {
     name: 'AgentGate',
-    eyebrow: 'AI governance',
+    category: 'AI governance',
     description:
       'Governance and control for autonomous AI agents: what they can access, decide, and do.',
-    icon: <FiShield aria-hidden="true" />,
+    status: 'In development',
+    logoLight: agentGateLogoLight,
+    logoDark: agentGateLogoDark,
   },
   {
     name: 'AutoPaylot',
-    eyebrow: 'Financial automation',
+    category: 'Financial automation',
     description:
       'Intelligent control of recurring financial obligations, payments, approvals, and confirmation.',
-    icon: <FiCpu aria-hidden="true" />,
+    status: 'In development',
+    logoLight: autoPaylotLogoLight,
+    logoDark: autoPaylotLogoDark,
   },
   {
     name: 'Business Resource Scheduler',
-    eyebrow: 'Operational intelligence',
+    category: 'Operational intelligence',
     description:
       'Resource orchestration that determines when complex work can actually happen.',
-    icon: <FiLayers aria-hidden="true" />,
+    status: 'In development',
+    logoLight: brsLogoLight,
+    logoDark: brsLogoDark,
+  },
+  {
+    name: 'EarnLogic',
+    category: 'Earnings intelligence',
+    description:
+      'Intelligence for understanding earning potential, opportunities, performance, and better financial decisions.',
+    status: 'In development',
+    logoLight: elogLogoLight,
+    logoDark: elogLogoDark,
+  },
+  {
+    name: 'FamilyOS',
+    category: 'Family organization',
+    description:
+      'A shared operating system for family life: schedules, responsibilities, information, and everyday coordination.',
+    status: 'In development',
+    logoLight: fosLogoLight,
+    logoDark: fosLogoDark,
+  },
+  {
+    name: 'LegacyCI',
+    category: 'Legacy code intelligence',
+    description:
+      'Intelligence for understanding legacy systems, dependencies, change impact, and safer modernization.',
+    status: 'In development',
+    logoLight: lciLogoLight,
+    logoDark: lciLogoDark,
   },
 ]
 
@@ -112,9 +166,19 @@ export function App() {
       <main id="main">
         <section className="hero" id="top">
           <div className="hero__visual" aria-hidden="true">
-            <div className="hero__orb hero__orb--one" />
-            <div className="hero__orb hero__orb--two" />
-            <div className="hero__core">N</div>
+            <div className="hero__company-logo">
+              <img
+                className="theme-logo theme-logo--light"
+                src={noitisLogoLight}
+                alt=""
+              />
+
+              <img
+                className="theme-logo theme-logo--dark"
+                src={noitisLogoDark}
+                alt=""
+              />
+            </div>
           </div>
 
           <div className="hero__copy">
@@ -162,8 +226,23 @@ export function App() {
           <div className="product-grid">
             {products.map((product) => (
               <article className="product-card" key={product.name}>
-                <span className="product-card__icon">{product.icon}</span>
-                <p className="product-card__eyebrow">{product.eyebrow}</p>
+                <div
+                  className="product-card__logo"
+                  role="img"
+                  aria-label={`${product.name} logo`}
+                >
+                  <img
+                    className="theme-logo theme-logo--light"
+                    src={product.logoLight}
+                    alt=""
+                  />
+
+                  <img
+                    className="theme-logo theme-logo--dark"
+                    src={product.logoDark}
+                    alt=""
+                  />
+                </div>
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <span className="product-card__status">In development</span>
