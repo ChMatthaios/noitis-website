@@ -8,7 +8,8 @@ The Noitis website is intentionally small. Its current React source contains:
 - `BrandMark.tsx` — shared Noitis brand rendering;
 - `PrivacyPage.tsx` — privacy-notice page;
 - `main.tsx` and `privacy.tsx` — entry points;
-- `styles.css` — stylesheet entry point.
+- `styles.css` — stable stylesheet entry point;
+- `styles/site.css` — current website style implementation.
 
 This is already an appropriate level of componentization for the current site. Do not split every section into a component solely to mirror larger application repositories.
 
@@ -30,7 +31,11 @@ Owns the public privacy-notice presentation. Legal/privacy content must remain e
 
 ### Styling
 
-`styles.css` is the stylesheet entry point. Responsibility-based style modules should preserve cascade order and keep theme/base rules, shell/navigation, site sections, privacy styles, responsive behavior, and brand/logo overrides understandable.
+`styles.css` is the stable stylesheet entry point imported by the React entry files. It currently imports `styles/site.css`, which contains the existing approved website styling in its original cascade order.
+
+This boundary allows future style modules to be introduced only when responsibility genuinely becomes unclear. Do not split a modest stylesheet into many artificial files merely for symmetry with larger products.
+
+When styles are split later, preserve ordering deliberately across theme/base rules, shell/navigation, company sections, privacy styles, responsive behavior, and brand/logo overrides.
 
 ## Data and content extraction
 
