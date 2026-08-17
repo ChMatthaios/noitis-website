@@ -17,8 +17,8 @@ import noitisLogoDark from '../media/Noitis Logo - Dark.png'
 import agentGateLogoLight from '../media/AgentGate Light.png'
 import agentGateLogoDark from '../media/AgentGate Dark.png'
 
-import autoPaylotLogoLight from '../media/Autopaylot Light.png'
-import autoPaylotLogoDark from '../media/Autopaylot Dark.png'
+import autoPaylotLogoLight from '../media/AutoPaylot Light.png'
+import autoPaylotLogoDark from '../media/AutoPaylot Dark.png'
 
 import brsLogoLight from '../media/BRS Light.png'
 import brsLogoDark from '../media/BRS Dark.png'
