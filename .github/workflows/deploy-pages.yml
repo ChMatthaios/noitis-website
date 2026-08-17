@@ -16,23 +16,27 @@ concurrency:
 
 jobs:
   build:
+    name: Build website
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Setup Node
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22.13.0'
+          cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Validate and build
+        run: npm run check
 
-      - name: Setup Pages
+      - name: Set up Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
@@ -41,11 +45,13 @@ jobs:
           path: ./dist
 
   deploy:
+    name: Deploy website
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

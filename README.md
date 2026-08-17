@@ -4,86 +4,124 @@
 
 Official company website for **Noitis**, a Greece-based technology company building intelligent systems people can trust.
 
+## Status
+
+The repository contains the current public website frontend and GitHub Pages deployment configuration.
+
+The site is intentionally **static-first**. It does not contain a product backend, operational database, authentication service, or data warehouse. Those systems should not be added unless a real website capability requires them.
+
 ## Stack
 
 - React
 - TypeScript
 - Vite
-- GitHub Pages
 - GitHub Actions
+- GitHub Pages
+
+## Requirements
+
+- Node.js 22.13.0 or newer in the Node 22 line
+- npm
+- Git
+- a modern browser
 
 ## Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open the local URL shown by Vite.
+Open the local URL printed by Vite.
 
-## Production build
+## Validation
+
+```bash
+npm run check
+```
+
+`check` runs the TypeScript/Vite production build. A successful build confirms the current static website compiles; it does not substitute for browser, accessibility, content, or legal review.
+
+## Production preview
 
 ```bash
 npm run build
 npm run preview
 ```
 
-The production files are generated in `dist/`.
-
-## GitHub Pages deployment
-
-This repository includes `.github/workflows/deploy-pages.yml`.
-
-After pushing the repository to GitHub:
-
-1. Open the repository on GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **GitHub Actions** as the source.
-4. Push to `main`.
-5. The included workflow builds and deploys the site automatically.
-
-Until a custom domain is connected, GitHub will provide a Pages URL.
-
-## Custom Noitis domain
-
-The site intentionally does **not** include a `CNAME` file. This project deploys with a custom GitHub Actions workflow, and GitHub documents that a `CNAME` file is ignored for this deployment method.
-
-When the final domain is registered and its DNS is under your control:
-
-1. Open **GitHub → noitis-website → Settings → Pages**.
-2. Enter the final domain under **Custom domain** (for example `noitis.gr`).
-3. At the domain registrar, add the DNS records GitHub Pages requires for that domain.
-4. Wait for GitHub's DNS check to succeed.
-5. Enable **Enforce HTTPS**.
-
-Preferred public address:
-
-```text
-https://noitis.gr
-```
-
-If you also control `www.noitis.gr`, configure it consistently so visitors end up on one canonical address.
+Production files are generated in `dist/`.
 
 ## Pages
+
+The Vite build has two HTML entry points:
 
 - `index.html` — Noitis company website
 - `privacy.html` — Noitis privacy notice
 
-The privacy notice is intentionally marked as pre-production until verified controller and data-processing details are available.
+The privacy notice remains subject to verification of the final controller, contact, processing, and deployment details before it should be treated as a completed production legal notice.
 
-## Accessibility principles
+## Continuous integration
 
-This site deliberately uses:
+`.github/workflows/ci.yml` validates pushes and pull requests with:
 
-- large readable text
-- high contrast
-- visible keyboard focus
-- 44px+ interactive targets
-- plain-language navigation
-- no hover-only information
-- reduced-motion support
-- responsive mobile navigation
-- light and dark themes
+```text
+checkout
+  ↓
+Node 22.13.0
+  ↓
+npm ci
+  ↓
+npm run check
+```
+
+The committed `package-lock.json` is the dependency authority for CI and deployment.
+
+## GitHub Pages deployment
+
+`.github/workflows/deploy-pages.yml` deploys from `main`.
+
+The workflow:
+
+1. checks out the exact commit;
+2. installs dependencies with `npm ci`;
+3. validates/builds the site;
+4. uploads the generated `dist/` artifact;
+5. deploys that artifact through GitHub Pages.
+
+In **Settings → Pages**, the deployment source should be **GitHub Actions**.
+
+Until a custom domain is owned and configured, GitHub Pages provides the public project URL.
+
+## Custom Noitis domain
+
+The repository intentionally does not rely on a committed `CNAME` file for the current custom Actions-based Pages workflow.
+
+When a final domain is registered and its DNS is under your control:
+
+1. open **GitHub → noitis-website → Settings → Pages**;
+2. enter the final custom domain;
+3. configure the required DNS records with the domain provider;
+4. wait for GitHub's domain/DNS verification;
+5. enable HTTPS;
+6. review canonical URLs, redirects, metadata, sitemap/robots behavior, and social preview metadata for the final public address.
+
+The Vite configuration uses relative asset paths so the same site build can work on a GitHub Pages project URL and later on a custom Noitis domain without rewriting application components.
+
+## Accessibility direction
+
+The current site is designed around:
+
+- readable typography;
+- high contrast;
+- visible keyboard focus;
+- appropriately sized interactive targets;
+- semantic navigation;
+- no hover-only information;
+- reduced-motion support;
+- responsive mobile navigation;
+- light and dark themes.
+
+Accessibility remains a release requirement and should be tested as behavior, not assumed from styling alone.
 
 ## Brand palette
 
@@ -95,31 +133,41 @@ This site deliberately uses:
 | Future Violet | `#8B5CF6` | Frontier technology |
 | Ice White | `#EAF2FF` | Clarity and clean surfaces |
 
-## Suggested first Git commands
+## Repository structure
 
-Create the repository on GitHub first, then from this folder:
-
-```bash
-git init
-git add .
-git commit -m "Launch Noitis company website"
-git branch -M main
-git remote add origin https://github.com/ChMatthaios/noitis-website.git
-git push -u origin main
+```text
+noitis-website/
+├── src/                       # React source and stylesheet entry point
+├── media/                     # Noitis/product source artwork
+├── public/                    # files copied directly into the build
+├── docs/
+│   ├── architecture/
+│   ├── decisions/
+│   └── engineering/
+├── .github/workflows/
+│   ├── ci.yml
+│   └── deploy-pages.yml
+├── index.html
+├── privacy.html
+├── package.json
+├── package-lock.json
+└── vite.config.ts
 ```
 
-Create the `noitis-website` repository under the `ChMatthaios` GitHub account before adding this remote.
+## Engineering documentation
 
-## Status
+- [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture and boundaries
+- [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering rules
+- [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership and growth rules
+- [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first/GitHub Pages architecture decision
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and validation expectations
 
-The website is ready to build and deploy. A custom public URL requires ownership/control of the chosen domain and its DNS.
+## Trademark status
 
+**NOITIS™** is currently used as a claimed trade mark. The `™` symbol does not indicate registration. Do not use the registered symbol unless registration has actually been granted in the relevant territory.
 
-## Recommended next hardening step
+## Architecture principle
 
-After the first successful local `npm install`, commit the generated `package-lock.json` and change the workflow install step from `npm install` to `npm ci` for deterministic deployments.
+The website should stay as simple as its job allows:
 
-
-## Trade mark status
-
-**NOITIS™** is currently used as a claimed trade mark. The TM symbol does not mean registration has been granted. Do not use the registered symbol unless and until formal registration is granted in the relevant territory.
+> **Public information and brand presentation in the browser; operational product authority stays in the product systems that own it.**
