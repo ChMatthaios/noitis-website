@@ -7,6 +7,10 @@ export default defineConfig({
   // and later on a custom Noitis domain without changing application code.
   base: './',
   plugins: [react()],
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
   build: {
     rollupOptions: {
       input: {
