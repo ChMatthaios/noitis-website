@@ -41,6 +41,7 @@ const products = [
     description:
       'Governance and control for autonomous AI agents: what they can access, decide, and do.',
     status: 'In development',
+    href: 'http://localhost:5174',
     logoLight: agentGateLogoLight,
     logoDark: agentGateLogoDark,
   },
@@ -50,6 +51,7 @@ const products = [
     description:
       'Intelligent control of recurring financial obligations, payments, approvals, and confirmation.',
     status: 'In development',
+    href: 'http://localhost:5175',
     logoLight: autoPaylotLogoLight,
     logoDark: autoPaylotLogoDark,
   },
@@ -59,6 +61,7 @@ const products = [
     description:
       'Resource orchestration that determines when complex work can actually happen.',
     status: 'In development',
+    href: 'http://localhost:5176',
     logoLight: brsLogoLight,
     logoDark: brsLogoDark,
   },
@@ -68,6 +71,7 @@ const products = [
     description:
       'Intelligence for understanding earning potential, opportunities, performance, and better financial decisions.',
     status: 'In development',
+    href: 'http://localhost:5177',
     logoLight: elogLogoLight,
     logoDark: elogLogoDark,
   },
@@ -77,6 +81,7 @@ const products = [
     description:
       'A shared operating system for family life: schedules, responsibilities, information, and everyday coordination.',
     status: 'In development',
+    href: 'http://localhost:5178',
     logoLight: fosLogoLight,
     logoDark: fosLogoDark,
   },
@@ -86,6 +91,7 @@ const products = [
     description:
       'Intelligence for understanding legacy systems, dependencies, change impact, and safer modernization.',
     status: 'In development',
+    href: 'http://localhost:5179',
     logoLight: lciLogoLight,
     logoDark: lciLogoDark,
   },
@@ -225,7 +231,15 @@ export function App() {
 
           <div className="product-grid">
             {products.map((product) => (
-              <article className="product-card" key={product.name}>
+              <a
+                className="product-card"
+                href={product.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${product.name}`}
+                key={product.name}
+                style={{ display: 'block', textDecoration: 'none' }}
+              >
                 <div
                   className="product-card__logo"
                   role="img"
@@ -246,7 +260,7 @@ export function App() {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <span className="product-card__status">In development</span>
-              </article>
+              </a>
             ))}
           </div>
         </section>
