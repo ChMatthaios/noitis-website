@@ -325,6 +325,8 @@ export function App() {
           <a href="#principles">How we build</a>
           <a href="#about">About</a>
           <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="./trademark.html">Trademarks</a>
         </div>
 
         <p className="site-footer__legal">© {new Date().getFullYear()} Noitis™. All rights reserved.</p>

@@ -9,8 +9,10 @@ export function PrivacyPage() {
         <a className="brand-link" href="./index.html" aria-label="Return to Noitis home">
           <BrandMark compact />
         </a>
-        <nav className="privacy-nav" aria-label="Privacy navigation">
+        <nav className="privacy-nav" aria-label="Legal navigation">
           <a href="./index.html">Home</a>
+          <a href="./terms.html">Terms</a>
+          <a href="./trademark.html">Trademarks</a>
         </nav>
       </header>
 
@@ -19,123 +21,141 @@ export function PrivacyPage() {
           <p className="eyebrow">Noitis™ privacy notice</p>
           <h1>Privacy should be understandable.</h1>
           <p className="privacy-hero__lead">
-            This page explains the structure Noitis intends to use for privacy across its products.
-            It is currently a pre-production notice and must be completed with verified legal and operational details before launch.
+            This notice describes the current privacy behavior of the public Noitis company website.
+            Individual Noitis products may use separate privacy notices when their own services process personal data.
           </p>
-          <p className="privacy-meta"><strong>Draft effective date:</strong> 13 August 2026</p>
+          <p className="privacy-meta"><strong>Effective date:</strong> 21 August 2026</p>
         </header>
 
-        <aside className="privacy-alert" role="note" aria-label="Important draft status">
-          <strong>Pre-production notice</strong>
-          <p>
-            Before public production use, Noitis must add the registered legal entity, postal address, privacy contact,
-            real data flows, processors, retention periods, international-transfer safeguards, and product-specific lawful bases.
-          </p>
-        </aside>
-
         <section className="privacy-section">
-          <h2>1. Who is responsible for your data?</h2>
-          <p><strong>Noitis™</strong> is the parent brand for its products.</p>
+          <h2>1. Who operates this website?</h2>
+          <p>
+            This website is operated under the <strong>Noitis™</strong> brand from Greece.
+          </p>
           <dl className="privacy-details">
-            <div><dt>Data controller</dt><dd>[TO COMPLETE: registered legal entity]</dd></div>
-            <div><dt>Registered address</dt><dd>[TO COMPLETE: full postal address, Greece]</dd></div>
-            <div><dt>Privacy contact</dt><dd>[TO COMPLETE: privacy@your-domain]</dd></div>
-            <div><dt>Data Protection Officer</dt><dd>[TO COMPLETE if appointed or legally required]</dd></div>
+            <div><dt>Privacy contact</dt><dd>chouliarasmatthaios@gmail.com</dd></div>
           </dl>
-        </section>
-
-        <section className="privacy-section">
-          <h2>2. What information may we process?</h2>
           <p>
-            The exact information depends on the Noitis product and the features a customer chooses to use.
-            Noitis intends to follow a data-minimisation approach: collect what a feature needs, not everything that could be collected.
+            If the legal identity responsible for Noitis changes, or a registered entity becomes the controller for this website,
+            this notice will be updated accordingly.
           </p>
-          <ul>
-            <li>Account, organization, role, and contact information.</li>
-            <li>Product configuration, settings, permissions, and operational records.</li>
-            <li>Activity, approval, audit, and security events where required by a product.</li>
-            <li>Information customers intentionally provide through integrations, documents, or workflows.</li>
-            <li>Support and diagnostic information needed to operate and secure the service.</li>
-          </ul>
         </section>
 
         <section className="privacy-section">
-          <h2>3. Why may we process personal data?</h2>
+          <h2>2. What the current website collects</h2>
+          <p>
+            The current Noitis website is static-first. Its frontend does not intentionally include account creation,
+            contact forms, advertising trackers, marketing analytics, payment collection, or a Noitis-operated backend database.
+          </p>
+          <p>The website currently stores one browser preference locally:</p>
           <ul>
-            <li>To provide and operate a requested Noitis product.</li>
-            <li>To authenticate users and protect accounts and systems.</li>
-            <li>To perform requested workflows and maintain understandable activity history.</li>
-            <li>To provide support and respond to requests.</li>
-            <li>To maintain reliability, prevent abuse, and investigate security incidents.</li>
-            <li>To comply with applicable legal and regulatory obligations.</li>
+            <li><code>noitis-theme</code> — remembers whether the visitor selected the light or dark theme.</li>
           </ul>
           <p>
-            The final production notice must map each purpose to the lawful basis that actually applies to the product and situation.
+            This value is stored in the visitor&apos;s own browser through local storage. It is not intended to identify a visitor
+            and is not transmitted to a Noitis application server by the current website code.
           </p>
         </section>
 
         <section className="privacy-section">
-          <h2>4. AI and automated processing</h2>
+          <h2>3. Hosting and technical connection data</h2>
           <p>
-            Noitis builds products around understandable control. If a production product uses automated processing that materially
-            affects individuals, the final notice will describe what it does, why it is used, and the safeguards that apply.
+            The website is designed to be hosted through GitHub Pages. Like other internet hosting providers, GitHub may process
+            technical connection information needed to deliver and secure the site, such as IP addresses, request information,
+            device/browser information, and security logs, under GitHub&apos;s own applicable privacy and service terms.
           </p>
-        </section>
-
-        <section className="privacy-section">
-          <h2>5. Service providers and transfers</h2>
           <p>
-            Noitis may rely on selected providers for services such as hosting, authentication, communications, monitoring,
-            customer support, or regulated connectivity. Before production, the actual providers, processing locations,
-            and relevant international-transfer safeguards must be verified and disclosed where required.
+            The current Noitis frontend does not intentionally copy that hosting data into a separate Noitis analytics or customer database.
           </p>
         </section>
 
         <section className="privacy-section">
-          <h2>6. Retention</h2>
-          <p>
-            Noitis intends to keep personal data only for as long as necessary for the purpose for which it was collected,
-            including legitimate security, contractual, audit, and legal requirements. Final retention periods or criteria
-            will be published before production use.
-          </p>
-        </section>
-
-        <section className="privacy-section">
-          <h2>7. Your rights</h2>
-          <p>Subject to applicable law, individuals may have rights to:</p>
+          <h2>4. Why information may be processed</h2>
           <ul>
-            <li>access personal data;</li>
-            <li>correct inaccurate or incomplete data;</li>
-            <li>request deletion;</li>
-            <li>restrict certain processing;</li>
-            <li>receive or transfer eligible data;</li>
-            <li>object to certain processing;</li>
-            <li>withdraw consent where processing relies on consent; and</li>
-            <li>seek safeguards relating to qualifying automated decisions.</li>
+            <li>To deliver the website and its static assets.</li>
+            <li>To remember the visitor&apos;s selected theme locally in the browser.</li>
+            <li>To maintain security, reliability, and availability through the hosting platform.</li>
+            <li>To comply with applicable legal obligations.</li>
           </ul>
-        </section>
-
-        <section className="privacy-section">
-          <h2>8. Complaints</h2>
           <p>
-            Individuals may have the right to lodge a complaint with a competent data-protection supervisory authority.
-            For a controller established in Greece, this may include the Hellenic Data Protection Authority.
+            If Noitis later adds forms, accounts, analytics, newsletters, support tools, cookies, or other data-processing features,
+            this notice must be updated before or when those features are introduced, as required by applicable law.
           </p>
         </section>
 
         <section className="privacy-section">
-          <h2>9. Cookies and analytics</h2>
+          <h2>5. Cookies and local storage</h2>
+          <p>The current website does not intentionally set advertising or analytics cookies.</p>
           <p>
-            Noitis will describe any cookies, local storage, analytics, or similar technologies actually used by its production website
-            and products. Non-essential tracking should not be introduced silently.
+            It uses browser local storage for the <code>noitis-theme</code> preference described above. Visitors can remove that value
+            by clearing site data in their browser. Removing it only resets the saved theme choice.
           </p>
         </section>
 
         <section className="privacy-section">
-          <h2>10. Changes to this notice</h2>
+          <h2>6. Links to Noitis products and third-party services</h2>
           <p>
-            This notice may change as Noitis products, legal requirements, and verified data practices evolve.
-            The current effective date will be shown whenever a production notice is updated.
+            The website may link to Noitis products or external websites. A linked destination may have its own privacy practices,
+            terms, authentication, infrastructure, and data flows. This website privacy notice does not automatically govern those separate services.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>7. Retention</h2>
+          <p>
+            The <code>noitis-theme</code> preference remains in the visitor&apos;s browser until the visitor clears it or browser/site storage
+            is otherwise removed.
+          </p>
+          <p>
+            Any technical information processed by the hosting provider is retained according to the provider&apos;s applicable policies
+            and legitimate operational requirements. Noitis does not currently define a separate retention period for hosting logs it does not independently receive or store.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>8. International processing</h2>
+          <p>
+            Internet infrastructure and hosting providers may process information in more than one country. Where applicable data-protection
+            law requires safeguards for international transfers, the relevant service provider and controller are responsible for using appropriate legal mechanisms.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>9. Your rights</h2>
+          <p>
+            Depending on applicable law and the circumstances, individuals may have rights concerning personal data, including access,
+            correction, deletion, restriction, portability, objection, and withdrawal of consent where consent is the applicable legal basis.
+          </p>
+          <p>
+            Because the current website does not provide user accounts or a Noitis-operated personal-data database, Noitis may have little
+            or no website-specific personal data with which to identify a visitor. Privacy questions or rights requests may nevertheless be sent to the contact address above.
+          </p>
+          <p>
+            Individuals may also have the right to lodge a complaint with a competent supervisory authority. In Greece, this may include the Hellenic Data Protection Authority.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>10. Children</h2>
+          <p>
+            The public company website is not designed to collect personal information from children. The current website does not intentionally
+            provide forms or account registration through which a child could submit personal data to Noitis.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>11. Security</h2>
+          <p>
+            Noitis aims to keep the public website limited in scope and to avoid collecting personal data that the website does not need.
+            No internet service can guarantee absolute security, and hosting/provider security remains subject to the relevant platform&apos;s controls and terms.
+          </p>
+        </section>
+
+        <section className="privacy-section">
+          <h2>12. Changes to this notice</h2>
+          <p>
+            This notice may change when the website, Noitis organization, hosting model, legal requirements, or actual data practices change.
+            The effective date will be updated when a material revision is published.
           </p>
         </section>
       </main>
@@ -145,7 +165,13 @@ export function PrivacyPage() {
           <BrandMark />
           <p>Privacy should be understandable.</p>
         </div>
-        <a href="./index.html">Back to Noitis™</a>
+        <div className="site-footer__links">
+          <a href="./index.html">Home</a>
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="./trademark.html">Trademarks</a>
+        </div>
+        <p className="site-footer__legal">© {new Date().getFullYear()} Noitis™. All rights reserved.</p>
       </footer>
     </div>
   )

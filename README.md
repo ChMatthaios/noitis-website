@@ -53,12 +53,14 @@ Production files are generated in `dist/`.
 
 ## Pages
 
-The Vite build has two HTML entry points:
+The Vite build has four HTML entry points:
 
 - `index.html` — Noitis company website
-- `privacy.html` — Noitis privacy notice
+- `privacy.html` — website privacy notice
+- `terms.html` — website terms of use
+- `trademark.html` — Noitis trademark and brand-use policy
 
-The privacy notice remains subject to verification of the final controller, contact, processing, and deployment details before it should be treated as a completed production legal notice.
+The legal pages describe the current public website and its present technical behavior. They should be reviewed whenever the website, Noitis legal structure, hosting model, data practices, or commercial operations materially change.
 
 ## Continuous integration
 
@@ -137,7 +139,7 @@ Accessibility remains a release requirement and should be tested as behavior, no
 
 ```text
 noitis-website/
-├── src/                       # React source and stylesheet entry point
+├── src/                       # React source, legal pages, and stylesheet entry point
 ├── media/                     # Noitis/product source artwork
 ├── public/                    # files copied directly into the build
 ├── docs/
@@ -149,6 +151,12 @@ noitis-website/
 │   └── deploy-pages.yml
 ├── index.html
 ├── privacy.html
+├── terms.html
+├── trademark.html
+├── LICENSE
+├── PRIVACY.md
+├── TERMS.md
+├── TRADEMARK.md
 ├── package.json
 ├── package-lock.json
 └── vite.config.ts
@@ -162,9 +170,22 @@ noitis-website/
 - [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first/GitHub Pages architecture decision
 - [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and validation expectations
 
+## Legal, licensing, and brand use
+
+This repository is **proprietary Noitis software and content**. Public visibility does not make the repository open source and does not place its code, website copy, visual design, product descriptions, documentation, or brand assets in the public domain.
+
+- [`LICENSE`](./LICENSE) — proprietary repository/software/content terms
+- [`PRIVACY.md`](./PRIVACY.md) — current website privacy notice
+- [`TERMS.md`](./TERMS.md) — public website terms of use
+- [`TRADEMARK.md`](./TRADEMARK.md) — Noitis trademark and brand-use policy
+
+The public website exposes corresponding Privacy, Terms, and Trademarks pages in its footer.
+
 ## Trademark status
 
-**NOITIS™** is currently used as a claimed trade mark. The `™` symbol does not indicate registration. Do not use the registered symbol unless registration has actually been granted in the relevant territory.
+**Noitis™** is currently used as a claimed trademark. The `™` symbol does not indicate registration. Do not use the registered `®` symbol unless registration has actually been granted in the relevant territory and its use is appropriate.
+
+The Noitis name, logos, slogan, product-family branding, and distinctive brand assets remain subject to the trademark policy even when the website repository is publicly viewable.
 
 ## Architecture principle
 
