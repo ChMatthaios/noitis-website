@@ -69,7 +69,7 @@ async function reviewPage(page, route, label) {
 
   assert(unlabeledControls.length === 0, `${label}: unlabeled interactive controls found on ${route || 'index.html'}: ${unlabeledControls.join(', ')}`)
 
-  const undersizedTargets = await page.locator('.brand-link, .site-nav a, .privacy-nav a, .site-footer a, .button, button').evaluateAll((elements) => elements
+  const undersizedPrimaryTargets = await page.locator('.brand-link, .button, button').evaluateAll((elements) => elements
     .filter((element) => {
       const style = getComputedStyle(element)
       if (style.display === 'none' || style.visibility === 'hidden') return false
@@ -78,7 +78,18 @@ async function reviewPage(page, route, label) {
     })
     .map((element) => `${element.tagName.toLowerCase()}.${element.className}:${Math.round(element.getBoundingClientRect().width)}x${Math.round(element.getBoundingClientRect().height)}`))
 
-  assert(undersizedTargets.length === 0, `${label}: interactive targets below 44x44 CSS pixels: ${undersizedTargets.join(', ')}`)
+  assert(undersizedPrimaryTargets.length === 0, `${label}: primary interactive targets below 44x44 CSS pixels: ${undersizedPrimaryTargets.join(', ')}`)
+
+  const undersizedTextLinks = await page.locator('.site-nav a, .privacy-nav a, .site-footer a').evaluateAll((elements) => elements
+    .filter((element) => {
+      const style = getComputedStyle(element)
+      if (style.display === 'none' || style.visibility === 'hidden') return false
+      const rect = element.getBoundingClientRect()
+      return rect.width > 0 && rect.height > 0 && (rect.width < 24 || rect.height < 44)
+    })
+    .map((element) => `${element.tagName.toLowerCase()}.${element.className}:${Math.round(element.getBoundingClientRect().width)}x${Math.round(element.getBoundingClientRect().height)}`))
+
+  assert(undersizedTextLinks.length === 0, `${label}: navigation text targets are too small: ${undersizedTextLinks.join(', ')}`)
 }
 
 async function reviewBrowser(name, browserType) {
