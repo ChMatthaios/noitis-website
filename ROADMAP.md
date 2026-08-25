@@ -4,20 +4,21 @@ This roadmap is the implementation sequence for the public Noitis company websit
 
 ## Implementation audit — 2026-08-25
 
-- **Phase 1 is complete.** The static-first React/TypeScript/Vite website, Noitis identity, legal pages, CI, GitHub Pages deployment, themes, and product presentation are present on `main`.
-- **Phase 2 is partial and is the next active phase.** Company/about content and the permanent local product links exist, and `robots.txt` is present. Final launch copy/contact content, public-safe production product destinations, social-preview metadata, sitemap, and final legal/data-practice review remain open.
+- **Phase 1 source foundation is complete.** The static-first React/TypeScript/Vite website, Noitis identity, legal pages, CI workflow, Pages deployment workflow, themes, and product presentation are present on `main`. The normal CI build is green.
+- **Current hosting note:** the Pages deployment workflow currently fails at `actions/configure-pages` because the repository does not have a GitHub Pages site enabled/configured for Actions deployment. This is an environment/hosting configuration gap, not a website build failure, and is tracked in Phase 4 below.
+- **Phase 2 is partial and is the next product/content phase.** Company/about content and the permanent local product links exist, and `robots.txt` is present. Final launch copy/contact content, public-safe production product destinations, social-preview metadata, sitemap, and final legal/data-practice review remain open.
 - **Phase 3 has a useful accessibility/semantic baseline but is not complete.** The site includes a skip link, semantic sections, accessible navigation labels, and responsive navigation, but formal accessibility, responsive-device, SEO, performance, browser, link, and smoke-test release work is still required.
-- **Phases 4–6 are not started as production phases.** GitHub Pages exists as the current development/publication mechanism, but the final production domain, operational ownership, launch-candidate gates, and official launch are intentionally still open.
+- **Phases 4–6 are not complete as production phases.** Production hosting enablement, the final domain, operational ownership, launch-candidate gates, and official launch remain open.
 
 **Branch workflow:** before work begins on `phase-N`, fast-forward/synchronize that branch to the latest accepted `main`. A phase is merged only when its checklist is implemented, validated, documented, and the relevant CI gate is green.
 
-## Phase 1 — Company website foundation — Complete
+## Phase 1 — Company website source foundation — Complete
 - [x] React/TypeScript/Vite static-first website
 - [x] Noitis brand identity, product presentation, and responsive navigation
 - [x] Light and dark themes
 - [x] Privacy, Terms, and Trademark public pages
 - [x] Proprietary repository/license and trademark documentation
-- [x] GitHub Actions CI and GitHub Pages deployment
+- [x] GitHub Actions CI workflow and GitHub Pages deployment workflow
 - [x] Product links and public company positioning
 
 ## Phase 2 — Content and product readiness — Partial / next
@@ -43,9 +44,10 @@ This roadmap is the implementation sequence for the public Noitis company websit
 - [ ] Add automated link checks and browser smoke coverage
 - [ ] Complete cross-browser release review
 
-## Phase 4 — Production domain and operations — Not started
+## Phase 4 — Production domain and operations — Hosting gap identified
+- [ ] Enable/configure the repository's GitHub Pages site to deploy through GitHub Actions, or choose and document the final production hosting platform
 - [ ] Register/confirm the final Noitis production domain
-- [ ] Configure DNS and GitHub Pages custom-domain settings
+- [ ] Configure DNS and the selected hosting platform's custom-domain settings
 - [ ] Verify HTTPS and domain ownership
 - [ ] Configure canonical production URLs and redirects
 - [ ] Add privacy-respecting analytics only if there is a defined business need and legal basis
