@@ -1,51 +1,36 @@
 import noitisLogoLight from '../media/Noitis Logo - Light.png'
 import noitisLogoDark from '../media/Noitis Logo - Dark.png'
-
 import noitisLongLogoLight from '../media/Noitis Long Logo - Light.png'
 import noitisLongLogoDark from '../media/Noitis Long Logo - Dark.png'
 
+type Theme = 'light' | 'dark'
+
 type BrandMarkProps = {
   compact?: boolean
+  theme?: Theme
 }
 
-export function BrandMark({ compact = false }: BrandMarkProps) {
+export function BrandMark({ compact = false, theme = 'light' }: BrandMarkProps) {
+  const logo = theme === 'dark' ? noitisLogoDark : noitisLogoLight
+  const longLogo = theme === 'dark' ? noitisLongLogoDark : noitisLongLogoLight
+
   if (compact) {
     return (
-      <span className="brand brand--header" aria-label="Noitis">
-        <span className="brand__long-logo">
-          <img
-            className="theme-logo theme-logo--light"
-            src={noitisLongLogoLight}
-            alt="Noitis"
-          />
-
-          <img
-            className="theme-logo theme-logo--dark"
-            src={noitisLongLogoDark}
-            alt="Noitis"
-          />
+      <span className="brand brand--header" role="img" aria-label="Noitis">
+        <span className="brand__long-logo" aria-hidden="true">
+          <img className="theme-logo" src={longLogo} alt="" decoding="async" />
         </span>
       </span>
     )
   }
 
   return (
-    <span className="brand" aria-label="Noitis">
+    <span className="brand" role="img" aria-label="Noitis">
       <span className="brand__mark brand__mark--official" aria-hidden="true">
-        <img
-          className="theme-logo theme-logo--light"
-          src={noitisLogoLight}
-          alt=""
-        />
-
-        <img
-          className="theme-logo theme-logo--dark"
-          src={noitisLogoDark}
-          alt=""
-        />
+        <img className="theme-logo" src={logo} alt="" loading="lazy" decoding="async" />
       </span>
 
-      <span className="brand__copy">
+      <span className="brand__copy" aria-hidden="true">
         <strong>NOITIS™</strong>
         <small>Intelligence, engineered.</small>
       </span>

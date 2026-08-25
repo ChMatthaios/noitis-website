@@ -24,15 +24,19 @@ Local multi-app links belong in ignored `.env.development.local`, which is devel
 
 ## 4. Accessibility is a release requirement
 
-Changes must preserve semantic landmarks/heading order, keyboard access, visible focus, useful labels, target sizes, alt decisions, responsive layouts, readable contrast, reduced-motion behavior, and light/dark usability. Phase 3 adds the formal browser/accessibility gate.
+Preserve semantic landmarks and heading order, keyboard access, visible focus, useful labels, 44x44 CSS-pixel interactive targets where applicable, readable contrast, reduced-motion behavior, responsive layouts, and useful image-alt decisions.
+
+Phase 3 validation uses the existing source checks plus `scripts/browser-smoke.mjs` to exercise these requirements in Chromium, Firefox, and WebKit at mobile, tablet, and desktop sizes.
 
 ## 5. Performance and assets
 
-Prefer simple cacheable static output. Avoid unnecessary runtime dependencies. Large images must be reviewed for format, dimensions, compression, and duplication before production optimization is considered complete. Phase 3 owns the formal asset/Core Web Vitals pass.
+Use system fonts; do not add remote font loading without an explicit performance/privacy review. Prefer the compact official product symbols over larger wordmarks where the product name is already rendered as text. Below-the-fold product imagery must lazy-load, and theme-specific imagery should request only the active variant.
+
+The web manifest uses the SVG Noitis mark instead of a duplicate large PNG. `scripts/verify-quality.mjs` enforces JavaScript/CSS budgets and the current publication-image budget. Revisit the budgets only when a real feature justifies the increase.
 
 ## 6. SEO and publication metadata
 
-Every public entry point requires an accurate title/description and canonical/social metadata. Sitemap/robots output must be generated for the configured publication URL. The final custom domain is not authoritative until Phase 4 establishes ownership and deployment.
+Every public entry point requires an accurate title, description, robots directive, canonical URL, Open Graph metadata, and Twitter metadata. The home page also publishes minimal Organization structured data. Sitemap/robots output must be generated for the configured publication URL. The final custom domain is not authoritative until Phase 4 establishes ownership and deployment.
 
 ## 7. Privacy and security
 
@@ -40,15 +44,23 @@ The static site must not contain secrets or private/customer data. `VITE_*` vari
 
 If analytics, forms, cookies, newsletters, accounts, or other data collection are added later, document legal basis, consent where applicable, data destinations, retention, failure modes, and legal-page changes before production use.
 
-## 8. Deterministic builds
+## 8. Deterministic builds and checks
 
 Use committed `package-lock.json` with `npm ci`. Node.js 22.13.0 is the repository baseline.
 
-`npm run check` builds the site, generates publication files, verifies canonical/social metadata, verifies sitemap/robots, and rejects development-only destinations in `dist/`.
+`npm run check` builds the site and validates production-content safety, metadata/indexability, sitemap/robots, local links, contrast/reduced-motion rules, font policy, image-loading rules, and JavaScript/CSS budgets.
+
+The browser smoke dependency is intentionally installed without modifying the application lockfile:
+
+```bash
+npm install --no-save --package-lock=false playwright@1.62.1
+npx playwright install chromium firefox webkit
+npm run check:browser
+```
 
 ## 9. CI and deployment separation
 
-CI runs on pushes/PRs. Pages deployment runs from `main` only when `NOITIS_PAGES_ENABLED=true`. Deployment must build from committed source and lockfiles; do not deploy locally generated `dist/` output.
+CI runs on pushes/PRs and executes both the source/build checks and the Phase 3 browser smoke review. Pages deployment runs from `main` only when `NOITIS_PAGES_ENABLED=true`. Deployment must build from committed source and lockfiles; do not deploy locally generated `dist/` output.
 
 ## 10. Domain and hosting configuration
 

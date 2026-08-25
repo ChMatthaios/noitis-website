@@ -31,18 +31,35 @@ export function App() {
     window.localStorage.setItem('noitis-theme', theme)
   }, [theme])
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
+
   const closeMenu = () => setMenuOpen(false)
+  const heroLogo = theme === 'dark' ? noitisLogoDark : noitisLogoLight
 
   return (
     <div className="site-shell">
       <a className="skip-link" href="#main">Skip to main content</a>
 
       <header className="site-header">
-        <a className="brand-link" href="#top" aria-label="Noitis home" onClick={closeMenu}><BrandMark compact /></a>
-        <button className="menu-button" type="button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} onClick={() => setMenuOpen((value) => !value)}>
-          {menuOpen ? <FiX /> : <FiMenu />}
+        <a className="brand-link" href="#top" aria-label="Noitis home" onClick={closeMenu}><BrandMark compact theme={theme} /></a>
+        <button
+          className="menu-button"
+          type="button"
+          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          {menuOpen ? <FiX aria-hidden="true" /> : <FiMenu aria-hidden="true" />}
         </button>
-        <nav className={menuOpen ? 'site-nav site-nav--open' : 'site-nav'} aria-label="Main navigation">
+        <nav id="site-navigation" className={menuOpen ? 'site-nav site-nav--open' : 'site-nav'} aria-label="Main navigation">
           <a href="#products" onClick={closeMenu}>Products</a>
           <a href="#principles" onClick={closeMenu}>How we build</a>
           <a href="#about" onClick={closeMenu}>About</a>
@@ -58,8 +75,7 @@ export function App() {
         <section className="hero" id="top">
           <div className="hero__visual" aria-hidden="true">
             <div className="hero__company-logo">
-              <img className="theme-logo theme-logo--light" src={noitisLogoLight} alt="" />
-              <img className="theme-logo theme-logo--dark" src={noitisLogoDark} alt="" />
+              <img className="theme-logo" src={heroLogo} alt="" decoding="async" fetchPriority="high" />
             </div>
           </div>
           <div className="hero__copy">
@@ -86,33 +102,36 @@ export function App() {
             <p>Each product solves a different problem, but all of them share the same standard: intelligence should be understandable, controlled, and useful in the real workflow.</p>
           </div>
           <div className="product-grid">
-            {products.map((product) => (
-              <article className="product-card" key={product.name}>
-                <div className="product-card__logo" role="img" aria-label={`${product.name} logo`}>
-                  <img className="theme-logo theme-logo--light" src={product.logoLight} alt="" />
-                  <img className="theme-logo theme-logo--dark" src={product.logoDark} alt="" />
-                </div>
-                <p className="product-card__eyebrow">{product.category}</p>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <span className="product-card__status">{product.status}</span>
-                <p style={{ fontSize: '.88rem', marginTop: '14px' }}>{product.note}</p>
-                <div className="hero__actions" style={{ marginTop: '22px' }}>
-                  {product.href ? (
-                    <a className="button button--secondary" href={product.href} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}>
-                      Open product <FiExternalLink aria-hidden="true" />
-                    </a>
-                  ) : (
-                    <span className="product-card__status">Public access not configured</span>
-                  )}
-                  {product.pricingHref ? (
-                    <a className="button button--secondary" href={product.pricingHref} target="_blank" rel="noreferrer" aria-label={`Open ${product.name} pricing`}>
-                      Pricing <FiExternalLink aria-hidden="true" />
-                    </a>
-                  ) : null}
-                </div>
-              </article>
-            ))}
+            {products.map((product) => {
+              const productLogo = theme === 'dark' ? product.logoDark : product.logoLight
+
+              return (
+                <article className="product-card" key={product.name}>
+                  <div className="product-card__logo" role="img" aria-label={`${product.name} logo`}>
+                    <img className="theme-logo" src={productLogo} alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <p className="product-card__eyebrow">{product.category}</p>
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                  <span className="product-card__status">{product.status}</span>
+                  <p style={{ fontSize: '.88rem', marginTop: '14px' }}>{product.note}</p>
+                  <div className="hero__actions" style={{ marginTop: '22px' }}>
+                    {product.href ? (
+                      <a className="button button--secondary" href={product.href} target="_blank" rel="noreferrer" aria-label={`Open ${product.name}`}>
+                        Open product <FiExternalLink aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <span className="product-card__status">Public access not configured</span>
+                    )}
+                    {product.pricingHref ? (
+                      <a className="button button--secondary" href={product.pricingHref} target="_blank" rel="noreferrer" aria-label={`Open ${product.name} pricing`}>
+                        Pricing <FiExternalLink aria-hidden="true" />
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </section>
 
@@ -157,7 +176,7 @@ export function App() {
       </main>
 
       <footer className="site-footer">
-        <div className="site-footer__brand"><BrandMark /><p>Built in Greece. Designed for a global future.</p></div>
+        <div className="site-footer__brand"><BrandMark theme={theme} /><p>Built in Greece. Designed for a global future.</p></div>
         <div className="site-footer__links">
           <a href="#products">Products</a><a href="#principles">How we build</a><a href="#about">About</a><a href="#contact">Contact</a><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./trademark.html">Trademarks</a>
         </div>

@@ -26,14 +26,16 @@ Actual GitHub Pages activation is a repository/hosting operation and is tracked 
 
 **Phase 2 evidence:** `src/productCatalog.ts` is the reviewed public product catalogue; `.env.example` documents publication/product URL configuration; `scripts/generate-publication-files.mjs` creates sitemap/robots output; `scripts/verify-content.mjs` rejects leaked local destinations and missing publication metadata; the public legal pages and Markdown were reviewed on 25 August 2026. Phase 2 was accepted and promoted to `main` on 25 August 2026.
 
-## Phase 3 — Accessibility, SEO, and quality
-- [ ] Complete keyboard-only and screen-reader review
-- [ ] Validate contrast, focus, reduced motion, headings, landmarks, and target sizes
-- [ ] Test responsive behavior across supported mobile, tablet, and desktop sizes
-- [ ] Validate metadata, canonical URLs, structured data where appropriate, and indexability
-- [ ] Optimize images, fonts, bundle size, and Core Web Vitals
-- [ ] Add automated link/build checks and browser smoke coverage
-- [ ] Complete cross-browser release review
+## Phase 3 — Accessibility, SEO, and quality — Implementation complete, awaiting acceptance
+- [x] Complete keyboard-only and screen-reader review
+- [x] Validate contrast, focus, reduced motion, headings, landmarks, and target sizes
+- [x] Test responsive behavior across supported mobile, tablet, and desktop sizes
+- [x] Validate metadata, canonical URLs, structured data where appropriate, and indexability
+- [x] Optimize images, fonts, bundle size, and Core Web Vitals
+- [x] Add automated link/build checks and browser smoke coverage
+- [x] Complete cross-browser release review
+
+**Phase 3 evidence:** `src/styles/phase3.css` contains the accessibility/responsive fixes; the home page includes Organization structured data; product imagery uses compact symbols, active-theme selection, and lazy loading; the manifest uses the SVG mark; `npm run check` verifies publication metadata, links, contrast/reduced-motion rules, and bundle budgets; `scripts/browser-smoke.mjs` reviews Chromium, Firefox, and WebKit at mobile/tablet/desktop sizes with keyboard, semantic, target-size, responsive, theme, reduced-motion, and legal-page checks. Phase 3 remains unmerged until the user review is accepted.
 
 ## Phase 4 — Production domain and operations
 - [ ] Register/confirm the final Noitis production domain

@@ -13,7 +13,9 @@ React / TypeScript / static HTML / CSS / media
                  ↓
 Vite production build
                  ↓
-publication generator + content-safety verification
+publication + link + quality verification
+                 ↓
+small cross-browser smoke review
                  ↓
 static dist/ artifact
                  ↓
@@ -33,7 +35,7 @@ noitis-website/
 │   └── styles/
 ├── media/
 ├── public/                   # favicon, manifest, share image, sitemap, robots
-├── scripts/                  # development env, publication generation, verification
+├── scripts/                  # development env, publication and quality checks
 ├── docs/
 │   ├── architecture/
 │   ├── content/
@@ -53,9 +55,28 @@ Local product destinations are generated into ignored `.env.development.local`, 
 
 ## Publication metadata
 
-`vite.config.ts` injects the configured publication base URL into canonical/Open Graph/Twitter metadata. `scripts/generate-publication-files.mjs` creates `sitemap.xml` and `robots.txt` for the same publication address.
+`vite.config.ts` injects the configured publication base URL into canonical/Open Graph/Twitter metadata. The home page includes minimal Organization structured data. `scripts/generate-publication-files.mjs` creates `sitemap.xml` and `robots.txt` for the same publication address.
 
 The fallback publication address is the GitHub Pages project URL. The final custom domain remains a Phase 4 deployment decision.
+
+## Phase 3 quality flow
+
+```text
+npm ci
+   ↓
+npm run check
+   ├── production build
+   ├── content / canonical / sitemap / robots verification
+   ├── local-link verification
+   └── contrast / reduced-motion / image / bundle-budget verification
+   ↓
+install pinned Playwright without changing package-lock
+   ↓
+npm run check:browser
+   └── Chromium + Firefox + WebKit, mobile + tablet + desktop
+```
+
+The browser smoke script starts and stops the local Vite production preview itself. It exists only to cover the Phase 3 browser/accessibility requirements; it does not add a runtime service to the website.
 
 ## Deployment flow
 
@@ -64,7 +85,7 @@ phase branch / PR
       ↓
 GitHub Actions CI
       ↓
-npm ci → npm run check
+Phase quality checks
       ↓
 accepted merge to main
       ↓
