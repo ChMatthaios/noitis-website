@@ -6,9 +6,11 @@ Official company website for **Noitis**, a Greece-based technology company build
 
 ## Status
 
-The repository contains the current public website frontend and GitHub Pages deployment configuration.
+This branch represents the completed **Phase 1 — Company website foundation** milestone.
 
-The site is intentionally **static-first**. It does not contain a product backend, operational database, authentication service, or data warehouse. Those systems should not be added unless a real website capability requires them.
+The repository contains the static-first public website frontend, legal/public-information pages, Noitis and product presentation, GitHub Actions validation, and a GitHub Pages deployment workflow. The deployment workflow is configured to enable Pages through GitHub Actions when it runs from `main`.
+
+The site intentionally does **not** contain a product backend, operational database, authentication service, CMS, analytics platform, or data warehouse. Those systems must not be added unless a real website capability requires them.
 
 ## Stack
 
@@ -16,7 +18,7 @@ The site is intentionally **static-first**. It does not contain a product backen
 - TypeScript
 - Vite
 - GitHub Actions
-- GitHub Pages
+- GitHub Pages deployment
 
 ## Requirements
 
@@ -40,7 +42,7 @@ Open the local URL printed by Vite.
 npm run check
 ```
 
-`check` runs the TypeScript/Vite production build. A successful build confirms the current static website compiles; it does not substitute for browser, accessibility, content, or legal review.
+`check` runs the TypeScript/Vite production build. A successful Phase 1 build confirms that the current static website compiles; browser, accessibility, SEO, responsive, and cross-browser release gates belong to later roadmap phases.
 
 ## Production preview
 
@@ -51,7 +53,7 @@ npm run preview
 
 Production files are generated in `dist/`.
 
-## Pages
+## Public entry points
 
 The Vite build has four HTML entry points:
 
@@ -60,7 +62,7 @@ The Vite build has four HTML entry points:
 - `terms.html` — website terms of use
 - `trademark.html` — Noitis trademark and brand-use policy
 
-The legal pages describe the current public website and its present technical behavior. They should be reviewed whenever the website, Noitis legal structure, hosting model, data practices, or commercial operations materially change.
+The legal pages describe the current public website and its present technical behavior. They must be reviewed whenever the website, Noitis legal/operator identity, hosting model, data practices, or commercial operations materially change.
 
 ## Continuous integration
 
@@ -80,50 +82,32 @@ The committed `package-lock.json` is the dependency authority for CI and deploym
 
 ## GitHub Pages deployment
 
-`.github/workflows/deploy-pages.yml` deploys from `main`.
+`.github/workflows/deploy-pages.yml` deploys only from `main` and can also be invoked manually through GitHub Actions.
 
 The workflow:
 
 1. checks out the exact commit;
 2. installs dependencies with `npm ci`;
 3. validates/builds the site;
-4. uploads the generated `dist/` artifact;
-5. deploys that artifact through GitHub Pages.
+4. configures GitHub Pages with Actions-based enablement;
+5. uploads the generated `dist/` artifact;
+6. deploys that artifact through GitHub Pages.
 
-In **Settings → Pages**, the deployment source should be **GitHub Actions**.
-
-Until a custom domain is owned and configured, GitHub Pages provides the public project URL.
+Phase branches do not deploy automatically. After a phase is reviewed and merged, the `main` deployment run is the external verification that Pages is enabled and serving the approved artifact.
 
 ## Custom Noitis domain
 
-The repository intentionally does not rely on a committed `CNAME` file for the current custom Actions-based Pages workflow.
+A final production domain is intentionally **not** a Phase 1 requirement. The repository does not commit a speculative `CNAME` or hard-code an unowned future domain.
 
-When a final domain is registered and its DNS is under your control:
+When a final domain is registered and its DNS is under Noitis control, the production-domain roadmap phase will configure the Pages custom-domain settings, DNS, HTTPS, canonical URLs, redirects, sitemap/robots behavior, and social-preview metadata for that final address.
 
-1. open **GitHub → noitis-website → Settings → Pages**;
-2. enter the final custom domain;
-3. configure the required DNS records with the domain provider;
-4. wait for GitHub's domain/DNS verification;
-5. enable HTTPS;
-6. review canonical URLs, redirects, metadata, sitemap/robots behavior, and social preview metadata for the final public address.
-
-The Vite configuration uses relative asset paths so the same site build can work on a GitHub Pages project URL and later on a custom Noitis domain without rewriting application components.
+The Vite configuration uses relative asset paths so the same build can work on a GitHub Pages project URL and later on a custom Noitis domain without rewriting application components.
 
 ## Accessibility direction
 
-The current site is designed around:
+The Phase 1 implementation already provides foundations such as semantic navigation, keyboard-operable controls, visible focus styling, appropriately sized targets, reduced-motion handling, responsive navigation, and light/dark themes.
 
-- readable typography;
-- high contrast;
-- visible keyboard focus;
-- appropriately sized interactive targets;
-- semantic navigation;
-- no hover-only information;
-- reduced-motion support;
-- responsive mobile navigation;
-- light and dark themes.
-
-Accessibility remains a release requirement and should be tested as behavior, not assumed from styling alone.
+Accessibility remains a release requirement and is not considered fully validated until the dedicated accessibility/SEO/quality phase completes browser and assistive-technology checks.
 
 ## Brand palette
 
@@ -157,10 +141,27 @@ noitis-website/
 ├── PRIVACY.md
 ├── TERMS.md
 ├── TRADEMARK.md
+├── ROADMAP.md
 ├── package.json
 ├── package-lock.json
 └── vite.config.ts
 ```
+
+There is no `database/` directory because this repository has no operational database. The Noitis database-layout standard applies only to repositories that actually own database objects or configuration data.
+
+## Phase branch model
+
+Each `phase-N` branch is a milestone, not a permanently synchronized development branch.
+
+```text
+phase-1 = accepted Phase 1 state only
+phase-2 = Phase 1 + accepted Phase 2
+phase-3 = Phases 1-3
+...
+main    = latest accepted phase
+```
+
+Once an earlier phase is accepted, its branch is not moved forward with later implementation.
 
 ## Engineering documentation
 
@@ -168,7 +169,7 @@ noitis-website/
 - [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering rules
 - [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership and growth rules
 - [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first/GitHub Pages architecture decision
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and validation expectations
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution, phase, and validation expectations
 
 ## Legal, licensing, and brand use
 
