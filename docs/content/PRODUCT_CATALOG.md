@@ -2,11 +2,11 @@
 
 **Last audited: 25 August 2026**
 
-This document explains the public company-site product catalogue in `src/productCatalog.ts`. The product repositories remain authoritative for product implementation; this website owns only the public summary and public-link configuration.
+This document explains the public company-site catalogue in `src/productCatalog.ts`. Product repositories remain authoritative for implementation; this website owns only the reviewed public summary and public-link configuration.
 
 ## Current public status
 
-All six products are currently represented as **In development**.
+All six products are represented as **In development**.
 
 | Product | Public company-site summary boundary |
 |---|---|
@@ -19,12 +19,12 @@ All six products are currently represented as **In development**.
 
 ## Sources reviewed
 
-- `Noitis-MC/AgentGate` — current `main` README/roadmap and trusted application state
-- `Noitis-MC/AutoPaylot` — current `main` README/roadmap and explicit no-real-payment boundary
-- `Noitis-MC/BusinessResourceScheduler` — current `main` README/roadmap and trusted scheduling state
-- `Noitis-MC/EarnLogic` — current executable .NET/PostgreSQL implementation and audited roadmap; stale prototype wording in older README sections is not used as a capability authority
-- `Noitis-MC/FamilyOS` — current `main` README/roadmap and explicit simulation/provider boundaries
-- `Noitis-MC/LegacyCI` — current `main` README/roadmap and `TEST_ONE_ANALYSIS_ONLY`/connector boundary
+- `Noitis-MC/AgentGate` — accepted `main` README/roadmap and trusted application state
+- `Noitis-MC/AutoPaylot` — accepted `main` README/roadmap and no-real-payment boundary
+- `Noitis-MC/BusinessResourceScheduler` — accepted `main` README/roadmap and trusted scheduling state
+- `Noitis-MC/EarnLogic` — executable .NET/PostgreSQL implementation and audited roadmap; stale prototype wording is not used as the sole capability authority
+- `Noitis-MC/FamilyOS` — accepted `main` README/roadmap and simulation/provider boundaries
+- `Noitis-MC/LegacyCI` — accepted `main` README/roadmap and `TEST_ONE_ANALYSIS_ONLY`/connector boundary
 
 ## Link authority
 
@@ -37,9 +37,9 @@ The production website must not guess a public product or pricing URL. Each opti
 - `VITE_FAMILYOS_PUBLIC_URL` / `VITE_FAMILYOS_PRICING_URL`
 - `VITE_LEGACYCI_PUBLIC_URL` / `VITE_LEGACYCI_PRICING_URL`
 
-If a production URL is absent, the product card stays visible but non-linking and says public access is not configured. This is intentional.
+If a production URL is absent, the card stays visible but non-linking and says public access is not configured.
 
-For local development only, `scripts/ensure-local-env.mjs` creates ignored `.env.local` values using the permanent Noitis local ports 5174–5179.
+For development only, `scripts/ensure-local-env.mjs` creates ignored `.env.development.local` values using the permanent Noitis local ports 5174–5179. Vite does not load that mode-specific file for production builds.
 
 ## Review rule
 

@@ -4,11 +4,11 @@ This document adapts the Noitis engineering foundation to the public company web
 
 ## 1. Static-first by default
 
-The website is a public information surface. Keep it deployable as static assets unless a concrete feature requires server-side capability. Do not add API, database, warehouse, authentication, queue, microservice, CMS, or cloud-service scaffolding merely for architectural appearance.
+Keep the website deployable as static assets unless a concrete feature requires server-side capability. Do not add API, database, warehouse, authentication, queue, microservice, CMS, or cloud-service scaffolding merely for architectural appearance.
 
 ## 2. Public claims are production data
 
-Company copy, product descriptions, pricing references, legal statements, privacy statements, trademark language, locations, contacts, certifications, partnerships, customer claims, availability, and launch state can affect public trust.
+Company copy, product descriptions, pricing references, legal/privacy/trademark language, contacts, certifications, partnerships, customer claims, availability, and launch state can affect public trust.
 
 - do not invent or imply unverified facts;
 - distinguish current capability from roadmap work;
@@ -20,11 +20,11 @@ Company copy, product descriptions, pricing references, legal statements, privac
 
 Never hard-code a guessed production product/pricing URL. Public destinations come from documented `VITE_*` build variables. If a real destination does not exist, render the product without a public link.
 
-Local multi-app links belong in ignored `.env.local`. The production validation gate must reject leaked localhost destinations.
+Local multi-app links belong in ignored `.env.development.local`, which is development-mode configuration only. The production validation gate must reject leaked localhost destinations.
 
 ## 4. Accessibility is a release requirement
 
-Changes must preserve semantic landmarks/heading order, keyboard access, visible focus, useful labels, target sizes, alt decisions, responsive layouts, readable contrast, reduced-motion behavior, and light/dark usability. Accessibility is tested as behavior; Phase 3 adds the formal browser/accessibility gate.
+Changes must preserve semantic landmarks/heading order, keyboard access, visible focus, useful labels, target sizes, alt decisions, responsive layouts, readable contrast, reduced-motion behavior, and light/dark usability. Phase 3 adds the formal browser/accessibility gate.
 
 ## 5. Performance and assets
 
@@ -36,7 +36,7 @@ Every public entry point requires an accurate title/description and canonical/so
 
 ## 7. Privacy and security
 
-The current static site must not contain secrets or private/customer data. `VITE_*` variables are public frontend configuration and must never contain secrets.
+The static site must not contain secrets or private/customer data. `VITE_*` variables are public frontend configuration and must never contain secrets.
 
 If analytics, forms, cookies, newsletters, accounts, or other data collection are added later, document legal basis, consent where applicable, data destinations, retention, failure modes, and legal-page changes before production use.
 
@@ -44,7 +44,7 @@ If analytics, forms, cookies, newsletters, accounts, or other data collection ar
 
 Use committed `package-lock.json` with `npm ci`. Node.js 22.13.0 is the repository baseline.
 
-`npm run check` is the source validation gate: it builds the site, generates publication files, verifies canonical/social metadata, verifies sitemap/robots, and rejects development-only destinations in `dist/`.
+`npm run check` builds the site, generates publication files, verifies canonical/social metadata, verifies sitemap/robots, and rejects development-only destinations in `dist/`.
 
 ## 9. CI and deployment separation
 

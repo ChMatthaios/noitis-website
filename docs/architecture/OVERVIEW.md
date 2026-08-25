@@ -31,9 +31,9 @@ noitis-website/
 │   ├── productCatalog.ts
 │   ├── legal page components
 │   └── styles/
-├── media/                    # source brand/product artwork
+├── media/
 ├── public/                   # favicon, manifest, share image, sitemap, robots
-├── scripts/                  # local env, publication generation, verification
+├── scripts/                  # development env, publication generation, verification
 ├── docs/
 │   ├── architecture/
 │   ├── content/
@@ -43,13 +43,13 @@ noitis-website/
 └── four HTML entry points
 ```
 
-The website intentionally has **no API, operational database, warehouse, authentication service, payment processor, CMS, or form backend**. Those belong in product repositories or future dedicated services only if a real website requirement exists.
+The website intentionally has **no API, operational database, warehouse, authentication service, payment processor, CMS, or form backend**.
 
 ## Public product authority
 
 `src/productCatalog.ts` is the website-owned public summary of the Noitis product family. It must be reviewed against accepted product repositories. Public product/pricing URLs are environment configuration and are omitted when no real public destination exists.
 
-Local product destinations are generated into ignored `.env.local`; they are not committed as production content. `npm run check` rejects production output containing `localhost:` or `127.0.0.1`.
+Local product destinations are generated into ignored `.env.development.local`, which Vite loads only in development mode. `npm run check` rejects production output containing `localhost:` or `127.0.0.1`.
 
 ## Publication metadata
 
@@ -73,7 +73,7 @@ Pages workflow (only when NOITIS_PAGES_ENABLED=true)
 Pages artifact → deployment
 ```
 
-Pages activation itself is an administrative repository/hosting operation. It is intentionally tracked with Phase 4 domain/operations work rather than hidden inside application code.
+Pages activation itself is an administrative repository/hosting operation tracked with Phase 4 domain/operations work.
 
 ## Evolution rule
 

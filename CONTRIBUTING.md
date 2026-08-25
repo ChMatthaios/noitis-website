@@ -14,7 +14,7 @@ phase-3 = Phases 1-3
 main    = latest accepted phase
 ```
 
-Work only on the active phase branch. After acceptance and merge, keep that phase branch fixed and create/synchronize the next phase branch from the new `main`.
+Work only on the active phase branch. After acceptance and merge, keep that phase branch fixed and synchronize the next phase branch from the new `main`.
 
 ## Public-content rules
 
@@ -36,7 +36,7 @@ npm run check
 npm run dev
 ```
 
-`npm run check` builds the production site, generates sitemap/robots output, validates required publication metadata, and fails if development-only local destinations leak into production output.
+`npm run dev` may create `.env.development.local`; that file is development-only and ignored by Git. `npm run check` builds in production mode, generates sitemap/robots output, validates required publication metadata, and fails if local destinations leak into production output.
 
 For production preview:
 
@@ -47,16 +47,16 @@ npm run preview
 
 ## Environment configuration
 
-`npm run dev` creates `.env.local` with the permanent Noitis local ports if no local env file exists. Production/public links are optional `VITE_*` values documented in `.env.example`.
+Development defaults are documented in `.env.example` and generated into `.env.development.local`. Production/public links are optional `VITE_*` values supplied by the production build/deployment environment.
 
-Never commit secrets to a `VITE_*` variable: Vite frontend variables are public by design.
+Never put secrets in a `VITE_*` variable: Vite frontend variables are public by design.
 
 ## Engineering expectations
 
 - Production checks must pass before a phase is proposed for merge into `main`.
 - Keyboard navigation, focus states, reduced-motion behavior, mobile layouts, and light/dark themes must remain usable.
 - Meaningful images need useful alt decisions; decorative theme variants should not duplicate meaningful alt text.
-- Review public metadata, canonical assumptions, sitemap/robots, social previews, and legal text when publication URLs or business facts change.
+- Review metadata, canonical assumptions, sitemap/robots, social previews, and legal text when publication URLs or business facts change.
 - Keep GitHub Pages deployment reproducible and separate from product infrastructure.
 - Pages activation and the final custom domain are Phase 4 operations; do not fake them in source.
 - Update relevant Markdown whenever architecture, scripts, phase status, hosting behavior, public claims, or legal/data practices change.

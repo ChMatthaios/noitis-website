@@ -1,6 +1,7 @@
 import { existsSync, writeFileSync } from 'node:fs'
 
-if (existsSync('.env.local') || existsSync('.env')) {
+const target = '.env.development.local'
+if (existsSync(target) || existsSync('.env.development')) {
   process.exit(0)
 }
 
@@ -19,5 +20,5 @@ VITE_FAMILYOS_PRICING_URL=
 VITE_LEGACYCI_PRICING_URL=
 `
 
-writeFileSync('.env.local', localEnvironment, 'utf8')
-console.log('Created .env.local with the permanent Noitis local product URLs.')
+writeFileSync(target, localEnvironment, 'utf8')
+console.log(`Created ${target} with the permanent Noitis local product URLs.`)

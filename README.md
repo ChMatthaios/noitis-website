@@ -33,11 +33,9 @@ npm ci
 npm run dev
 ```
 
-`npm run dev` creates an ignored `.env.local` with the permanent Noitis local product URLs when neither `.env.local` nor `.env` already exists. This preserves the multi-app local experience without committing development URLs into production configuration.
+`npm run dev` creates an ignored `.env.development.local` with the permanent Noitis local product URLs when no development env file already exists. Vite loads that file only in development mode, so local app links cannot silently become production configuration.
 
 Website: `http://localhost:5173`
-
-Local product ports:
 
 | Product | Local URL |
 |---|---|
@@ -54,7 +52,7 @@ Local product ports:
 npm run check
 ```
 
-`check` now runs the production build and then verifies that production output:
+`check` runs the production build and then verifies that production output:
 
 - contains canonical/social metadata;
 - contains `robots.txt` and a four-page sitemap;
@@ -85,7 +83,7 @@ See [`.env.example`](./.env.example) and [`docs/content/PRODUCT_CATALOG.md`](./d
 
 The six product descriptions were audited against the current Noitis product repositories on 25 August 2026. The company site intentionally uses conservative descriptions and does not turn roadmap items into capability claims.
 
-All six products currently display **In development**. Product-specific safety boundaries—such as AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors—remain visible in the catalogue copy where materially relevant.
+All six products currently display **In development**. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
 
 ## Public pages
 
@@ -96,7 +94,7 @@ Vite builds four HTML entry points:
 - `terms.html` — website terms of use
 - `trademark.html` — Noitis trademark and brand-use policy
 
-All four entry points include canonical and social-preview metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL.
+All four include canonical and social-preview metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL.
 
 ## Legal and operator status
 
@@ -129,7 +127,7 @@ noitis-website/
 ├── src/                         # React pages, product catalogue, styles
 ├── media/                       # Noitis/product source artwork
 ├── public/                      # favicon/manifest/share image/sitemap/robots
-├── scripts/                     # local-env, publication generation, content verification
+├── scripts/                     # development env, publication generation, verification
 ├── docs/
 │   ├── architecture/
 │   ├── content/

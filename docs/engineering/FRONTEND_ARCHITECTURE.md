@@ -15,11 +15,9 @@ Do not split every section into components merely to mirror larger Noitis applic
 
 ## Product catalogue boundary
 
-Product marketing data has grown enough to deserve a typed module. `productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations.
+`productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations. It does **not** become authoritative for product business behavior; accepted product repositories remain the implementation authority.
 
-It does **not** become authoritative for product business behavior. Accepted product repositories remain the implementation authority.
-
-Public URLs arrive through `VITE_*` variables. Local links are generated into ignored `.env.local`, keeping local-development convenience separate from production output.
+Public URLs arrive through `VITE_*` variables. Development links are generated into ignored `.env.development.local`, so local convenience is isolated from production-mode configuration.
 
 ## State rules
 
@@ -27,7 +25,7 @@ Local browser state is appropriate for theme preference and mobile-menu state. D
 
 ## Legal-page ownership
 
-Legal content must remain explicit and reviewable. The React legal pages and root Markdown legal files should communicate the same current operator/hosting/data-practice facts. Update both when material behavior changes.
+Legal content must remain explicit and reviewable. React legal pages and root Markdown legal files should communicate the same current operator/hosting/data-practice facts. Update both when material behavior changes.
 
 ## Publication metadata
 
