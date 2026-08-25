@@ -6,9 +6,9 @@ Accepted
 
 ## Context
 
-The Noitis website currently serves public company, product, brand, and privacy information. It does not require authenticated application behavior, an operational database, server-side business logic, or a data warehouse.
+The Noitis website serves public company, product, brand, legal, and privacy information. It does not require authenticated application behavior, an operational database, server-side business logic, a CMS, or a data warehouse.
 
-The site is already built with React, TypeScript, and Vite and deployed through GitHub Pages.
+The site is built with React, TypeScript, and Vite and is configured for deployment through GitHub Pages from the approved `main` branch.
 
 ## Decision
 
@@ -21,6 +21,7 @@ Use:
 - a committed npm lockfile;
 - GitHub Actions CI for validation;
 - a separate GitHub Pages workflow for deployment from `main`;
+- `actions/configure-pages` with Actions-based Pages enablement so repository configuration and the supported deployment flow remain aligned;
 - relative build paths so the same artifact can work on a project Pages URL and a future custom domain.
 
 Do not add API, database, warehouse, authentication, CMS, or service scaffolding until a concrete website requirement justifies it.
@@ -33,14 +34,19 @@ Do not add API, database, warehouse, authentication, CMS, or service scaffolding
 - inexpensive and understandable deployment;
 - no server credentials or database lifecycle for a static marketing site;
 - clear separation from Noitis product application backends;
-- easy reproducibility from repository source;
+- reproducibility from repository source;
 - custom-domain migration does not require rewriting component asset paths.
 
 ### Tradeoffs
 
 - dynamic forms, authenticated areas, personalized content, server-controlled experiments, or private APIs will require a new architectural decision;
 - public content changes currently require repository changes rather than a CMS workflow;
-- GitHub Pages deployment constraints remain part of the hosting model until hosting changes.
+- GitHub Pages deployment constraints remain part of the hosting model until hosting changes;
+- deployment is verified only after approved code reaches `main`, because phase branches do not publish automatically.
+
+## Phase milestone behavior
+
+A completed `phase-N` branch is retained as the accepted state of that phase. It is not advanced with later-phase implementation. `main` represents the latest accepted phase.
 
 ## Revisit when
 
