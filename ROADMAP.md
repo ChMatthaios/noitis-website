@@ -15,7 +15,7 @@ Phase branches are milestone branches. Once a phase is accepted and merged, its 
 
 Actual GitHub Pages activation is a repository/hosting operation and is tracked in Phase 4 together with the final production-domain work. The deployment workflow is gated until Pages is intentionally enabled.
 
-## Phase 2 — Content and product readiness — Implementation complete, awaiting acceptance
+## Phase 2 — Content and product readiness — Complete
 - [x] Review every company/product claim against the current product state
 - [x] Keep product descriptions, optional pricing links, and launch status synchronized through the reviewed product catalogue and deployment configuration
 - [x] Complete company/about/contact content required for the current launch path
@@ -24,7 +24,7 @@ Actual GitHub Pages activation is a repository/hosting operation and is tracked 
 - [x] Review legal pages for the current Noitis operator identity, hosting model, and actual data practices
 - [x] Remove placeholder/development-only destinations from production builds and enforce that boundary in `npm run check`
 
-**Phase 2 evidence:** `src/productCatalog.ts` is the reviewed public product catalogue; `.env.example` documents publication/product URL configuration; `scripts/generate-publication-files.mjs` creates sitemap/robots output; `scripts/verify-content.mjs` rejects leaked local destinations and missing publication metadata; the public legal pages and Markdown were reviewed on 25 August 2026.
+**Phase 2 evidence:** `src/productCatalog.ts` is the reviewed public product catalogue; `.env.example` documents publication/product URL configuration; `scripts/generate-publication-files.mjs` creates sitemap/robots output; `scripts/verify-content.mjs` rejects leaked local destinations and missing publication metadata; the public legal pages and Markdown were reviewed on 25 August 2026. Phase 2 was accepted and promoted to `main` on 25 August 2026.
 
 ## Phase 3 — Accessibility, SEO, and quality
 - [ ] Complete keyboard-only and screen-reader review

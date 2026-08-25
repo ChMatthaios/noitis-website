@@ -6,9 +6,9 @@ Official public-company website source for **Noitis™**, a technology brand bei
 
 ## Current phase
 
-**Phase 2 — Content and product readiness: implementation complete, awaiting acceptance.**
+**Phase 2 — Content and product readiness: Complete.**
 
-`main` remains the accepted Phase 1 milestone until Phase 2 is tested and approved. `phase-2` contains Phase 1 plus the complete Phase 2 implementation.
+`main` and `phase-2` point to the accepted Phase 2 milestone. `phase-1` remains frozen at the completed Phase 1 state. The next work starts from this exact milestone on `phase-3`.
 
 The site is intentionally **static-first**. It has no application backend, operational database, authentication service, data warehouse, contact-form processor, marketing analytics, or payment collection. Do not add database/API scaffolding merely for symmetry with Noitis product applications.
 
