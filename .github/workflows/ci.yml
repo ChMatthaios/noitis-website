@@ -7,9 +7,12 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_SITE_URL: https://noitis-mc.github.io/noitis-website/
+
 jobs:
   web:
-    name: Website build
+    name: Website build and content validation
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +29,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate production build
+      - name: Validate production build and publication content
         run: npm run check
