@@ -2,23 +2,22 @@
 
 > **Intelligence, engineered.**
 
-Official company website for **Noitis**, a Greece-based technology company building intelligent systems people can trust.
+Official public-company website source for **Noitis™**, a technology brand being built in Greece with an international horizon.
 
-## Status
+## Current phase
 
-This branch represents the completed **Phase 1 — Company website foundation** milestone.
+**Phase 2 — Content and product readiness: implementation complete, awaiting acceptance.**
 
-The repository contains the static-first public website frontend, legal/public-information pages, Noitis and product presentation, GitHub Actions validation, and a GitHub Pages deployment workflow. The deployment workflow is configured to enable Pages through GitHub Actions when it runs from `main`.
+`main` remains the accepted Phase 1 milestone until Phase 2 is tested and approved. `phase-2` contains Phase 1 plus the complete Phase 2 implementation.
 
-The site intentionally does **not** contain a product backend, operational database, authentication service, CMS, analytics platform, or data warehouse. Those systems must not be added unless a real website capability requires them.
+The site is intentionally **static-first**. It has no application backend, operational database, authentication service, data warehouse, contact-form processor, marketing analytics, or payment collection. Do not add database/API scaffolding merely for symmetry with Noitis product applications.
 
 ## Stack
 
-- React
-- TypeScript
+- React + TypeScript
 - Vite
 - GitHub Actions
-- GitHub Pages deployment
+- GitHub Pages deployment workflow
 
 ## Requirements
 
@@ -34,7 +33,20 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite.
+`npm run dev` creates an ignored `.env.local` with the permanent Noitis local product URLs when neither `.env.local` nor `.env` already exists. This preserves the multi-app local experience without committing development URLs into production configuration.
+
+Website: `http://localhost:5173`
+
+Local product ports:
+
+| Product | Local URL |
+|---|---|
+| AgentGate | `http://localhost:5174` |
+| AutoPaylot | `http://localhost:5175` |
+| Business Resource Scheduler | `http://localhost:5176` |
+| EarnLogic | `http://localhost:5177` |
+| FamilyOS | `http://localhost:5178` |
+| LegacyCI | `http://localhost:5179` |
 
 ## Validation
 
@@ -42,97 +54,88 @@ Open the local URL printed by Vite.
 npm run check
 ```
 
-`check` runs the TypeScript/Vite production build. A successful Phase 1 build confirms that the current static website compiles; browser, accessibility, SEO, responsive, and cross-browser release gates belong to later roadmap phases.
+`check` now runs the production build and then verifies that production output:
 
-## Production preview
+- contains canonical/social metadata;
+- contains `robots.txt` and a four-page sitemap;
+- does not contain `localhost:` or `127.0.0.1` development destinations.
+
+For a production preview:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Production files are generated in `dist/`.
+## Publication URL and product links
 
-## Public entry points
+The current publication fallback is:
 
-The Vite build has four HTML entry points:
+```text
+https://noitis-mc.github.io/noitis-website/
+```
+
+A future custom domain is a Phase 4 deployment decision. Set `VITE_SITE_URL` to the active public base address when building for another domain.
+
+Public product and pricing links are configuration, not marketing literals. The React catalogue reads optional `VITE_<PRODUCT>_PUBLIC_URL` and `VITE_<PRODUCT>_PRICING_URL` values. When no real public destination is configured, the production card remains visible as **In development** but does not emit a fake or local link.
+
+See [`.env.example`](./.env.example) and [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md).
+
+## Public product content
+
+The six product descriptions were audited against the current Noitis product repositories on 25 August 2026. The company site intentionally uses conservative descriptions and does not turn roadmap items into capability claims.
+
+All six products currently display **In development**. Product-specific safety boundaries—such as AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors—remain visible in the catalogue copy where materially relevant.
+
+## Public pages
+
+Vite builds four HTML entry points:
 
 - `index.html` — Noitis company website
 - `privacy.html` — website privacy notice
 - `terms.html` — website terms of use
 - `trademark.html` — Noitis trademark and brand-use policy
 
-The legal pages describe the current public website and its present technical behavior. They must be reviewed whenever the website, Noitis legal/operator identity, hosting model, data practices, or commercial operations materially change.
+All four entry points include canonical and social-preview metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL.
 
-## Continuous integration
+## Legal and operator status
 
-`.github/workflows/ci.yml` validates pushes and pull requests with:
+The current public legal pages state the present facts:
 
-```text
-checkout
-  ↓
-Node 22.13.0
-  ↓
-npm ci
-  ↓
-npm run check
-```
+- the website is operated under the **Noitis™** brand from Greece;
+- the current pages do not represent that a separate registered Noitis legal entity has been formed;
+- the site has no accounts, contact form, advertising trackers, marketing analytics, payment collection, or Noitis-operated backend database;
+- the only Noitis browser storage used by this website is the `noitis-theme` preference;
+- hosting configuration may evolve as Phase 4 establishes the final production domain/hosting state.
 
-The committed `package-lock.json` is the dependency authority for CI and deployment.
+Legal text must be reviewed again if those facts change.
 
 ## GitHub Pages deployment
 
-`.github/workflows/deploy-pages.yml` deploys only from `main` and can also be invoked manually through GitHub Actions.
+`.github/workflows/deploy-pages.yml` is intentionally gated by the repository variable:
 
-The workflow:
+```text
+NOITIS_PAGES_ENABLED=true
+```
 
-1. checks out the exact commit;
-2. installs dependencies with `npm ci`;
-3. validates/builds the site;
-4. configures GitHub Pages with Actions-based enablement;
-5. uploads the generated `dist/` artifact;
-6. deploys that artifact through GitHub Pages.
+The current GitHub integration can build the Pages artifact but cannot create/enable the Pages site itself; GitHub returns `Resource not accessible by integration` for that administrative action. Enabling Pages, selecting GitHub Actions as its source, and setting `NOITIS_PAGES_ENABLED=true` are therefore Phase 4 repository/hosting operations.
 
-Phase branches do not deploy automatically. After a phase is reviewed and merged, the `main` deployment run is the external verification that Pages is enabled and serving the approved artifact.
-
-## Custom Noitis domain
-
-A final production domain is intentionally **not** a Phase 1 requirement. The repository does not commit a speculative `CNAME` or hard-code an unowned future domain.
-
-When a final domain is registered and its DNS is under Noitis control, the production-domain roadmap phase will configure the Pages custom-domain settings, DNS, HTTPS, canonical URLs, redirects, sitemap/robots behavior, and social-preview metadata for that final address.
-
-The Vite configuration uses relative asset paths so the same build can work on a GitHub Pages project URL and later on a custom Noitis domain without rewriting application components.
-
-## Accessibility direction
-
-The Phase 1 implementation already provides foundations such as semantic navigation, keyboard-operable controls, visible focus styling, appropriately sized targets, reduced-motion handling, responsive navigation, and light/dark themes.
-
-Accessibility remains a release requirement and is not considered fully validated until the dedicated accessibility/SEO/quality phase completes browser and assistive-technology checks.
-
-## Brand palette
-
-| Name | Hex | Role |
-|---|---|---|
-| Midnight Navy | `#0B1020` | Trust, security, infrastructure |
-| Trust Blue | `#3B82F6` | Confidence and primary actions |
-| Electric Cyan | `#22D3EE` | Active systems and innovation |
-| Future Violet | `#8B5CF6` | Frontier technology |
-| Ice White | `#EAF2FF` | Clarity and clean surfaces |
+This gate prevents normal `main` pushes from producing a misleading failed deployment while Pages is intentionally not enabled yet.
 
 ## Repository structure
 
 ```text
 noitis-website/
-├── src/                       # React source, legal pages, and stylesheet entry point
-├── media/                     # Noitis/product source artwork
-├── public/                    # files copied directly into the build
+├── src/                         # React pages, product catalogue, styles
+├── media/                       # Noitis/product source artwork
+├── public/                      # favicon/manifest/share image/sitemap/robots
+├── scripts/                     # local-env, publication generation, content verification
 ├── docs/
 │   ├── architecture/
+│   ├── content/
 │   ├── decisions/
 │   └── engineering/
-├── .github/workflows/
-│   ├── ci.yml
-│   └── deploy-pages.yml
+├── .github/workflows/           # CI and gated Pages deployment
 ├── index.html
 ├── privacy.html
 ├── terms.html
@@ -147,49 +150,27 @@ noitis-website/
 └── vite.config.ts
 ```
 
-There is no `database/` directory because this repository has no operational database. The Noitis database-layout standard applies only to repositories that actually own database objects or configuration data.
-
-## Phase branch model
-
-Each `phase-N` branch is a milestone, not a permanently synchronized development branch.
-
-```text
-phase-1 = accepted Phase 1 state only
-phase-2 = Phase 1 + accepted Phase 2
-phase-3 = Phases 1-3
-...
-main    = latest accepted phase
-```
-
-Once an earlier phase is accepted, its branch is not moved forward with later implementation.
-
 ## Engineering documentation
 
-- [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture and boundaries
+- [`ROADMAP.md`](./ROADMAP.md) — phase sequence and acceptance state
+- [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md) — product-claim and public-link authority
+- [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture
 - [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering rules
-- [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership and growth rules
-- [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first/GitHub Pages architecture decision
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution, phase, and validation expectations
+- [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership rules
+- [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first hosting decision
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and phase workflow
 
 ## Legal, licensing, and brand use
 
-This repository is **proprietary Noitis software and content**. Public visibility does not make the repository open source and does not place its code, website copy, visual design, product descriptions, documentation, or brand assets in the public domain.
+This repository is **proprietary Noitis software and content**. Public visibility does not make it open source or place its code, copy, design, documentation, or brand assets in the public domain.
 
-- [`LICENSE`](./LICENSE) — proprietary repository/software/content terms
-- [`PRIVACY.md`](./PRIVACY.md) — current website privacy notice
-- [`TERMS.md`](./TERMS.md) — public website terms of use
-- [`TRADEMARK.md`](./TRADEMARK.md) — Noitis trademark and brand-use policy
+- [`LICENSE`](./LICENSE)
+- [`PRIVACY.md`](./PRIVACY.md)
+- [`TERMS.md`](./TERMS.md)
+- [`TRADEMARK.md`](./TRADEMARK.md)
 
-The public website exposes corresponding Privacy, Terms, and Trademarks pages in its footer.
-
-## Trademark status
-
-**Noitis™** is currently used as a claimed trademark. The `™` symbol does not indicate registration. Do not use the registered `®` symbol unless registration has actually been granted in the relevant territory and its use is appropriate.
-
-The Noitis name, logos, slogan, product-family branding, and distinctive brand assets remain subject to the trademark policy even when the website repository is publicly viewable.
+**Noitis™** is used as a claimed trademark. `™` does not indicate registration; do not use `®` unless registration has actually been granted and its use is appropriate.
 
 ## Architecture principle
-
-The website should stay as simple as its job allows:
 
 > **Public information and brand presentation in the browser; operational product authority stays in the product systems that own it.**

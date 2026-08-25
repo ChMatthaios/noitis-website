@@ -2,67 +2,41 @@
 
 ## Current state
 
-The Noitis website is intentionally small. Its Phase 1 React source contains:
+The Noitis website remains intentionally small. Current React ownership is:
 
-- `App.tsx` — company-site composition and local navigation/theme behavior;
+- `App.tsx` — company-site composition, navigation/theme state, product rendering, and contact section;
+- `productCatalog.ts` — reviewed public product summaries and optional public/pricing link configuration;
 - `BrandMark.tsx` — shared Noitis brand rendering;
-- `PrivacyPage.tsx` — privacy-notice page;
-- `TermsPage.tsx` — terms-of-use page;
-- `TrademarkPage.tsx` — trademark and brand-use page;
-- `main.tsx`, `privacy.tsx`, `terms.tsx`, and `trademark.tsx` — HTML entry-point bootstraps;
-- `styles.css` — stable stylesheet entry point;
-- `styles/site.css` — current website style implementation.
+- `PrivacyPage.tsx`, `TermsPage.tsx`, `TrademarkPage.tsx` — public legal-page presentation;
+- entry files (`main.tsx`, `privacy.tsx`, `terms.tsx`, `trademark.tsx`);
+- `styles.css` / `styles/site.css` — stable stylesheet boundary.
 
-This is an appropriate level of componentization for the Phase 1 site. Do not split every section into a component solely to mirror larger application repositories.
+Do not split every section into components merely to mirror larger Noitis applications.
 
-## Ownership rules
+## Product catalogue boundary
 
-### `App.tsx`
+Product marketing data has grown enough to deserve a typed module. `productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations.
 
-Owns the main public page composition and lightweight UI state such as theme/mobile navigation.
+It does **not** become authoritative for product business behavior. Accepted product repositories remain the implementation authority.
 
-It may contain stable marketing-section composition while the site remains modest. Extract a component when a section gains meaningful behavior, independent reuse, or enough complexity that ownership becomes unclear.
-
-### `BrandMark.tsx`
-
-Owns Noitis brand-mark rendering and theme-aware logo assets. Keep brand asset switching centralized rather than duplicating logo rules across page sections.
-
-### Legal pages
-
-`PrivacyPage.tsx`, `TermsPage.tsx`, and `TrademarkPage.tsx` own the public legal-information presentation for their corresponding HTML entry points. Legal/privacy content must remain explicit and reviewable rather than generated from unrelated product state.
-
-### Styling
-
-`styles.css` is the stable stylesheet entry point imported by the React entry files. It imports `styles/site.css`, which contains the current website style implementation.
-
-This boundary allows future style modules to be introduced only when responsibility genuinely becomes unclear. Do not split a modest stylesheet into many artificial files merely for symmetry with larger products.
-
-When styles are split later, preserve ordering deliberately across theme/base rules, shell/navigation, company sections, legal-page styles, responsive behavior, and brand/logo overrides.
-
-## Data and content extraction
-
-The Phase 1 product/company copy is small enough to remain close to the UI that renders it. If product metadata expands materially—for example product URLs, launch states, pricing, release dates, or localization—move it into a typed data module rather than duplicating literals across components.
+Public URLs arrive through `VITE_*` variables. Local links are generated into ignored `.env.local`, keeping local-development convenience separate from production output.
 
 ## State rules
 
-Local browser state is appropriate for:
+Local browser state is appropriate for theme preference and mobile-menu state. Do not use browser state as the source of truth for protected product data, identity, billing, permissions, or operational state.
 
-- theme preference;
-- mobile-menu state;
-- other purely presentational interactions.
+## Legal-page ownership
 
-Do not use browser state as the authoritative source for protected Noitis application data, customer identity, billing, permissions, or operational product state.
+Legal content must remain explicit and reviewable. The React legal pages and root Markdown legal files should communicate the same current operator/hosting/data-practice facts. Update both when material behavior changes.
+
+## Publication metadata
+
+Canonical/social metadata lives in the HTML entry points and is parameterized by the publication base URL in `vite.config.ts`. Sitemap/robots generation belongs to `scripts/generate-publication-files.mjs`, not React runtime code.
 
 ## Accessibility rules
 
-Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation must have clear control semantics. Theme/logo swapping must not duplicate meaningful alternative text for decorative variants.
-
-Phase 1 establishes these foundations; the dedicated accessibility/SEO/quality phase is responsible for browser, assistive-technology, responsive, and cross-browser validation.
-
-## Phase branch rule
-
-A completed `phase-N` branch represents the accepted frontend state at that phase. Earlier milestone branches are not advanced when later-phase frontend work is introduced.
+Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation requires clear control semantics. Theme/logo variants should not duplicate meaningful alternative text. Phase 3 owns formal browser/accessibility validation.
 
 ## Growth path
 
-If the website later adds a CMS, forms, analytics, localization, authenticated areas, or a richer product catalogue, evolve the architecture around that real capability. Do not pre-build feature folders, service abstractions, or data layers for requirements that do not exist yet.
+If the website later adds a CMS, forms, analytics, localization, authenticated areas, or a richer catalogue, evolve the architecture around that real capability. Do not pre-build service/data/backend layers for requirements that do not exist.

@@ -2,52 +2,41 @@
 
 ## Status
 
-Accepted
+Accepted; reviewed 25 August 2026.
 
 ## Context
 
-The Noitis website serves public company, product, brand, legal, and privacy information. It does not require authenticated application behavior, an operational database, server-side business logic, a CMS, or a data warehouse.
-
-The site is built with React, TypeScript, and Vite and is configured for deployment through GitHub Pages from the approved `main` branch.
+The Noitis website serves public company, product, brand, contact, and legal information. It does not require authenticated application behavior, an operational database, server-side business logic, or a data warehouse.
 
 ## Decision
 
-Keep the website as a static-first frontend deployed through GitHub Pages.
+Keep the website as a static-first React/TypeScript/Vite frontend with deterministic npm builds, GitHub Actions CI, and a separate GitHub Pages deployment workflow.
 
-Use:
-
-- React/TypeScript for page composition and lightweight interaction;
-- Vite for deterministic production builds;
-- a committed npm lockfile;
-- GitHub Actions CI for validation;
-- a separate GitHub Pages workflow for deployment from `main`;
-- `actions/configure-pages` with Actions-based Pages enablement so repository configuration and the supported deployment flow remain aligned;
-- relative build paths so the same artifact can work on a project Pages URL and a future custom domain.
+Use relative asset paths so one artifact can run at a GitHub Pages project URL and later on a custom Noitis domain. Treat public product/pricing destinations as build configuration rather than hard-coded production literals.
 
 Do not add API, database, warehouse, authentication, CMS, or service scaffolding until a concrete website requirement justifies it.
+
+## Hosting activation boundary
+
+The repository contains the Pages deployment workflow, but Pages-site activation and custom-domain settings are administrative hosting operations. They are tracked in Roadmap Phase 4. The workflow is gated by `NOITIS_PAGES_ENABLED=true` so pushes do not produce misleading deployment failures before hosting is intentionally enabled.
 
 ## Consequences
 
 ### Positive
 
 - small operational surface;
-- inexpensive and understandable deployment;
-- no server credentials or database lifecycle for a static marketing site;
-- clear separation from Noitis product application backends;
-- reproducibility from repository source;
+- reproducible source-controlled publication;
+- no server credentials or database lifecycle for a static company site;
+- clear separation from product application backends;
+- production builds can omit unconfigured product destinations without breaking the catalogue;
 - custom-domain migration does not require rewriting component asset paths.
 
 ### Tradeoffs
 
-- dynamic forms, authenticated areas, personalized content, server-controlled experiments, or private APIs will require a new architectural decision;
-- public content changes currently require repository changes rather than a CMS workflow;
-- GitHub Pages deployment constraints remain part of the hosting model until hosting changes;
-- deployment is verified only after approved code reaches `main`, because phase branches do not publish automatically.
-
-## Phase milestone behavior
-
-A completed `phase-N` branch is retained as the accepted state of that phase. It is not advanced with later-phase implementation. `main` represents the latest accepted phase.
+- dynamic forms, authenticated areas, personalized content, server-controlled experiments, or private APIs require a new architectural decision;
+- public content changes require repository changes rather than a CMS;
+- Pages/domain administration remains an external repository/hosting concern.
 
 ## Revisit when
 
-Revisit this decision when a real requirement appears for server-side processing, content-management workflows, localization at scale, authenticated experiences, forms with protected data, or other capabilities that no longer fit a static deployment.
+Revisit when a real requirement appears for server-side processing, content-management workflows, localization at scale, authenticated experiences, forms with protected data, or other capabilities that no longer fit a static deployment.

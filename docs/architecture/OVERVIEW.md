@@ -2,101 +2,79 @@
 
 ## Purpose
 
-This repository contains the public Noitis company website. It is a marketing, product-discovery, brand, legal, and public-information surface—not an operational Noitis application backend.
-
-The Phase 1 implementation uses React, TypeScript, Vite, static assets, GitHub Actions, and a GitHub Pages deployment workflow.
+This repository contains the public Noitis company website. It is a marketing, product-discovery, brand, contact, and public-information surface—not an operational Noitis application backend.
 
 ## Current architecture
 
 ```text
-Browser
-  ↓
-Static HTML / React / CSS / media
-  ↓
+Reviewed public content + build configuration
+                 ↓
+React / TypeScript / static HTML / CSS / media
+                 ↓
 Vite production build
-  ↓
-GitHub Pages artifact
-  ↓
-GitHub Pages
+                 ↓
+publication generator + content-safety verification
+                 ↓
+static dist/ artifact
+                 ↓
+GitHub Pages when hosting is enabled
 ```
 
-GitHub Pages is configured by the deployment workflow when the approved code runs from `main`. Phase branches do not deploy automatically.
-
-## Public entry points
-
-The site has four HTML entry points:
-
-- `index.html` — company website;
-- `privacy.html` — privacy notice;
-- `terms.html` — terms of use;
-- `trademark.html` — trademark and brand-use policy.
-
-They are built by Vite and share the same React/CSS asset pipeline.
+The site has four HTML entry points: `index.html`, `privacy.html`, `terms.html`, and `trademark.html`.
 
 ## Repository boundaries
 
 ```text
 noitis-website/
-├── src/                     # React page source and CSS entry point
-├── media/                   # source brand/product artwork
-├── public/                  # files copied directly into the build
-├── docs/                    # architecture, decisions, engineering rules
-├── .github/workflows/       # CI and GitHub Pages deployment
-├── index.html
-├── privacy.html
-├── terms.html
-├── trademark.html
-├── package.json
-├── package-lock.json
-└── vite.config.ts
+├── src/
+│   ├── App.tsx
+│   ├── productCatalog.ts
+│   ├── legal page components
+│   └── styles/
+├── media/                    # source brand/product artwork
+├── public/                   # favicon, manifest, share image, sitemap, robots
+├── scripts/                  # local env, publication generation, verification
+├── docs/
+│   ├── architecture/
+│   ├── content/
+│   ├── decisions/
+│   └── engineering/
+├── .github/workflows/
+└── four HTML entry points
 ```
 
-The website intentionally does **not** include application API, operational database, data warehouse, CMS, authentication, or service scaffolding. Those belong in product repositories or future dedicated services when an actual public-site requirement exists.
+The website intentionally has **no API, operational database, warehouse, authentication service, payment processor, CMS, or form backend**. Those belong in product repositories or future dedicated services only if a real website requirement exists.
 
-Because the website owns no operational database, it has no `database/` directory. The Noitis `database/db_objects` and `database/conf_data` layout applies only to repositories that actually own database objects/configuration data.
+## Public product authority
 
-## Public-site authority boundary
+`src/productCatalog.ts` is the website-owned public summary of the Noitis product family. It must be reviewed against accepted product repositories. Public product/pricing URLs are environment configuration and are omitted when no real public destination exists.
 
-The browser may render public copy, product descriptions, navigation, theme state, legal pages, and static assets. It must not become the authority for protected product actions, account data, billing, credentials, private telemetry, or internal operational state.
+Local product destinations are generated into ignored `.env.local`; they are not committed as production content. `npm run check` rejects production output containing `localhost:` or `127.0.0.1`.
 
-If the site later gains forms, newsletters, analytics, authentication, or public APIs, those integrations must be introduced explicitly with their own security, privacy, consent, failure, and data-retention design.
+## Publication metadata
+
+`vite.config.ts` injects the configured publication base URL into canonical/Open Graph/Twitter metadata. `scripts/generate-publication-files.mjs` creates `sitemap.xml` and `robots.txt` for the same publication address.
+
+The fallback publication address is the GitHub Pages project URL. The final custom domain remains a Phase 4 deployment decision.
 
 ## Deployment flow
 
 ```text
-Commit / pull request
-        ↓
+phase branch / PR
+      ↓
 GitHub Actions CI
-        ↓
-npm ci
-        ↓
-TypeScript + Vite production build
-
-main branch
-        ↓
-GitHub Pages workflow
-        ↓
-npm ci + production build
-        ↓
-actions/configure-pages (enablement allowed)
-        ↓
-Pages artifact
-        ↓
-GitHub Pages deployment
+      ↓
+npm ci → npm run check
+      ↓
+accepted merge to main
+      ↓
+Pages workflow (only when NOITIS_PAGES_ENABLED=true)
+      ↓
+Pages artifact → deployment
 ```
 
-CI validates code independently from deployment. Deployment is limited to `main`, uses the committed lockfile, and is the external verification step after a phase is approved.
-
-## Domain model
-
-The site uses relative Vite asset paths so the same build can work on a GitHub Pages project URL and later behind a custom Noitis domain. Domain ownership, DNS, HTTPS, canonical URL metadata, and redirects are deployment/configuration concerns rather than reasons to hard-code environment-specific paths throughout React components.
-
-A final production domain is not assumed in Phase 1.
-
-## Phase milestone rule
-
-`phase-N` branches are historical milestones. A completed earlier phase branch is not advanced with later implementation. `main` represents the latest accepted phase.
+Pages activation itself is an administrative repository/hosting operation. It is intentionally tracked with Phase 4 domain/operations work rather than hidden inside application code.
 
 ## Evolution rule
 
-Keep this repository static-first. Add server-side capability only when a real website feature requires it. Do not introduce a backend, database, CMS, analytics platform, authentication system, or microservices merely to make the repository appear more corporate.
+Keep this repository static-first. Add server-side capability only when a real website feature requires it. Do not introduce backend/database/CMS/analytics/authentication infrastructure merely to make the repository appear more corporate.

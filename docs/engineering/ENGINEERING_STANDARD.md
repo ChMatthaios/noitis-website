@@ -1,117 +1,63 @@
 # Noitis Website Engineering Standard
 
-This document adapts the Noitis Engineering Foundation to the public company website. The goal is a trustworthy, accessible, reproducible site—not application-backend ceremony.
+This document adapts the Noitis engineering foundation to the public company website. The goal is a trustworthy, accessible, reproducible site—not application-backend ceremony.
 
 ## 1. Static-first by default
 
-The website is a public information surface. Keep it deployable as static assets unless a concrete feature requires server-side capability.
-
-Do not add API, database, warehouse, authentication, queue, microservice, CMS, or cloud-service scaffolding merely for architectural appearance.
-
-The website currently owns no database. Do not create a `database/` directory just to mirror application repositories; the Noitis `database/db_objects` and `database/conf_data` standard applies only when a repository genuinely owns database objects or configuration data.
+The website is a public information surface. Keep it deployable as static assets unless a concrete feature requires server-side capability. Do not add API, database, warehouse, authentication, queue, microservice, CMS, or cloud-service scaffolding merely for architectural appearance.
 
 ## 2. Public claims are production data
 
-Company copy, product descriptions, pricing references, legal statements, privacy statements, trademark language, locations, contact information, certifications, partnerships, customer claims, and availability statements can affect public trust.
-
-Treat them as reviewed product content:
+Company copy, product descriptions, pricing references, legal statements, privacy statements, trademark language, locations, contacts, certifications, partnerships, customer claims, availability, and launch state can affect public trust.
 
 - do not invent or imply unverified facts;
-- distinguish current capability from roadmap or in-development status;
-- update stale claims when products or company details change;
-- keep provisional legal/operator details explicit until they change;
-- do not use the registered trademark symbol unless registration actually supports it.
+- distinguish current capability from roadmap work;
+- keep `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` aligned;
+- update stale claims when accepted product `main` changes;
+- do not use `®` unless registration supports it.
 
-## 3. Accessibility is a release requirement
+## 3. Public links are configuration
 
-Changes must preserve or improve:
+Never hard-code a guessed production product/pricing URL. Public destinations come from documented `VITE_*` build variables. If a real destination does not exist, render the product without a public link.
 
-- semantic landmarks and heading order;
-- keyboard access;
-- visible focus states;
-- sufficiently large interactive targets;
-- meaningful link/button labels;
-- appropriate image alternative text;
-- responsive layouts;
-- readable contrast;
-- reduced-motion behavior;
-- light/dark theme usability.
+Local multi-app links belong in ignored `.env.local`. The production validation gate must reject leaked localhost destinations.
 
-Accessibility should be tested as behavior, not inferred from visual appearance alone. Phase 1 provides the foundation; the dedicated accessibility/SEO/quality phase owns full validation.
+## 4. Accessibility is a release requirement
 
-## 4. Performance and assets
+Changes must preserve semantic landmarks/heading order, keyboard access, visible focus, useful labels, target sizes, alt decisions, responsive layouts, readable contrast, reduced-motion behavior, and light/dark usability. Accessibility is tested as behavior; Phase 3 adds the formal browser/accessibility gate.
 
-Prefer simple, cacheable static output. Avoid unnecessary runtime dependencies and client-side work.
+## 5. Performance and assets
 
-Large images should be reviewed for format, dimensions, compression, and whether duplicate source/public copies are genuinely necessary before the site is considered production-optimized.
+Prefer simple cacheable static output. Avoid unnecessary runtime dependencies. Large images must be reviewed for format, dimensions, compression, and duplication before production optimization is considered complete. Phase 3 owns the formal asset/Core Web Vitals pass.
 
-Do not make visual polish dependent on blocking third-party scripts.
+## 6. SEO and publication metadata
 
-## 5. SEO and discoverability
+Every public entry point requires an accurate title/description and canonical/social metadata. Sitemap/robots output must be generated for the configured publication URL. The final custom domain is not authoritative until Phase 4 establishes ownership and deployment.
 
-Each public entry point should have an accurate title and description. Canonical URLs, social preview metadata, robots/sitemap behavior, redirects, and structured data must be introduced deliberately as the roadmap reaches content/SEO readiness.
+## 7. Privacy and security
 
-Do not hard-code an unowned future production domain as authoritative. A temporary public Pages address may be used while the final production domain remains a later deployment concern.
+The current static site must not contain secrets or private/customer data. `VITE_*` variables are public frontend configuration and must never contain secrets.
 
-## 6. Privacy and security
-
-The current static site should not contain secrets or private operational data.
-
-Never commit:
-
-- API keys or credentials;
-- internal-only endpoints;
-- customer/user data;
-- private analytics identifiers that are not intended for public frontend use;
-- internal documents or operational metadata.
-
-If analytics, forms, cookies, newsletters, or other data collection are added later, document the legal basis, consent behavior where applicable, data destinations, retention, failure modes, and privacy-notice changes before treating them as production-ready.
-
-## 7. Frontend boundaries
-
-React components may own presentation and local interaction state such as navigation or theme preference. They must not become a hidden source of truth for operational Noitis product behavior.
-
-Keep product marketing data explicit and easy to review. Extract sections/components/data only when it improves ownership or testability; do not fragment a modest site into artificial layers.
+If analytics, forms, cookies, newsletters, accounts, or other data collection are added later, document legal basis, consent where applicable, data destinations, retention, failure modes, and legal-page changes before production use.
 
 ## 8. Deterministic builds
 
-Use the committed `package-lock.json` with `npm ci` in CI and deployment.
+Use committed `package-lock.json` with `npm ci`. Node.js 22.13.0 is the repository baseline.
 
-The repository baseline is Node.js 22.13.0. A production change is not healthy until the exact commit passes the configured GitHub Actions build.
+`npm run check` is the source validation gate: it builds the site, generates publication files, verifies canonical/social metadata, verifies sitemap/robots, and rejects development-only destinations in `dist/`.
 
 ## 9. CI and deployment separation
 
-CI validates pushes and pull requests. GitHub Pages deployment runs from `main`.
+CI runs on pushes/PRs. Pages deployment runs from `main` only when `NOITIS_PAGES_ENABLED=true`. Deployment must build from committed source and lockfiles; do not deploy locally generated `dist/` output.
 
-The deployment workflow must build from committed source and lockfiles, may enable/configure Pages through `actions/configure-pages`, uploads only the generated `dist/` artifact, and deploys through the supported Pages action. Do not deploy locally generated output or bypass the repository build contract.
+## 10. Domain and hosting configuration
 
-Phase branches do not deploy automatically; the `main` deployment is the external verification after phase approval.
+Domain ownership, DNS, HTTPS, Pages activation, repository Pages settings, and redirects are Phase 4 operations. Keep them out of component logic. Relative asset paths are intentional while the site may move between the project Pages URL and a custom domain.
 
-## 10. Domain and deployment configuration
+## 11. Phase discipline
 
-Keep domain ownership, DNS, HTTPS, and GitHub Pages settings outside component code. Relative build paths are intentional while the site may run at either a GitHub Pages project URL or a future custom domain.
+Phase branches are immutable milestones after acceptance. Do not synchronize an earlier accepted phase branch forward. A phase is complete only when its checklist, source/docs, relevant tests, review, and CI gate agree.
 
-Do not commit a speculative custom domain before ownership and DNS are under control.
+## 12. Architecture evolution
 
-## 11. Testing direction
-
-As the site grows, tests should prioritize user-visible and release-critical behavior:
-
-- navigation and mobile-menu behavior;
-- theme switching;
-- accessibility regressions;
-- legal-page reachability;
-- important external/internal links;
-- responsive smoke checks;
-- metadata/indexability checks;
-- production build/deployment integrity.
-
-Introduce test tooling when it provides real coverage, not just to populate a folder.
-
-## 12. Phase milestone branches
-
-Each `phase-N` branch is a historical milestone. Once a phase is accepted, do not move that branch forward with later implementation. `main` represents the latest accepted phase.
-
-## 13. Architecture evolution
-
-Prefer the smallest architecture that keeps public content reliable and maintainable. Add complexity only for an observed requirement: content-management workflow, authenticated area, forms, analytics, localization, experimentation, or another concrete capability.
+Prefer the smallest architecture that keeps public content reliable and maintainable. Add complexity only for an observed requirement.
