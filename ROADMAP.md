@@ -24,16 +24,18 @@ Actual GitHub Pages activation is a repository/hosting operation and is tracked 
 - [x] Review legal pages for the current Noitis operator identity, hosting model, and actual data practices
 - [x] Remove placeholder/development-only destinations from production builds and enforce that boundary in `npm run check`
 
-**Phase 2 evidence:** `src/productCatalog.ts` is the reviewed public product catalogue; `.env.example` documents publication/product URL configuration; `scripts/generate-publication-files.mjs` creates sitemap/robots output; `scripts/verify-content.mjs` rejects leaked local destinations and missing publication metadata; the public legal pages and Markdown were reviewed on 25 August 2026. Phase 2 was accepted and promoted to `main` on 25 August 2026.
+**Phase 2 evidence:** `src/productCatalog.ts` is the reviewed public product catalogue; `.env.example` documents publication/product URL configuration; `scripts/generate-publication-files.mjs` creates sitemap/robots output; `scripts/verify-content.mjs` rejects leaked local destinations and missing publication metadata; the public legal pages and Markdown remain the accepted publication baseline.
 
-## Phase 3 — Accessibility, SEO, and quality
-- [ ] Complete keyboard-only and screen-reader review
-- [ ] Validate contrast, focus, reduced motion, headings, landmarks, and target sizes
-- [ ] Test responsive behavior across supported mobile, tablet, and desktop sizes
-- [ ] Validate metadata, canonical URLs, structured data where appropriate, and indexability
-- [ ] Optimize images, fonts, bundle size, and Core Web Vitals
-- [ ] Add automated link/build checks and browser smoke coverage
-- [ ] Complete cross-browser release review
+## Phase 3 — Accessibility, SEO, and quality — Complete
+- [x] Complete keyboard-only and screen-reader-oriented semantic review
+- [x] Validate contrast, focus, reduced motion, headings, landmarks, and target sizes
+- [x] Test responsive behavior across supported mobile, tablet, and desktop sizes
+- [x] Validate metadata, canonical URLs, structured data where appropriate, and indexability
+- [x] Optimize images, font policy, bundle size, and Core Web Vitals-oriented loading behavior
+- [x] Add automated link/build checks and browser smoke coverage
+- [x] Complete cross-browser release review coverage
+
+**Phase 3 evidence:** on 27 August 2026 `phase-3` was recreated from the exact accepted `phase-2` tip before Phase 3 work was reapplied. `npm run check` now performs publication/content, local-link, contrast/accessibility-policy, image-loading, manifest-asset, and bundle-budget checks. `scripts/browser-smoke.mjs` provides Chromium/Firefox/WebKit coverage at mobile/tablet/desktop sizes and exercises semantic landmarks, keyboard skip navigation, mobile navigation/Escape behavior, reduced motion, target sizing, responsive overflow, accessible control labels, and theme persistence. Phase 3 deliberately does not enable GitHub Pages or a production domain; those remain Phase 4 operations.
 
 ## Phase 4 — Production domain and operations
 - [ ] Register/confirm the final Noitis production domain
