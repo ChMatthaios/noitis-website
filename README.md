@@ -6,9 +6,9 @@ Official public-company website source for **Noitis™**, a technology brand bei
 
 ## Current phase
 
-**Phase 2 — Content and product readiness: Complete.**
+**Phase 3 — Accessibility, SEO, and quality: Complete on `phase-3`.**
 
-`main` and `phase-2` point to the accepted Phase 2 milestone. `phase-1` remains frozen at the completed Phase 1 state. The next work starts from this exact milestone on `phase-3`.
+The `phase-3` branch was rebuilt from the exact accepted `phase-2` milestone on 27 August 2026. Phase 2 therefore remains the inherited content/product baseline, while Phase 3 adds the accessibility, SEO, responsive, asset-performance, link, quality, and browser-smoke release gates described below. `main` is not advanced by this branch until a later explicit merge decision.
 
 The site is intentionally **static-first**. It has no application backend, operational database, authentication service, data warehouse, contact-form processor, marketing analytics, or payment collection. Do not add database/API scaffolding merely for symmetry with Noitis product applications.
 
@@ -25,6 +25,7 @@ The site is intentionally **static-first**. It has no application backend, opera
 - npm
 - Git
 - a modern browser
+- Playwright only when running the optional cross-browser smoke command locally
 
 ## Local development
 
@@ -46,17 +47,31 @@ Website: `http://localhost:5173`
 | FamilyOS | `http://localhost:5178` |
 | LegacyCI | `http://localhost:5179` |
 
-## Validation
+## Phase 3 validation
+
+Primary deterministic gate:
 
 ```bash
 npm run check
 ```
 
-`check` runs the production build and then verifies that production output:
+`check` performs the production build and verifies:
 
-- contains canonical/social metadata;
-- contains `robots.txt` and a four-page sitemap;
-- does not contain `localhost:` or `127.0.0.1` development destinations.
+- production-content safety and absence of leaked local destinations;
+- page metadata, canonical URLs, indexability, Organization structured data, sitemap, and robots output;
+- local links, in-page anchors, and built asset references;
+- reviewed contrast pairs, focus/reduced-motion rules, local/system-font policy, image-loading strategy, and bundle budgets;
+- use of the lightweight SVG manifest mark rather than the obsolete PNG asset.
+
+Cross-browser smoke coverage is available separately because Playwright browsers are intentionally not permanent project dependencies:
+
+```bash
+npm install --no-save --package-lock=false playwright@1.62.1
+npm run check
+npm run check:browser
+```
+
+The browser smoke exercises Chromium, Firefox, and WebKit at mobile, tablet, and desktop breakpoints. It checks semantic landmarks, horizontal overflow, keyboard skip navigation, mobile-menu open/Escape-close behavior, accessible control labels, target sizes, reduced motion, and theme persistence.
 
 For a production preview:
 
@@ -64,6 +79,20 @@ For a production preview:
 npm run build
 npm run preview
 ```
+
+## Accessibility and responsive contract
+
+Phase 3 preserves the Phase 2 public experience while adding explicit release checks for:
+
+- keyboard-first navigation and a visible skip link;
+- semantic header/nav/main/footer landmarks and one primary heading per public page;
+- focus-visible treatment;
+- reduced-motion behavior;
+- mobile, tablet, and desktop layouts;
+- 44 CSS-pixel primary controls and adequately sized navigation targets;
+- deterministic light/dark asset selection so duplicate hidden logos are not downloaded unnecessarily.
+
+These checks supplement manual review; they do not claim universal assistive-technology certification.
 
 ## Publication URL and product links
 
@@ -81,9 +110,7 @@ See [`.env.example`](./.env.example) and [`docs/content/PRODUCT_CATALOG.md`](./d
 
 ## Public product content
 
-The six product descriptions were audited against the current Noitis product repositories on 25 August 2026. The company site intentionally uses conservative descriptions and does not turn roadmap items into capability claims.
-
-All six products currently display **In development**. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
+The six product descriptions remain conservative and are not allowed to turn roadmap items into public capability claims. All six products currently display **In development**. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
 
 ## Public pages
 
@@ -94,7 +121,7 @@ Vite builds four HTML entry points:
 - `terms.html` — website terms of use
 - `trademark.html` — Noitis trademark and brand-use policy
 
-All four include canonical and social-preview metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL.
+All four include publication metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL. The home page also carries Noitis Organization structured data.
 
 ## Legal and operator status
 
@@ -106,28 +133,26 @@ The current public legal pages state the present facts:
 - the only Noitis browser storage used by this website is the `noitis-theme` preference;
 - hosting configuration may evolve as Phase 4 establishes the final production domain/hosting state.
 
-Legal text must be reviewed again if those facts change.
+Legal text must be reviewed again if those facts change. Phase 3 does not change those legal facts.
 
 ## GitHub Pages deployment
 
-`.github/workflows/deploy-pages.yml` is intentionally gated by the repository variable:
+`.github/workflows/deploy-pages.yml` remains intentionally gated by the repository variable:
 
 ```text
 NOITIS_PAGES_ENABLED=true
 ```
 
-The current GitHub integration can build the Pages artifact but cannot create/enable the Pages site itself; GitHub returns `Resource not accessible by integration` for that administrative action. Enabling Pages, selecting GitHub Actions as its source, and setting `NOITIS_PAGES_ENABLED=true` are therefore Phase 4 repository/hosting operations.
-
-This gate prevents normal `main` pushes from producing a misleading failed deployment while Pages is intentionally not enabled yet.
+Actual Pages enablement, custom-domain DNS, HTTPS/domain ownership, and final production publication remain Phase 4 operations.
 
 ## Repository structure
 
 ```text
 noitis-website/
-├── src/                         # React pages, product catalogue, styles
+├── src/                         # React site, catalogue, Phase 3 accessibility/quality styles
 ├── media/                       # Noitis/product source artwork
-├── public/                      # favicon/manifest/share image/sitemap/robots
-├── scripts/                     # development env, publication generation, verification
+├── public/                      # favicon/manifest/share image/public assets
+├── scripts/                     # publication, content, link, quality, browser-smoke verification
 ├── docs/
 │   ├── architecture/
 │   ├── content/
@@ -144,7 +169,6 @@ noitis-website/
 ├── TRADEMARK.md
 ├── ROADMAP.md
 ├── package.json
-├── package-lock.json
 └── vite.config.ts
 ```
 
@@ -153,7 +177,7 @@ noitis-website/
 - [`ROADMAP.md`](./ROADMAP.md) — phase sequence and acceptance state
 - [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md) — product-claim and public-link authority
 - [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture
-- [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering rules
+- [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering and quality rules
 - [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership rules
 - [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first hosting decision
 - [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and phase workflow
