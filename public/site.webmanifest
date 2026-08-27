@@ -7,6 +7,6 @@
   "background_color": "#0B1020",
   "theme_color": "#0B1020",
   "icons": [
-    { "src": "./noitis-mark.png", "sizes": "any", "type": "image/png", "purpose": "any" }
+    { "src": "./noitis-mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }
