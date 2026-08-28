@@ -14,9 +14,25 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  VITE_SITE_URL: ${{ vars.NOITIS_SITE_URL || 'https://noitis-mc.github.io/noitis-website/' }}
+  VITE_AGENTGATE_PUBLIC_URL: ${{ vars.AGENTGATE_PUBLIC_URL }}
+  VITE_AUTOPAYLOT_PUBLIC_URL: ${{ vars.AUTOPAYLOT_PUBLIC_URL }}
+  VITE_BRS_PUBLIC_URL: ${{ vars.BRS_PUBLIC_URL }}
+  VITE_EARNLOGIC_PUBLIC_URL: ${{ vars.EARNLOGIC_PUBLIC_URL }}
+  VITE_FAMILYOS_PUBLIC_URL: ${{ vars.FAMILYOS_PUBLIC_URL }}
+  VITE_LEGACYCI_PUBLIC_URL: ${{ vars.LEGACYCI_PUBLIC_URL }}
+  VITE_AGENTGATE_PRICING_URL: ${{ vars.AGENTGATE_PRICING_URL }}
+  VITE_AUTOPAYLOT_PRICING_URL: ${{ vars.AUTOPAYLOT_PRICING_URL }}
+  VITE_BRS_PRICING_URL: ${{ vars.BRS_PRICING_URL }}
+  VITE_EARNLOGIC_PRICING_URL: ${{ vars.EARNLOGIC_PRICING_URL }}
+  VITE_FAMILYOS_PRICING_URL: ${{ vars.FAMILYOS_PRICING_URL }}
+  VITE_LEGACYCI_PRICING_URL: ${{ vars.LEGACYCI_PRICING_URL }}
+
 jobs:
   build:
     name: Build website
+    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -46,6 +62,7 @@ jobs:
 
   deploy:
     name: Deploy website
+    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

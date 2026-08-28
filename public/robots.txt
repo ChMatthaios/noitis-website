@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://noitis-mc.github.io/noitis-website/sitemap.xml

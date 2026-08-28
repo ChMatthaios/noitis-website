@@ -1,0 +1,50 @@
+/* AutoPaylot-aligned corporate surfaces while preserving the Noitis marketing layout. */
+:root {
+  --midnight: #0B1020;
+  --blue: #3B82F6;
+  --cyan: #22D3EE;
+  --violet: #8B5CF6;
+  --ice: #EAF2FF;
+  --surface: #FFFFFF;
+  --surface-soft: #F2F4F7;
+  --surface-raised: #FFFFFF;
+  --text: #0B1020;
+  --muted: rgba(11, 16, 32, 0.68);
+  --border: rgba(11, 16, 32, 0.10);
+  --header: rgba(255, 255, 255, 0.96);
+  --shadow: 0 8px 24px rgba(11, 16, 32, 0.045);
+  background: #F6F7F9;
+}
+
+:root[data-theme='dark'] {
+  --surface: #121722;
+  --surface-soft: #181E2A;
+  --surface-raised: #121722;
+  --text: #EAF2FF;
+  --muted: rgba(234, 242, 255, 0.72);
+  --border: rgba(234, 242, 255, 0.10);
+  --header: rgba(18, 23, 34, 0.96);
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+  background: #0B1020;
+}
+
+body {
+  background: #F6F7F9;
+}
+
+:root[data-theme='dark'] body {
+  background: #0B1020;
+}
+
+.site-shell {
+  background: #F6F7F9;
+}
+
+:root[data-theme='dark'] .site-shell {
+  background: #0B1020;
+}
+
+.site-header {
+  background: var(--header);
+  border-bottom-color: var(--border);
+}
