@@ -10,6 +10,10 @@ function idsIn(html) {
   return new Set([...html.matchAll(/\sid=["']([^"']+)["']/g)].map((match) => match[1]))
 }
 
+function normalizeUrlPath(value) {
+  return value.replaceAll('\\', '/')
+}
+
 for (const fileName of htmlFiles) {
   const filePath = join('dist', fileName)
   if (!existsSync(filePath)) throw new Error(`Missing built page ${filePath}.`)
@@ -31,7 +35,7 @@ for (const fileName of htmlFiles) {
     const pathWithoutQuery = rawPath.split('?', 1)[0]
     if (!pathWithoutQuery) continue
 
-    const decoded = decodeURIComponent(pathWithoutQuery)
+    const decoded = normalizeUrlPath(decodeURIComponent(pathWithoutQuery))
     const targetPath = decoded.startsWith('/')
       ? join('dist', decoded.replace(/^\/+/, ''))
       : normalize(join(dirname(filePath), decoded))
