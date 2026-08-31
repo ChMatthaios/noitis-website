@@ -12,7 +12,7 @@ env:
 
 jobs:
   web:
-    name: Website build and Phase 3 quality checks
+    name: Website build and quality checks
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Validate production-safe URL configuration
+        run: npm run check:production
 
       - name: Validate build, links, metadata and quality budgets
         run: npm run check

@@ -14,6 +14,8 @@
     "check:links": "node scripts/verify-links.mjs",
     "check:quality": "node scripts/verify-quality.mjs",
     "check:browser": "node scripts/browser-smoke.mjs",
+    "check:production": "node scripts/verify-production-config.mjs",
+    "check:live": "node scripts/verify-publication-health.mjs",
     "check": "npm run build && npm run check:content && npm run check:links && npm run check:quality"
   },
   "dependencies": {

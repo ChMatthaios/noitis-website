@@ -15,7 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VITE_SITE_URL: ${{ vars.NOITIS_SITE_URL || 'https://noitis-mc.github.io/noitis-website/' }}
+  VITE_SITE_URL: ${{ vars.NOITIS_SITE_URL }}
+  NOITIS_CUSTOM_DOMAIN: ${{ vars.NOITIS_CUSTOM_DOMAIN }}
   VITE_AGENTGATE_PUBLIC_URL: ${{ vars.AGENTGATE_PUBLIC_URL }}
   VITE_AUTOPAYLOT_PUBLIC_URL: ${{ vars.AUTOPAYLOT_PUBLIC_URL }}
   VITE_BRS_PUBLIC_URL: ${{ vars.BRS_PUBLIC_URL }}
@@ -49,6 +50,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Validate production publication configuration
+        run: npm run check:production
+
       - name: Validate and build
         run: npm run check
 
@@ -56,7 +60,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
