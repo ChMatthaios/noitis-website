@@ -4,10 +4,10 @@ This roadmap is the implementation sequence for the public Noitis company websit
 
 ## Implementation audit — 2026-08-31
 
-- **Phases 1–3 are complete and accepted.** The website has the static-first React/TypeScript/Vite foundation, reviewed publication content, product catalogue, legal/publication controls, accessibility/SEO/quality checks, and cross-browser smoke coverage required for the current pre-production milestone.
-- **Phase 3 preserves the accepted product presentation and icon work on `phase-3`.** Product/catalogue changes remain authoritative; the quality pass does not replace or redesign that accepted work.
-- Production builds enforce public-safe product destinations and publication metadata. Permanent local product links remain a development concern rather than leaking into production output.
-- GitHub Pages activation, final production domain/DNS/TLS, operational ownership, launch-candidate review, and official launch remain intentionally assigned to Phases 4–6.
+- **Phases 1–3 are complete and accepted.** The website has the static-first React/TypeScript/Vite foundation, reviewed publication content, product catalogue, legal/publication controls, accessibility/SEO/quality checks, and cross-browser smoke coverage required for the accepted pre-production milestone.
+- **Phase 4 repository-side operations are implemented on `phase-4`, but Phase 4 is not yet externally complete.** The branch now contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures.
+- **External Phase 4 activation remains required.** The final Noitis production domain must be owned/confirmed, GitHub Pages must be enabled with GitHub Actions as the source, the custom domain and DNS must be configured/verified, HTTPS must be enforced, and the final live canonical/redirect behavior must pass the live health gate.
+- Production builds continue to enforce public-safe product destinations and publication metadata. Permanent local product links remain a development concern rather than leaking into production output.
 - Phase branches are milestone branches. Once a phase is accepted and merged, its branch is kept at that completed phase and is not advanced with later-phase implementation.
 
 ## Phase 1 — Company website foundation — Complete
@@ -41,17 +41,21 @@ This roadmap is the implementation sequence for the public Noitis company websit
 - [x] Add Chromium, Firefox, and WebKit browser smoke coverage across mobile, tablet, and desktop
 - [x] Preserve accepted product/icon presentation while completing the quality milestone
 
-**Phase 3 evidence:** `npm run check` performs the production build plus publication/content, local-link, accessibility/quality-policy, image/asset, and bundle-budget verification. `npm run check:browser` uses `scripts/browser-smoke.mjs` for Chromium/Firefox/WebKit coverage at mobile/tablet/desktop sizes and exercises semantic landmarks, keyboard skip navigation, mobile navigation/Escape behavior, reduced motion, target sizing, responsive overflow, accessible control labels, and theme persistence. Phase 3 deliberately does not enable the final production domain or operational launch; those remain later-phase work.
+**Phase 3 evidence:** `npm run check` performs the production build plus publication/content, local-link, accessibility/quality-policy, image/asset, and bundle-budget verification. `npm run check:browser` uses `scripts/browser-smoke.mjs` for Chromium/Firefox/WebKit coverage at mobile/tablet/desktop sizes and exercises semantic landmarks, keyboard skip navigation, mobile navigation/Escape behavior, reduced motion, target sizing, responsive overflow, accessible control labels, and theme persistence.
 
-## Phase 4 — Production domain and operations — Not started
+## Phase 4 — Production domain and operations — Repository ready / external activation pending
 - [ ] Register/confirm the final Noitis production domain
-- [ ] Enable GitHub Pages for the repository, select GitHub Actions as the Pages source, and set `NOITIS_PAGES_ENABLED=true`
-- [ ] Configure DNS and GitHub Pages custom-domain settings
-- [ ] Verify HTTPS and domain ownership
-- [ ] Configure canonical production URLs and redirects
-- [ ] Add privacy-respecting analytics only if there is a defined business need and legal basis
-- [ ] Define website monitoring, broken-link checks, dependency updates, and content ownership
-- [ ] Document rollback and emergency content/legal update procedures
+- [ ] Enable GitHub Pages for the repository, select GitHub Actions as the Pages source, configure the required Actions variables, and set `NOITIS_PAGES_ENABLED=true`
+- [ ] Configure the GitHub Pages custom domain and DNS records, and verify the domain ownership challenge
+- [ ] Verify certificate provisioning and enable HTTPS enforcement
+- [x] Implement production URL/custom-domain validation and a single canonical publication configuration source
+- [ ] Activate the final canonical production URL and verify GitHub Pages/default-domain/apex-or-www redirect behavior against the real domain
+- [x] Review analytics need/legal basis and intentionally keep analytics disabled while no justified requirement exists
+- [x] Define live website monitoring, broken-link checks, dependency updates, and content/operations ownership
+- [x] Document DNS/canonical policy, normal rollback, emergency unpublish, and emergency content/legal update procedures
+- [ ] Run the production live-health gate successfully against the final domain after DNS/TLS activation
+
+**Phase 4 repository evidence:** `scripts/verify-production-config.mjs` provides `npm run check:production`; `scripts/verify-publication-health.mjs` provides `npm run check:live`; `.github/workflows/deploy-pages.yml` fails closed on missing/unsafe production configuration and uses the current Pages Actions artifact path; `.github/workflows/site-health.yml` runs daily when Pages is enabled; `.github/dependabot.yml` defines weekly npm/Actions review; `.github/CODEOWNERS` defines ownership; and `docs/operations/PRODUCTION.md` is the production runbook. Source control cannot itself prove domain ownership, DNS propagation, Pages repository settings, or TLS issuance, so those items remain open until verified externally.
 
 ## Phase 5 — Launch candidate — Not started
 - [ ] Freeze launch copy and product links for final review
