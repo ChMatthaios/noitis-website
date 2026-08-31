@@ -6,9 +6,11 @@ Official public-company website source for **Noitis™**, a technology brand bei
 
 ## Current phase
 
-**Phase 3 — Accessibility, SEO, and quality: Complete on `phase-3`.**
+**Phase 4 — Production domain and operations: repository foundation implemented on `phase-4`; external activation still required.**
 
-The `phase-3` branch was rebuilt from the exact accepted `phase-2` milestone on 27 August 2026. Phase 2 therefore remains the inherited content/product baseline, while Phase 3 adds the accessibility, SEO, responsive, asset-performance, link, quality, and browser-smoke release gates described below. `main` is not advanced by this branch until a later explicit merge decision.
+The `phase-4` branch starts from the exact accepted Phase 3 milestone. The accepted accessibility, SEO, responsive, asset-performance, link, quality, and browser-smoke gates remain intact. Phase 4 adds production URL/domain validation, fail-closed Pages deployment configuration, scheduled live-site health checks, dependency maintenance, explicit content/operations ownership, and production rollback/emergency procedures.
+
+The final production domain, GitHub Pages activation, DNS, domain verification, and HTTPS enforcement are account/DNS operations and are not marked complete until they are performed and verified.
 
 The site is intentionally **static-first**. It has no application backend, operational database, authentication service, data warehouse, contact-form processor, marketing analytics, or payment collection. Do not add database/API scaffolding merely for symmetry with Noitis product applications.
 
@@ -47,7 +49,7 @@ Website: `http://localhost:5173`
 | FamilyOS | `http://localhost:5178` |
 | LegacyCI | `http://localhost:5179` |
 
-## Phase 3 validation
+## Validation
 
 Primary deterministic gate:
 
@@ -63,15 +65,32 @@ npm run check
 - reviewed contrast pairs, focus/reduced-motion rules, local/system-font policy, image-loading strategy, and bundle budgets;
 - use of the lightweight SVG manifest mark rather than the obsolete PNG asset.
 
-Cross-browser smoke coverage is available separately because Playwright browsers are intentionally not permanent project dependencies:
+Production publication configuration has a separate fail-closed gate:
+
+```bash
+$env:VITE_SITE_URL = "https://YOUR-FINAL-DOMAIN/"
+$env:NOITIS_CUSTOM_DOMAIN = "YOUR-FINAL-DOMAIN"
+npm run check:production
+```
+
+This rejects missing/non-HTTPS/local publication addresses and rejects a mismatch between the configured custom domain and canonical site URL.
+
+After publication, run:
+
+```bash
+$env:SITE_URL = "https://YOUR-FINAL-DOMAIN/"
+npm run check:live
+```
+
+The live check verifies HTTPS availability, the four public HTML pages, canonical URLs, `robots.txt`, `sitemap.xml`, and discovered same-origin links.
+
+Cross-browser smoke coverage remains available separately because Playwright browsers are intentionally not permanent project dependencies:
 
 ```bash
 npm install --no-save --package-lock=false playwright@1.62.1
 npm run check
 npm run check:browser
 ```
-
-The browser smoke exercises Chromium, Firefox, and WebKit at mobile, tablet, and desktop breakpoints. It checks semantic landmarks, horizontal overflow, keyboard skip navigation, mobile-menu open/Escape-close behavior, accessible control labels, target sizes, reduced motion, and theme persistence.
 
 For a production preview:
 
@@ -82,7 +101,7 @@ npm run preview
 
 ## Accessibility and responsive contract
 
-Phase 3 preserves the Phase 2 public experience while adding explicit release checks for:
+The accepted Phase 3 release checks remain required:
 
 - keyboard-first navigation and a visible skip link;
 - semantic header/nav/main/footer landmarks and one primary heading per public page;
@@ -96,21 +115,21 @@ These checks supplement manual review; they do not claim universal assistive-tec
 
 ## Publication URL and product links
 
-The current publication fallback is:
+The pre-custom-domain Pages fallback is:
 
 ```text
 https://noitis-mc.github.io/noitis-website/
 ```
 
-A future custom domain is a Phase 4 deployment decision. Set `VITE_SITE_URL` to the active public base address when building for another domain.
+For production, the GitHub Actions repository variable `NOITIS_SITE_URL` is the publication URL authority and is passed to the build as `VITE_SITE_URL`. When a final custom domain is configured, `NOITIS_CUSTOM_DOMAIN` must contain the same hostname and `NOITIS_SITE_URL` must use HTTPS with a trailing slash.
 
 Public product and pricing links are configuration, not marketing literals. The React catalogue reads optional `VITE_<PRODUCT>_PUBLIC_URL` and `VITE_<PRODUCT>_PRICING_URL` values. When no real public destination is configured, the production card remains visible as **In development** but does not emit a fake or local link.
 
-See [`.env.example`](./.env.example) and [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md).
+See [`.env.example`](./.env.example), [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md), and [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md).
 
 ## Public product content
 
-The six product descriptions remain conservative and are not allowed to turn roadmap items into public capability claims. All six products currently display **In development**. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
+The six product descriptions remain conservative and are not allowed to turn roadmap items into public capability claims. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
 
 ## Public pages
 
@@ -123,42 +142,58 @@ Vite builds four HTML entry points:
 
 All four include publication metadata. The build generates `sitemap.xml` and `robots.txt` for the configured publication URL. The home page also carries Noitis Organization structured data.
 
-## Legal and operator status
+## Legal and analytics status
 
 The current public legal pages state the present facts:
 
 - the website is operated under the **Noitis™** brand from Greece;
 - the current pages do not represent that a separate registered Noitis legal entity has been formed;
 - the site has no accounts, contact form, advertising trackers, marketing analytics, payment collection, or Noitis-operated backend database;
-- the only Noitis browser storage used by this website is the `noitis-theme` preference;
-- hosting configuration may evolve as Phase 4 establishes the final production domain/hosting state.
+- the only Noitis browser storage used by this website is the `noitis-theme` preference.
 
-Legal text must be reviewed again if those facts change. Phase 3 does not change those legal facts.
+Phase 4 intentionally does **not** add analytics because there is currently no defined business requirement/legal basis that justifies changing the accepted privacy position. Analytics can be reconsidered later only through an explicit privacy/legal review and documentation update.
 
 ## GitHub Pages deployment
 
-`.github/workflows/deploy-pages.yml` remains intentionally gated by the repository variable:
+`.github/workflows/deploy-pages.yml` remains intentionally gated by:
 
 ```text
 NOITIS_PAGES_ENABLED=true
 ```
 
-Actual Pages enablement, custom-domain DNS, HTTPS/domain ownership, and final production publication remain Phase 4 operations.
+Before enabling that variable, configure `NOITIS_SITE_URL`; for a custom domain also configure `NOITIS_CUSTOM_DOMAIN`. The workflow runs `npm run check:production` before building and deploying, so unsafe/missing production URL configuration fails closed.
+
+With the custom GitHub Actions Pages workflow, the custom domain is configured through GitHub Pages settings and DNS rather than a committed `CNAME` file.
+
+## Operations
+
+Phase 4 adds:
+
+- `.github/workflows/site-health.yml` — daily live publication health check when Pages is enabled;
+- `.github/dependabot.yml` — weekly npm and GitHub Actions update review;
+- `.github/CODEOWNERS` — explicit website/content/operations ownership;
+- [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md) — Pages/DNS setup, validation, monitoring, rollback, emergency unpublish, and emergency legal/content procedures.
+
+External domain/DNS/HTTPS operations must be completed and verified before Phase 4 is accepted as 100% complete.
 
 ## Repository structure
 
 ```text
 noitis-website/
-├── src/                         # React site, catalogue, Phase 3 accessibility/quality styles
+├── src/                         # React site and accepted public experience
 ├── media/                       # Noitis/product source artwork
 ├── public/                      # favicon/manifest/share image/public assets
-├── scripts/                     # publication, content, link, quality, browser-smoke verification
+├── scripts/                     # build, quality, production-config and live-health checks
 ├── docs/
 │   ├── architecture/
 │   ├── content/
 │   ├── decisions/
-│   └── engineering/
-├── .github/workflows/           # CI and gated Pages deployment
+│   ├── engineering/
+│   └── operations/
+├── .github/
+│   ├── workflows/               # CI, Pages deployment and site-health monitoring
+│   ├── dependabot.yml
+│   └── CODEOWNERS
 ├── index.html
 ├── privacy.html
 ├── terms.html
@@ -175,6 +210,7 @@ noitis-website/
 ## Engineering documentation
 
 - [`ROADMAP.md`](./ROADMAP.md) — phase sequence and acceptance state
+- [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md) — Phase 4 production operations/runbook
 - [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md) — product-claim and public-link authority
 - [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture
 - [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering and quality rules
