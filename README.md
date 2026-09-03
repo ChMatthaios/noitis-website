@@ -6,11 +6,13 @@ Official public-company website source for **Noitis™**, a technology brand bei
 
 ## Current phase
 
-**Phase 4 — Production domain and operations: repository foundation implemented on `phase-4`; external activation still required.**
+**Phase 5 — Launch candidate: in progress on `phase-5`; external Phase-4 activation is still required before final acceptance.**
 
-The `phase-4` branch starts from the exact accepted Phase 3 milestone. The accepted accessibility, SEO, responsive, asset-performance, link, quality, and browser-smoke gates remain intact. Phase 4 adds production URL/domain validation, fail-closed Pages deployment configuration, scheduled live-site health checks, dependency maintenance, explicit content/operations ownership, and production rollback/emergency procedures.
+The `phase-5` branch starts from the exact accepted Phase-4 milestone. The accepted accessibility, SEO, responsive, asset-performance, link, quality, browser-smoke, production-configuration, deployment-gating, monitoring, and operations foundations remain intact.
 
-The final production domain, GitHub Pages activation, DNS, domain verification, and HTTPS enforcement are account/DNS operations and are not marked complete until they are performed and verified.
+Phase 5 re-audits and freezes the launch copy/product catalogue, strengthens the production-preview browser gate, runs the clean-checkout and pinned-browser acceptance checks, and records the final accessibility/SEO/hosting/legal and go/no-go requirements in [`docs/PHASE-5-LAUNCH-CANDIDATE.md`](./docs/PHASE-5-LAUNCH-CANDIDATE.md).
+
+The final production domain, GitHub Pages activation, DNS, domain verification, HTTPS enforcement, and live-site health verification are account/DNS operations and remain blocking until they are performed and verified. Source control does not pretend those external facts are complete.
 
 The site is intentionally **static-first**. It has no application backend, operational database, authentication service, data warehouse, contact-form processor, marketing analytics, or payment collection. Do not add database/API scaffolding merely for symmetry with Noitis product applications.
 
@@ -63,7 +65,7 @@ npm run check
 - page metadata, canonical URLs, indexability, Organization structured data, sitemap, and robots output;
 - local links, in-page anchors, and built asset references;
 - reviewed contrast pairs, focus/reduced-motion rules, local/system-font policy, image-loading strategy, and bundle budgets;
-- use of the lightweight SVG manifest mark rather than the obsolete PNG asset.
+- use of the lightweight SVG manifest/favicon mark rather than obsolete/broken generated asset references.
 
 Production publication configuration has a separate fail-closed gate:
 
@@ -99,6 +101,8 @@ npm run build
 npm run preview
 ```
 
+The Phase-5 browser gate verifies the accepted accessibility/responsive contract plus homepage navigation, product-card identity/order, intentional linked-vs-unconfigured product access states, HTTPS-only configured product/pricing destinations, legal pages, theme persistence, and mobile navigation behavior across Chromium, Firefox, and WebKit.
+
 ## Accessibility and responsive contract
 
 The accepted Phase 3 release checks remain required:
@@ -125,11 +129,22 @@ For production, the GitHub Actions repository variable `NOITIS_SITE_URL` is the 
 
 Public product and pricing links are configuration, not marketing literals. The React catalogue reads optional `VITE_<PRODUCT>_PUBLIC_URL` and `VITE_<PRODUCT>_PRICING_URL` values. When no real public destination is configured, the production card remains visible as **In development** but does not emit a fake or local link.
 
-See [`.env.example`](./.env.example), [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md), and [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md).
+For the current Phase-5 launch candidate, the safe default is to leave a product/pricing URL unset until a real HTTPS public deployment has been separately reviewed as intentional and publicly safe.
+
+See [`.env.example`](./.env.example), [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md), [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md), and [`docs/PHASE-5-LAUNCH-CANDIDATE.md`](./docs/PHASE-5-LAUNCH-CANDIDATE.md).
 
 ## Public product content
 
-The six product descriptions remain conservative and are not allowed to turn roadmap items into public capability claims. Material safety boundaries remain visible where relevant, including AutoPaylot real payment execution, FamilyOS real marketplace/provider operations, and LegacyCI production connectors.
+The six product descriptions remain conservative and are not allowed to turn roadmap items into public capability claims. The catalogue was re-audited on 3 September 2026 against the accepted Phase-4 milestone of every product.
+
+Material boundaries remain visible where relevant, including:
+
+- AgentGate production integration/approval-delivery work;
+- AutoPaylot real payment execution;
+- Business Resource Scheduler external calendar/API/webhook synchronization;
+- EarnLogic productized CRM/ERP/HRIS/payroll/API integrations;
+- FamilyOS provider platform, authoritative availability, and real marketplace payments;
+- LegacyCI semantic lineage/change-impact parsing beyond its certified read-only PostgreSQL metadata connector.
 
 ## Public pages
 
@@ -151,7 +166,7 @@ The current public legal pages state the present facts:
 - the site has no accounts, contact form, advertising trackers, marketing analytics, payment collection, or Noitis-operated backend database;
 - the only Noitis browser storage used by this website is the `noitis-theme` preference.
 
-Phase 4 intentionally does **not** add analytics because there is currently no defined business requirement/legal basis that justifies changing the accepted privacy position. Analytics can be reconsidered later only through an explicit privacy/legal review and documentation update.
+Phase 4 intentionally did **not** add analytics because there is currently no defined business requirement/legal basis that justifies changing the accepted privacy position. The Phase-5 candidate preserves that decision. Analytics can be reconsidered later only through an explicit privacy/legal review and documentation update.
 
 ## GitHub Pages deployment
 
@@ -167,14 +182,14 @@ With the custom GitHub Actions Pages workflow, the custom domain is configured t
 
 ## Operations
 
-Phase 4 adds:
+The accepted Phase-4 operations foundation includes:
 
 - `.github/workflows/site-health.yml` — daily live publication health check when Pages is enabled;
 - `.github/dependabot.yml` — weekly npm and GitHub Actions update review;
 - `.github/CODEOWNERS` — explicit website/content/operations ownership;
 - [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md) — Pages/DNS setup, validation, monitoring, rollback, emergency unpublish, and emergency legal/content procedures.
 
-External domain/DNS/HTTPS operations must be completed and verified before Phase 4 is accepted as 100% complete.
+External domain/DNS/HTTPS operations must be completed and verified before Phase 4—and therefore the externally dependent parts of Phase 5—can be accepted as 100% complete.
 
 ## Repository structure
 
@@ -189,7 +204,8 @@ noitis-website/
 │   ├── content/
 │   ├── decisions/
 │   ├── engineering/
-│   └── operations/
+│   ├── operations/
+│   └── PHASE-5-LAUNCH-CANDIDATE.md
 ├── .github/
 │   ├── workflows/               # CI, Pages deployment and site-health monitoring
 │   ├── dependabot.yml
@@ -210,25 +226,11 @@ noitis-website/
 ## Engineering documentation
 
 - [`ROADMAP.md`](./ROADMAP.md) — phase sequence and acceptance state
-- [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md) — Phase 4 production operations/runbook
+- [`docs/PHASE-5-LAUNCH-CANDIDATE.md`](./docs/PHASE-5-LAUNCH-CANDIDATE.md) — Phase-5 launch-candidate acceptance contract
+- [`docs/operations/PRODUCTION.md`](./docs/operations/PRODUCTION.md) — production operations/runbook inherited from Phase 4
 - [`docs/content/PRODUCT_CATALOG.md`](./docs/content/PRODUCT_CATALOG.md) — product-claim and public-link authority
 - [`docs/architecture/OVERVIEW.md`](./docs/architecture/OVERVIEW.md) — current website architecture
 - [`docs/engineering/ENGINEERING_STANDARD.md`](./docs/engineering/ENGINEERING_STANDARD.md) — public-site engineering and quality rules
 - [`docs/engineering/FRONTEND_ARCHITECTURE.md`](./docs/engineering/FRONTEND_ARCHITECTURE.md) — frontend ownership rules
 - [`docs/decisions/0001-static-first-company-website.md`](./docs/decisions/0001-static-first-company-website.md) — static-first hosting decision
 - [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution and phase workflow
-
-## Legal, licensing, and brand use
-
-This repository is **proprietary Noitis software and content**. Public visibility does not make it open source or place its code, copy, design, documentation, or brand assets in the public domain.
-
-- [`LICENSE`](./LICENSE)
-- [`PRIVACY.md`](./PRIVACY.md)
-- [`TERMS.md`](./TERMS.md)
-- [`TRADEMARK.md`](./TRADEMARK.md)
-
-**Noitis™** is used as a claimed trademark. `™` does not indicate registration; do not use `®` unless registration has actually been granted and its use is appropriate.
-
-## Architecture principle
-
-> **Public information and brand presentation in the browser; operational product authority stays in the product systems that own it.**
