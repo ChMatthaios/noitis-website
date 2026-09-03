@@ -28,16 +28,16 @@ function optionalUrl(value: string | undefined): string | undefined {
   return trimmed || undefined
 }
 
-// Audited against the Noitis product repositories on 2026-08-25. Keep this
-// deliberately conservative: the company website must describe what exists
-// without turning roadmap intentions into public capability claims.
+// Re-audited against the accepted Phase-4 product milestones on 2026-09-03.
+// Keep this deliberately conservative: the company website must describe what
+// exists without turning later roadmap intentions into public capability claims.
 export const products: ProductCatalogEntry[] = [
   {
     name: 'AgentGate',
     category: 'AI governance',
     description: 'A governance gateway for AI agents that applies organization policy and routes sensitive actions through human approval when required.',
     status: 'In development',
-    note: 'Trusted governance and approval foundations are implemented; broader production integrations and execution capabilities remain in development.',
+    note: 'The governance control plane and localhost developer-connectivity contracts are implemented; production integration adapters and approval delivery remain in development.',
     href: optionalUrl(import.meta.env.VITE_AGENTGATE_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_AGENTGATE_PRICING_URL),
     logoLight: agentGateLogoLight,
@@ -48,7 +48,7 @@ export const products: ProductCatalogEntry[] = [
     category: 'Financial obligations',
     description: 'Financial-obligation control for organizing recurring commitments and deciding what is ready before money moves.',
     status: 'In development',
-    note: 'Real bank connectivity and real payment execution are not enabled in the current product.',
+    note: 'Read-only sandbox bank connectivity and simulated payment controls are implemented; real payment execution remains disabled.',
     href: optionalUrl(import.meta.env.VITE_AUTOPAYLOT_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_AUTOPAYLOT_PRICING_URL),
     logoLight: autoPaylotLogoLight,
@@ -59,7 +59,7 @@ export const products: ProductCatalogEntry[] = [
     category: 'Operational scheduling',
     description: 'Constraint-based scheduling for work that depends on people, skills, equipment, spaces, locations, availability, and business rules.',
     status: 'In development',
-    note: 'The trusted scheduling vertical slice is implemented; broader operational and adaptive scheduling capabilities remain in development.',
+    note: 'Operational scheduling and adaptive planning are implemented; external calendar, API, webhook, and recurring synchronization capabilities remain in development.',
     href: optionalUrl(import.meta.env.VITE_BRS_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_BRS_PRICING_URL),
     logoLight: brsLogoLight,
@@ -70,7 +70,7 @@ export const products: ProductCatalogEntry[] = [
     category: 'Compensation intelligence',
     description: 'Commercial performance and incentive compensation connected by calculation lineage that explains monetary results.',
     status: 'In development',
-    note: 'The trusted compensation foundation is being built; planned rule families, integrations, and production release work are not represented as complete.',
+    note: 'Governed compensation calculations, statements, audit evidence, and the canonical ingestion foundation are implemented; productized CRM, ERP, HRIS, payroll, and public API integrations remain in development.',
     href: optionalUrl(import.meta.env.VITE_EARNLOGIC_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_EARNLOGIC_PRICING_URL),
     logoLight: elogLogoLight,
@@ -81,7 +81,7 @@ export const products: ProductCatalogEntry[] = [
     category: 'Family coordination',
     description: 'A parent-first, child-centred experience for discovery, bookings, schedules, saved items, and everyday family coordination.',
     status: 'In development',
-    note: 'Real payments, provider integrations, maps, and production notification delivery remain future work.',
+    note: 'Family coordination, booking/calendar workflows, and privacy-aware OpenStreetMap discovery are implemented; the provider platform, authoritative availability, and real payments remain in development.',
     href: optionalUrl(import.meta.env.VITE_FAMILYOS_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_FAMILYOS_PRICING_URL),
     logoLight: fosLogoLight,
@@ -92,7 +92,7 @@ export const products: ProductCatalogEntry[] = [
     category: 'Database change intelligence',
     description: 'Dependency, lineage, and pre-change impact analysis for complex database systems with explicit evidence and visible uncertainty.',
     status: 'In development',
-    note: 'Production customer-database connectors are not enabled; the current trusted application uses controlled analysis data.',
+    note: 'Certified read-only PostgreSQL 16–18 metadata connectivity is implemented; production semantic lineage parsing and change-impact semantics remain in development.',
     href: optionalUrl(import.meta.env.VITE_LEGACYCI_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_LEGACYCI_PRICING_URL),
     logoLight: lciLogoLight,
