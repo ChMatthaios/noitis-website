@@ -2,7 +2,8 @@
 
 **Branch:** `phase-5`  
 **Baseline:** accepted `phase-4` milestone  
-**Launch-candidate review started:** 3 September 2026
+**Launch-candidate review started:** 3 September 2026  
+**Repository-side acceptance gates:** green on 3 September 2026
 
 Phase 5 is the final pre-launch review of the Noitis company website. It does not replace the external Phase-4 activation work: the final domain, GitHub Pages settings, DNS, certificate/HTTPS enforcement, and live-site health gate still have to exist before the launch candidate can be accepted as 100% complete.
 
@@ -13,7 +14,7 @@ Phase 5 is the final pre-launch review of the Noitis company website. It does no
 3. A product card may remain intentionally non-linking until a real HTTPS public product destination has been verified.
 4. Localhost/private/demo destinations must never leak into production output.
 5. Phase 5 cannot mark external DNS/TLS/live-host evidence complete from source control alone.
-6. Phase 5 acceptance requires both automated gates and an explicit final manual review.
+6. Phase 5 acceptance requires both automated gates and an explicit final production-host review.
 
 ## Product-copy freeze
 
@@ -41,9 +42,40 @@ Production product/pricing links are optional build-time variables. The launch-c
 - otherwise leave the variable unset and allow the card to show `Public access not configured`;
 - never use localhost, a private environment, or an unsafe demo as a production destination.
 
-The existing `npm run check:production` and `npm run check` gates reject local/non-HTTPS publication configuration and development-only URLs in production output.
+`npm run check:production` rejects local/non-HTTPS production URL configuration. `npm run check` rejects development-only destinations in built production output. `npm run check:browser` verifies that every product card exposes exactly one intentional product-access state and that every configured product/pricing link is HTTPS and non-local.
 
-## Automated acceptance gates
+## Repository-side acceptance evidence
+
+The repository-side Phase-5 candidate passed the clean GitHub Actions flow on 3 September 2026.
+
+**Green CI evidence:** GitHub Actions run **104**, commit `af639a5a56aeb9cb857c819f042f8163076b33d2`.
+
+The run started from a clean checkout and completed successfully through:
+
+1. Node.js 22.13.0 setup;
+2. `npm ci`;
+3. `npm run check:production`;
+4. `npm run check`, including launch-script syntax validation, production build, publication/content validation, local-link/built-asset validation, and quality/bundle gates;
+5. temporary pinned Playwright `1.62.1` installation;
+6. Chromium, Firefox, and WebKit installation;
+7. `npm run check:browser` across mobile, tablet, and desktop viewports.
+
+The Phase-5 browser gate covers:
+
+- main navigation destinations;
+- mobile navigation open/Escape behavior;
+- the six expected product cards and their intentional linked-vs-unconfigured states;
+- HTTPS/non-local safety for configured product/pricing links;
+- Privacy, Terms, and Trademark pages;
+- light/dark theme switching and persistence;
+- keyboard skip navigation;
+- semantic landmarks and control labels;
+- reduced-motion behavior;
+- target sizes;
+- responsive overflow checks;
+- Chromium, Firefox, and WebKit behavior.
+
+## Automated acceptance commands
 
 From a clean checkout of `phase-5` using Node 22.13.0:
 
@@ -58,29 +90,20 @@ npm run check:browser
 
 GitHub Actions `.github/workflows/ci.yml` runs the same production-safe configuration, build/content/link/quality checks, and pinned Chromium/Firefox/WebKit browser smoke gate on every push and pull request.
 
-## Production-preview manual review
+## Final production-host review
 
-Before acceptance, review the built/previewed site on supported desktop/mobile widths and verify:
+Repository/preview validation is complete, but final acceptance still requires the real published host. Once the final domain is live, verify:
 
-- all main navigation links and the mobile menu;
-- keyboard skip navigation and focus visibility;
-- product-card copy and intentional link/non-link behavior;
-- Privacy, Terms, and Trademark pages;
-- light/dark theme switching and persistence;
-- responsive layout and absence of horizontal overflow;
-- public contact information and footer/legal navigation;
-- canonical/Open Graph/social-preview metadata in the production build;
-- no confidential, customer, localhost, or development-only data is exposed.
+- HTTPS and the intended canonical host/redirect behavior;
+- all four public HTML pages;
+- canonical metadata and social-preview metadata;
+- `robots.txt` and `sitemap.xml` against the production URL;
+- `site.webmanifest`, `social-preview.png`, and `noitis-mark.svg` resolving correctly;
+- the observed hosting/security headers and any material release concern they create;
+- the public Privacy, Terms, Trademark, operator/contact, and analytics statements against the actual launch configuration;
+- every configured public product/pricing destination by opening and reviewing the actual destination.
 
-## Final accessibility / SEO / hosting / legal review
-
-Phase 3 automated quality gates remain the baseline. Phase 5 adds a final release review of:
-
-- heading/landmark structure, keyboard operation, labels, focus, target sizing, reduced motion, and contrast;
-- title/description/canonical/robots/structured-data/Open Graph/Twitter metadata;
-- sitemap and robots consistency with the final production URL;
-- HTTPS and live hosting response behavior/security headers once the final domain is serving;
-- public Privacy, Terms, Trademark, operator/contact, and analytics statements against the actual launch configuration.
+The strengthened `npm run check:live` performs the deterministic live-host checks and reports observed hosting/security headers for final review.
 
 No analytics are enabled in the current candidate.
 
@@ -101,11 +124,11 @@ The following cannot be proven by the branch alone and remain blocking until ext
 
 Phase 5 may be accepted only when:
 
-- the automated clean-checkout and browser gates are green;
-- the production-preview manual review is complete;
-- the final accessibility/SEO/legal/hosting review has no unresolved critical issue;
-- external DNS/TLS/canonical/live-health evidence is green;
-- public product-link decisions are verified;
-- no critical issue remains open.
+- the automated clean-checkout and browser gates are green — **complete**;
+- the repository/production-preview contract is green — **complete**;
+- the final accessibility/SEO/legal/hosting review has no unresolved critical issue — **pending live host**;
+- external DNS/TLS/canonical/live-health evidence is green — **pending live host**;
+- public product-link decisions are verified against the real configured production destinations — **pending production configuration**;
+- no critical issue remains open — **pending final go/no-go**.
 
-Until then, the branch is a **Phase-5 candidate in progress**, not an accepted launch candidate.
+Until then, the branch is a **Phase-5 candidate with repository gates complete and external acceptance pending**, not an accepted launch candidate.
