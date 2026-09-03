@@ -10,13 +10,14 @@
     "dev": "node scripts/ensure-local-env.mjs && vite",
     "build": "node scripts/generate-publication-files.mjs && tsc -b && vite build",
     "preview": "vite preview",
+    "check:scripts": "node --check scripts/browser-smoke.mjs && node --check scripts/verify-publication-health.mjs",
     "check:content": "node scripts/verify-content.mjs",
     "check:links": "node scripts/verify-links.mjs",
     "check:quality": "node scripts/verify-quality.mjs",
     "check:browser": "node scripts/browser-smoke.mjs",
     "check:production": "node scripts/verify-production-config.mjs",
     "check:live": "node scripts/verify-publication-health.mjs",
-    "check": "npm run build && npm run check:content && npm run check:links && npm run check:quality"
+    "check": "npm run check:scripts && npm run build && npm run check:content && npm run check:links && npm run check:quality"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
