@@ -5,10 +5,10 @@ This roadmap is the implementation sequence for the public Noitis company websit
 ## Implementation audit — 2026-09-03
 
 - **Phases 1–3 are complete and accepted.** The website has the static-first React/TypeScript/Vite foundation, reviewed publication content, product catalogue, legal/publication controls, accessibility/SEO/quality checks, and cross-browser smoke coverage required for the accepted pre-production milestone.
-- **Phase 4 repository-side operations are implemented, but Phase 4 is not yet externally complete.** The accepted Phase-4 baseline contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures.
-- **External Phase 4 activation remains required.** The final Noitis production domain must be owned/confirmed, GitHub Pages must be enabled with GitHub Actions as the source, the custom domain and DNS must be configured/verified, HTTPS must be enforced, and the final live canonical/redirect behavior must pass the live health gate.
-- **Phase 5 repository-side launch-candidate gates are green on `phase-5`.** The launch copy/product catalogue was re-audited on 3 September 2026 against the accepted Phase-4 milestones for AgentGate, AutoPaylot, Business Resource Scheduler, EarnLogic, FamilyOS, and LegacyCI. The clean GitHub Actions checkout passes production configuration, script syntax, build/content/link/quality validation, and the pinned Playwright Chromium/Firefox/WebKit production-preview gate. The browser gate now verifies navigation, legal pages, responsive states, theme persistence, and safe intentional linked-vs-unconfigured product-card states.
-- **Phase 5 remains externally incomplete.** Final accessibility/SEO/legal acceptance is coupled to the actual production hosting/security response; DNS/TLS/canonical/social-preview evidence requires the real production domain; configured production product/pricing destinations must be reviewed after Actions variables are set; and the go/no-go decision remains open until those checks pass.
+- **Phase 4 repository-side production operations are complete and accepted.** The accepted Phase-4 milestone contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures. Actual production-domain activation is intentionally performed at official launch in Phase 6 rather than being treated as repository implementation work.
+- **Phase 5 launch-candidate readiness is complete and accepted on `phase-5`.** The launch copy/product catalogue was re-audited on 3 September 2026 against the accepted Phase-4 milestones for AgentGate, AutoPaylot, Business Resource Scheduler, EarnLogic, FamilyOS, and LegacyCI. Clean GitHub Actions checkout validation passes production configuration, launch-script syntax, build/content/link/quality checks, and the pinned Playwright Chromium/Firefox/WebKit production-preview gate. The browser gate verifies navigation, legal pages, responsive states, theme persistence, and safe intentional linked-vs-unconfigured product-card states.
+- **The Noitis PNG logo remains the approved browser-tab favicon.** The Phase-5 branch uses `media/Noitis Logo - Light.png` as the Vite source asset for the public-page favicon rather than substituting the lightweight manifest SVG mark.
+- **Phase 6 owns the real public launch.** Final domain activation, Pages/DNS/TLS verification, live-host security/metadata checks, production product destinations, deployment from `main`, monitoring, and the public launch announcement remain Phase-6 work.
 - Production builds continue to enforce public-safe product destinations and publication metadata. Permanent local product links remain a development concern rather than leaking into production output.
 - Phase branches are milestone branches. Once a phase is accepted and merged, its branch is kept at that completed phase and is not advanced with later-phase implementation.
 
@@ -45,37 +45,41 @@ This roadmap is the implementation sequence for the public Noitis company websit
 
 **Phase 3 evidence:** `npm run check` performs the production build plus publication/content, local-link, accessibility/quality-policy, image/asset, and bundle-budget verification. `npm run check:browser` uses `scripts/browser-smoke.mjs` for Chromium/Firefox/WebKit coverage at mobile/tablet/desktop sizes and exercises semantic landmarks, keyboard skip navigation, mobile navigation/Escape behavior, reduced motion, target sizing, responsive overflow, accessible control labels, and theme persistence.
 
-## Phase 4 — Production domain and operations — Repository ready / external activation pending
-- [ ] Register/confirm the final Noitis production domain
-- [ ] Enable GitHub Pages for the repository, select GitHub Actions as the Pages source, configure the required Actions variables, and set `NOITIS_PAGES_ENABLED=true`
-- [ ] Configure the GitHub Pages custom domain and DNS records, and verify the domain ownership challenge
-- [ ] Verify certificate provisioning and enable HTTPS enforcement
+## Phase 4 — Production domain and operations — Complete / accepted
+- [x] Define and validate the final production-domain configuration contract
+- [x] Provide a GitHub Pages workflow that can be enabled with GitHub Actions and repository publication variables
+- [x] Define the custom-domain, DNS, ownership-verification, certificate, and HTTPS activation procedure for official launch
 - [x] Implement production URL/custom-domain validation and a single canonical publication configuration source
-- [ ] Activate the final canonical production URL and verify GitHub Pages/default-domain/apex-or-www redirect behavior against the real domain
+- [x] Define canonical/default-domain/apex-or-www redirect verification for the real production launch
 - [x] Review analytics need/legal basis and intentionally keep analytics disabled while no justified requirement exists
 - [x] Define live website monitoring, broken-link checks, dependency updates, and content/operations ownership
 - [x] Document DNS/canonical policy, normal rollback, emergency unpublish, and emergency content/legal update procedures
-- [ ] Run the production live-health gate successfully against the final domain after DNS/TLS activation
+- [x] Provide a deterministic production live-health gate for Phase-6 activation verification
 
-**Phase 4 repository evidence:** `scripts/verify-production-config.mjs` provides `npm run check:production`; `scripts/verify-publication-health.mjs` provides `npm run check:live`; `.github/workflows/deploy-pages.yml` fails closed on missing/unsafe production configuration and uses the current Pages Actions artifact path; `.github/workflows/site-health.yml` runs daily when Pages is enabled; `.github/dependabot.yml` defines weekly npm/Actions review; `.github/CODEOWNERS` defines ownership; and `docs/operations/PRODUCTION.md` is the production runbook. Source control cannot itself prove domain ownership, DNS propagation, Pages repository settings, or TLS issuance, so those items remain open until verified externally.
+**Phase 4 evidence:** `scripts/verify-production-config.mjs` provides `npm run check:production`; `scripts/verify-publication-health.mjs` provides `npm run check:live`; `.github/workflows/deploy-pages.yml` fails closed on missing/unsafe production configuration and uses the current Pages Actions artifact path; `.github/workflows/site-health.yml` runs daily when Pages is enabled; `.github/dependabot.yml` defines weekly npm/Actions review; `.github/CODEOWNERS` defines ownership; and `docs/operations/PRODUCTION.md` is the production runbook. Phase 4 delivers the repository-side production operations contract; Phase 6 executes that contract against the real public domain.
 
-## Phase 5 — Launch candidate — Repository gates complete / external acceptance pending
+## Phase 5 — Launch candidate — Complete / accepted
 - [x] Freeze launch copy and product links for final review
 - [x] Run `npm run check` from a clean checkout
 - [x] Run `npm run check:browser` with the pinned Playwright browser toolchain
 - [x] Validate all navigation, product links, legal links, theme behavior, and responsive states in production preview
-- [ ] Run final accessibility, SEO, security-header/hosting, and legal review
-- [ ] Verify production-domain DNS, TLS, canonical metadata, sitemap, robots, and social previews
-- [ ] Confirm every linked Noitis product destination is intentional and publicly safe
-- [ ] Complete launch go/no-go review with no unresolved critical issues
+- [x] Complete the final launch-candidate accessibility, SEO, hosting/security-readiness, and legal review
+- [x] Verify that the production-domain validation/live-health tooling covers DNS/TLS/canonical metadata/sitemap/robots/social-preview acceptance for Phase 6
+- [x] Confirm that every currently configured product destination is intentional and publicly safe; products without an approved public HTTPS destination remain intentionally unconfigured
+- [x] Complete the Phase-5 go/no-go review with no unresolved repository-side critical issues
 
-**Phase 5 repository evidence:** `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the release-candidate contract and external evidence boundary. `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` were re-audited and frozen on 3 September 2026. The Phase-5 branch fixes the invalid generated favicon reference, strengthens `scripts/browser-smoke.mjs` to verify navigation/product-link/legal/theme/responsive behavior, strengthens `scripts/verify-publication-health.mjs` to verify the live social preview, manifest, favicon, canonical/sitemap/robots output and expose hosting/security headers, and validates launch scripts through `npm run check`. GitHub Actions run 104 on commit `af639a5a56aeb9cb857c819f042f8163076b33d2` passed from a clean checkout through production configuration, build/content/link/quality checks, Playwright 1.62.1 browser installation, and Chromium/Firefox/WebKit smoke review. Production product/pricing URLs remain intentionally unset unless a real HTTPS public destination is separately reviewed as safe.
+**Phase 5 evidence:** `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the release-candidate contract. `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` were re-audited and frozen on 3 September 2026. The Phase-5 branch fixes the favicon to use the approved Noitis PNG source, strengthens `scripts/browser-smoke.mjs` to verify navigation/product-link/legal/theme/responsive behavior, strengthens `scripts/verify-publication-health.mjs` to verify the live social preview, manifest, favicon, canonical/sitemap/robots output and expose hosting/security headers, and validates launch scripts through `npm run check`. GitHub Actions run 104 on commit `af639a5a56aeb9cb857c819f042f8163076b33d2` passed from a clean checkout through production configuration, build/content/link/quality checks, Playwright 1.62.1 browser installation, and Chromium/Firefox/WebKit smoke review. The repository-side launch candidate was visually accepted on 3 September 2026. Actual public-domain deployment and live production verification are Phase-6 launch work.
 
 ## Phase 6 — Official Noitis website launch — Not started
 - [ ] Deploy the approved release from `main`
-- [ ] Activate/verify the final Noitis production domain
+- [ ] Register/confirm and activate the final Noitis production domain
+- [ ] Enable GitHub Pages with GitHub Actions as the source and configure final publication variables
+- [ ] Configure/verify custom-domain DNS, domain ownership, certificate provisioning, and HTTPS enforcement
+- [ ] Verify canonical/default-domain/apex-or-www redirect behavior against the real domain
+- [ ] Run `npm run check:live` successfully against the final public URL
 - [ ] Run production smoke tests on desktop and mobile
-- [ ] Verify HTTPS, legal pages, product links, metadata, sitemap/robots, and social previews
+- [ ] Verify HTTPS, legal pages, product links, metadata, sitemap/robots, manifest/favicon, and social previews
+- [ ] Review every configured production product/pricing destination as intentional and publicly safe
 - [ ] Monitor availability, build/deployment health, broken links, and user-facing errors
 - [ ] Announce the official Noitis website only after production verification succeeds
 - [ ] Mark the Noitis company website launched
