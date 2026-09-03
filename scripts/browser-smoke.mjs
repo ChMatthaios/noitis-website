@@ -92,6 +92,65 @@ async function reviewPage(page, route, label) {
   assert(undersizedTextLinks.length === 0, `${label}: navigation text targets are too small: ${undersizedTextLinks.join(', ')}`)
 }
 
+async function verifyHomeContract(page, label) {
+  const contract = await page.evaluate(() => {
+    const expectedProducts = ['AgentGate', 'AutoPaylot', 'Business Resource Scheduler', 'EarnLogic', 'FamilyOS', 'LegacyCI']
+    const productCards = [...document.querySelectorAll('.product-card')].map((card) => {
+      const name = card.querySelector('h3')?.textContent?.trim() || ''
+      const openProduct = card.querySelector('a[aria-label^="Open "]:not([aria-label$=" pricing"])')
+      const pricing = card.querySelector('a[aria-label$=" pricing"]')
+      const unavailable = [...card.querySelectorAll('.product-card__status')]
+        .some((element) => element.textContent?.trim() === 'Public access not configured')
+
+      return {
+        name,
+        productHref: openProduct?.getAttribute('href') || null,
+        pricingHref: pricing?.getAttribute('href') || null,
+        unavailable,
+      }
+    })
+
+    const navigation = [...document.querySelectorAll('#site-navigation a')]
+      .map((element) => element.getAttribute('href'))
+      .filter(Boolean)
+
+    const footer = [...document.querySelectorAll('.site-footer a')]
+      .map((element) => element.getAttribute('href'))
+      .filter(Boolean)
+
+    return { expectedProducts, productCards, navigation, footer }
+  })
+
+  assert(contract.productCards.length === contract.expectedProducts.length, `${label}: expected six product cards.`)
+  assert(JSON.stringify(contract.productCards.map((card) => card.name)) === JSON.stringify(contract.expectedProducts), `${label}: product catalogue order/names do not match the launch candidate.`)
+
+  for (const card of contract.productCards) {
+    assert(Boolean(card.productHref) !== card.unavailable, `${label}: ${card.name} must have exactly one product-access state: reviewed link or Public access not configured.`)
+
+    for (const [kind, href] of [['product', card.productHref], ['pricing', card.pricingHref]]) {
+      if (!href) continue
+      const url = new URL(href, baseUrl)
+      assert(url.protocol === 'https:', `${label}: ${card.name} ${kind} link must use HTTPS.`)
+      assert(!['localhost', '127.0.0.1', '::1'].includes(url.hostname), `${label}: ${card.name} ${kind} link must not target a local address.`)
+    }
+  }
+
+  for (const href of ['#products', '#principles', '#about', '#contact', './privacy.html']) {
+    assert(contract.navigation.includes(href), `${label}: main navigation is missing ${href}.`)
+  }
+
+  for (const href of ['#products', '#principles', '#about', '#contact', './privacy.html', './terms.html', './trademark.html']) {
+    assert(contract.footer.includes(href), `${label}: footer navigation is missing ${href}.`)
+  }
+}
+
+async function verifyDesktopNavigation(page, label) {
+  for (const hash of ['#products', '#principles', '#about', '#contact']) {
+    await page.locator(`#site-navigation a[href="${hash}"]`).click()
+    assert((await page.evaluate(() => window.location.hash)) === hash, `${label}: navigation did not reach ${hash}.`)
+  }
+}
+
 async function verifySkipLink(page, label, browserName) {
   await page.goto(baseUrl, { waitUntil: 'networkidle' })
   await page.keyboard.press('Tab')
@@ -148,6 +207,7 @@ async function reviewBrowser(name, browserType) {
       const label = `${name}/${viewport.name}`
 
       await reviewPage(page, '', label)
+      await verifyHomeContract(page, label)
 
       if (viewport.name === 'mobile') {
         const menuButton = page.getByRole('button', { name: 'Open navigation' })
@@ -158,6 +218,7 @@ async function reviewBrowser(name, browserType) {
       }
 
       if (viewport.name === 'desktop') {
+        await verifyDesktopNavigation(page, label)
         await verifySkipLink(page, label, name)
 
         const themeButton = page.getByRole('button', { name: 'Switch to dark theme' })
@@ -183,7 +244,7 @@ try {
   await reviewBrowser('chromium', chromium)
   await reviewBrowser('firefox', firefox)
   await reviewBrowser('webkit', webkit)
-  console.log('Verified keyboard, screen-reader semantics, responsive layouts, reduced motion, target sizes, theme persistence, and cross-browser smoke coverage.')
+  console.log('Verified navigation, product-link safety, legal pages, keyboard/screen-reader semantics, responsive layouts, reduced motion, target sizes, theme persistence, and cross-browser smoke coverage.')
 } finally {
   preview.kill('SIGTERM')
 }
