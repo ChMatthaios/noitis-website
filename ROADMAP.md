@@ -2,11 +2,12 @@
 
 This roadmap is the implementation sequence for the public Noitis company website. The site remains static-first unless a real website requirement justifies additional infrastructure. The final phase is the official Noitis website launch on its production domain.
 
-## Implementation audit — 2026-08-31
+## Implementation audit — 2026-09-03
 
 - **Phases 1–3 are complete and accepted.** The website has the static-first React/TypeScript/Vite foundation, reviewed publication content, product catalogue, legal/publication controls, accessibility/SEO/quality checks, and cross-browser smoke coverage required for the accepted pre-production milestone.
-- **Phase 4 repository-side operations are implemented on `phase-4`, but Phase 4 is not yet externally complete.** The branch now contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures.
+- **Phase 4 repository-side operations are implemented, but Phase 4 is not yet externally complete.** The accepted Phase-4 baseline contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures.
 - **External Phase 4 activation remains required.** The final Noitis production domain must be owned/confirmed, GitHub Pages must be enabled with GitHub Actions as the source, the custom domain and DNS must be configured/verified, HTTPS must be enforced, and the final live canonical/redirect behavior must pass the live health gate.
+- **Phase 5 is in progress on `phase-5`.** The launch copy/product catalogue was re-audited on 3 September 2026 against the accepted Phase-4 milestones for AgentGate, AutoPaylot, Business Resource Scheduler, EarnLogic, FamilyOS, and LegacyCI. `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` now reflect those accepted boundaries, and `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the launch-candidate acceptance contract and safe product-link freeze.
 - Production builds continue to enforce public-safe product destinations and publication metadata. Permanent local product links remain a development concern rather than leaking into production output.
 - Phase branches are milestone branches. Once a phase is accepted and merged, its branch is kept at that completed phase and is not advanced with later-phase implementation.
 
@@ -57,8 +58,8 @@ This roadmap is the implementation sequence for the public Noitis company websit
 
 **Phase 4 repository evidence:** `scripts/verify-production-config.mjs` provides `npm run check:production`; `scripts/verify-publication-health.mjs` provides `npm run check:live`; `.github/workflows/deploy-pages.yml` fails closed on missing/unsafe production configuration and uses the current Pages Actions artifact path; `.github/workflows/site-health.yml` runs daily when Pages is enabled; `.github/dependabot.yml` defines weekly npm/Actions review; `.github/CODEOWNERS` defines ownership; and `docs/operations/PRODUCTION.md` is the production runbook. Source control cannot itself prove domain ownership, DNS propagation, Pages repository settings, or TLS issuance, so those items remain open until verified externally.
 
-## Phase 5 — Launch candidate — Not started
-- [ ] Freeze launch copy and product links for final review
+## Phase 5 — Launch candidate — In progress
+- [x] Freeze launch copy and product links for final review
 - [ ] Run `npm run check` from a clean checkout
 - [ ] Run `npm run check:browser` with the pinned Playwright browser toolchain
 - [ ] Validate all navigation, product links, legal links, theme behavior, and responsive states in production preview
@@ -66,6 +67,8 @@ This roadmap is the implementation sequence for the public Noitis company websit
 - [ ] Verify production-domain DNS, TLS, canonical metadata, sitemap, robots, and social previews
 - [ ] Confirm every linked Noitis product destination is intentional and publicly safe
 - [ ] Complete launch go/no-go review with no unresolved critical issues
+
+**Phase 5 evidence in progress:** `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the release-candidate contract, clean-checkout/browser gates, production-preview review, final accessibility/SEO/hosting/legal checks, external evidence requirements, and go/no-go rule. The product catalogue was re-audited on 3 September 2026 and is frozen for this candidate. A production product/pricing URL remains intentionally unset unless a real HTTPS public destination has been separately reviewed as safe.
 
 ## Phase 6 — Official Noitis website launch — Not started
 - [ ] Deploy the approved release from `main`
