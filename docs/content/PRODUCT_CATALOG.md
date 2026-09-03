@@ -1,32 +1,34 @@
 # Public Product Catalogue Authority
 
-**Last audited: 25 August 2026**
+**Last audited: 3 September 2026**
 
 This document explains the public company-site catalogue in `src/productCatalog.ts`. Product repositories remain authoritative for implementation; this website owns only the reviewed public summary and public-link configuration.
 
 ## Current public status
 
-All six products are represented as **In development**.
+All six products are represented as **In development**. The summaries below were re-audited against the accepted Phase-4 milestone of each product before the Noitis website Phase-5 launch-candidate review.
 
 | Product | Public company-site summary boundary |
 |---|---|
-| AgentGate | Governance gateway for agent policy and human approval; broader production integrations/execution remain in development. |
-| AutoPaylot | Financial-obligation control before money moves; real bank connectivity and real payment execution are not enabled. |
-| Business Resource Scheduler | Constraint-based scheduling; trusted core exists while broader operational/adaptive scheduling remains in development. |
-| EarnLogic | Commercial performance and incentive compensation with calculation lineage; planned rule families/integrations are not represented as complete. |
-| FamilyOS | Parent-first discovery/booking/coordination; real payments, provider integrations, maps, and production notification delivery remain future work. |
-| LegacyCI | Dependency/lineage/change-impact analysis; production customer-database connectors are not enabled. |
+| AgentGate | Governance control plane and localhost developer-connectivity contracts are implemented; production integration adapters and approval delivery remain in development. |
+| AutoPaylot | Read-only sandbox bank connectivity and simulated payment controls are implemented; real payment execution remains disabled. |
+| Business Resource Scheduler | Operational scheduling and adaptive planning are implemented; external calendar/API/webhook and recurring synchronization capabilities remain in development. |
+| EarnLogic | Governed compensation calculations, statements, audit evidence, and the canonical ingestion foundation are implemented; productized CRM/ERP/HRIS/payroll/API integrations remain in development. |
+| FamilyOS | Family coordination, booking/calendar workflows, and privacy-aware OpenStreetMap discovery are implemented; provider platform, authoritative availability, and real payments remain in development. |
+| LegacyCI | Certified read-only PostgreSQL 16–18 metadata connectivity is implemented; production semantic lineage parsing and change-impact semantics remain in development. |
 
-## Sources reviewed
+## Sources reviewed for the Phase-5 launch candidate
 
-- `Noitis-MC/AgentGate` — accepted `main` README/roadmap and trusted application state
-- `Noitis-MC/AutoPaylot` — accepted `main` README/roadmap and no-real-payment boundary
-- `Noitis-MC/BusinessResourceScheduler` — accepted `main` README/roadmap and trusted scheduling state
-- `Noitis-MC/EarnLogic` — executable .NET/PostgreSQL implementation and audited roadmap; stale prototype wording is not used as the sole capability authority
-- `Noitis-MC/FamilyOS` — accepted `main` README/roadmap and simulation/provider boundaries
-- `Noitis-MC/LegacyCI` — accepted `main` README/roadmap and `TEST_ONE_ANALYSIS_ONLY`/connector boundary
+The website Phase-5 review uses the accepted Phase-4 milestone branch of each product as the capability authority because `phase-5` was deliberately refreshed from those accepted milestones before new Phase-5 product work begins.
 
-## Link authority
+- `Noitis-MC/AgentGate` — accepted Phase 4 governance/developer-connectivity milestone and production-integration boundary
+- `Noitis-MC/AutoPaylot` — accepted Phase 4 read-only financial-connectivity milestone and `SIMULATION_ONLY` boundary
+- `Noitis-MC/BusinessResourceScheduler` — accepted Phase 4 adaptive-scheduling milestone and external-integration boundary
+- `Noitis-MC/EarnLogic` — accepted Phase 4 compensation-control milestone plus the governed canonical-ingestion foundation inherited from Phase 3
+- `Noitis-MC/FamilyOS` — accepted Phase 4 family-coordination/OpenStreetMap milestone and provider/payment boundaries
+- `Noitis-MC/LegacyCI` — accepted Phase 4 certified PostgreSQL metadata-connector milestone and semantic-analysis boundary
+
+## Link authority and launch freeze
 
 The production website must not guess a public product or pricing URL. Each optional destination is injected at build time:
 
@@ -37,16 +39,23 @@ The production website must not guess a public product or pricing URL. Each opti
 - `VITE_FAMILYOS_PUBLIC_URL` / `VITE_FAMILYOS_PRICING_URL`
 - `VITE_LEGACYCI_PUBLIC_URL` / `VITE_LEGACYCI_PRICING_URL`
 
-If a production URL is absent, the card stays visible but non-linking and says public access is not configured.
+For the Phase-5 launch candidate, the safe default is **no public product link unless a real HTTPS product deployment has been separately verified**. If a production URL is absent, the card stays visible but non-linking and says public access is not configured. This is intentional and is safer than linking a launch-candidate company site to localhost, a private environment, a demo that exposes customer data, or a product that is not publicly deployed.
 
 For development only, `scripts/ensure-local-env.mjs` creates ignored `.env.development.local` values using the permanent Noitis local ports 5174–5179. Vite does not load that mode-specific file for production builds.
 
-## Review rule
+## Launch-candidate review rule
 
-When a product completes a phase that changes a public claim, pricing model, launch state, safety boundary, or public destination:
+The catalogue text above is frozen for the current Phase-5 candidate. Change it only when one of the following is true:
 
-1. inspect the product repository's accepted `main`;
+1. a product's accepted milestone changes a public capability or safety boundary;
+2. a real public product or pricing destination is approved;
+3. a factual/legal correction is required;
+4. the launch candidate is deliberately reopened after review.
+
+When a product change requires a catalogue update:
+
+1. inspect the accepted product milestone that is authoritative for the claim;
 2. update this document and `src/productCatalog.ts` together;
-3. update deployment URL variables only for real public destinations;
-4. run `npm run check` and verify no local URL leaked into production output;
-5. update `ROADMAP.md` only if the website phase acceptance state changed.
+3. update deployment URL variables only for real HTTPS public destinations that have been reviewed as safe;
+4. run `npm run check` and the browser smoke gate and verify no local URL leaked into production output;
+5. repeat the Noitis website launch-candidate review before marking the affected Phase-5 item complete.
