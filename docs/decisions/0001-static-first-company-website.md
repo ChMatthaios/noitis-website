@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted; reviewed 25 August 2026.
+Accepted; reviewed September 2026.
 
 ## Context
 
@@ -12,13 +12,15 @@ The Noitis website serves public company, product, brand, contact, and legal inf
 
 Keep the website as a static-first React/TypeScript/Vite frontend with deterministic npm builds, GitHub Actions CI, and a separate GitHub Pages deployment workflow.
 
-Use relative asset paths so one artifact can run at a GitHub Pages project URL and later on a custom Noitis domain. Treat public product/pricing destinations as build configuration rather than hard-coded production literals.
+Use relative asset paths so one artifact can run at the current GitHub Pages project URL and later on a custom Noitis domain. Treat public product/pricing destinations as build configuration rather than hard-coded production literals.
 
 Do not add API, database, warehouse, authentication, CMS, or service scaffolding until a concrete website requirement justifies it.
 
-## Hosting activation boundary
+## Hosting boundary
 
-The repository contains the Pages deployment workflow, but Pages-site activation and custom-domain settings are administrative hosting operations. They are tracked in Roadmap Phase 4. The workflow is gated by `NOITIS_PAGES_ENABLED=true` so pushes do not produce misleading deployment failures before hosting is intentionally enabled.
+The repository contains the Pages deployment workflow while Pages settings, optional custom-domain configuration, DNS, and certificate state remain administrative hosting operations. The workflow is gated by `NOITIS_PAGES_ENABLED=true` so publication occurs only when hosting is intentionally enabled.
+
+The current public address is `https://noitis-mc.github.io/noitis-website/`. A custom domain can replace it later after ownership, DNS, TLS, canonical-host, redirect, and live-site checks are complete.
 
 ## Consequences
 
