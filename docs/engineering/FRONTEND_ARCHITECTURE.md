@@ -2,59 +2,39 @@
 
 ## Current state
 
-The Noitis website is intentionally small. Its current React source contains:
+The Noitis website remains intentionally small. Current React ownership is:
 
-- `App.tsx` — company-site composition and local navigation/theme behavior;
+- `App.tsx` — company-site composition, navigation/theme state, product rendering, and contact section;
+- `productCatalog.ts` — reviewed public product summaries and optional public/pricing link configuration;
 - `BrandMark.tsx` — shared Noitis brand rendering;
-- `PrivacyPage.tsx` — privacy-notice page;
-- `main.tsx` and `privacy.tsx` — entry points;
-- `styles.css` — stable stylesheet entry point;
-- `styles/site.css` — current website style implementation.
+- `PrivacyPage.tsx`, `TermsPage.tsx`, `TrademarkPage.tsx` — public legal-page presentation;
+- entry files (`main.tsx`, `privacy.tsx`, `terms.tsx`, `trademark.tsx`);
+- `styles.css` / `styles/site.css` — stable stylesheet boundary.
 
-This is already an appropriate level of componentization for the current site. Do not split every section into a component solely to mirror larger application repositories.
+Do not split every section into components merely to mirror larger Noitis applications.
 
-## Ownership rules
+## Product catalogue boundary
 
-### `App.tsx`
+`productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations. It does **not** become authoritative for product business behavior; accepted product repositories remain the implementation authority.
 
-Owns the main public page composition and lightweight UI state such as theme/mobile navigation.
-
-It may contain stable marketing-section composition while the site remains modest. Extract a component when a section gains meaningful behavior, independent reuse, or enough complexity that ownership becomes unclear.
-
-### `BrandMark.tsx`
-
-Owns Noitis brand-mark rendering and theme-aware logo assets. Keep brand asset switching centralized rather than duplicating logo rules across page sections.
-
-### `PrivacyPage.tsx`
-
-Owns the public privacy-notice presentation. Legal/privacy content must remain explicit and reviewable rather than generated from unrelated product state.
-
-### Styling
-
-`styles.css` is the stable stylesheet entry point imported by the React entry files. It currently imports `styles/site.css`, which contains the existing approved website styling in its original cascade order.
-
-This boundary allows future style modules to be introduced only when responsibility genuinely becomes unclear. Do not split a modest stylesheet into many artificial files merely for symmetry with larger products.
-
-When styles are split later, preserve ordering deliberately across theme/base rules, shell/navigation, company sections, privacy styles, responsive behavior, and brand/logo overrides.
-
-## Data and content extraction
-
-The current product/company copy is small enough to remain close to the UI that renders it. If product metadata expands materially—for example product URLs, launch states, pricing, release dates, or localization—move it into a typed data module rather than duplicating literals across components.
+Public URLs arrive through `VITE_*` variables. Development links are generated into ignored `.env.development.local`, so local convenience is isolated from production-mode configuration.
 
 ## State rules
 
-Local browser state is appropriate for:
+Local browser state is appropriate for theme preference and mobile-menu state. Do not use browser state as the source of truth for protected product data, identity, billing, permissions, or operational state.
 
-- theme preference;
-- mobile-menu state;
-- other purely presentational interactions.
+## Legal-page ownership
 
-Do not use browser state as the authoritative source for protected Noitis application data, customer identity, billing, permissions, or operational product state.
+Legal content must remain explicit and reviewable. React legal pages and root Markdown legal files should communicate the same current operator/hosting/data-practice facts. Update both when material behavior changes.
+
+## Publication metadata
+
+Canonical/social metadata lives in the HTML entry points and is parameterized by the publication base URL in `vite.config.ts`. Sitemap/robots generation belongs to `scripts/generate-publication-files.mjs`, not React runtime code.
 
 ## Accessibility rules
 
-Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation must have clear control semantics. Theme/logo swapping must not duplicate meaningful alternative text for decorative variants.
+Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation requires clear control semantics. Theme/logo variants should not duplicate meaningful alternative text. Phase 3 owns formal browser/accessibility validation.
 
 ## Growth path
 
-If the website later adds a CMS, forms, analytics, localization, authenticated areas, or a richer product catalogue, evolve the architecture around that real capability. Do not pre-build feature folders, service abstractions, or data layers for requirements that do not exist yet.
+If the website later adds a CMS, forms, analytics, localization, authenticated areas, or a richer catalogue, evolve the architecture around that real capability. Do not pre-build service/data/backend layers for requirements that do not exist.
