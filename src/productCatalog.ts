@@ -28,16 +28,15 @@ function optionalUrl(value: string | undefined): string | undefined {
   return trimmed || undefined
 }
 
-// Re-audited against the accepted Phase-4 product milestones on 2026-09-03.
-// Keep this deliberately conservative: the company website must describe what
-// exists without turning later roadmap intentions into public capability claims.
+// Keep public descriptions deliberately conservative. The company website must
+// describe verified capability without turning future roadmap intentions into claims.
 export const products: ProductCatalogEntry[] = [
   {
     name: 'AgentGate',
     category: 'AI governance',
     description: 'A governance gateway for AI agents that applies organization policy and routes sensitive actions through human approval when required.',
     status: 'In development',
-    note: 'The governance control plane and localhost developer-connectivity contracts are implemented; production integration adapters and approval delivery remain in development.',
+    note: 'AgentGate provides a governance control plane, developer connectivity, and controlled integration/approval-delivery foundations while broader commercial and enterprise capabilities continue to evolve.',
     href: optionalUrl(import.meta.env.VITE_AGENTGATE_PUBLIC_URL),
     pricingHref: optionalUrl(import.meta.env.VITE_AGENTGATE_PRICING_URL),
     logoLight: agentGateLogoLight,

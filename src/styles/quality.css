@@ -24,52 +24,25 @@ button:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .button--primary:hover {
-    transform: none;
-  }
+  html { scroll-behavior: auto; }
+  .button--primary:hover { transform: none; }
 }
 
 @media (max-width: 900px) and (min-width: 621px) {
-  .product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 620px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
+  .product-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 430px) {
-  .brand__long-logo {
-    width: 128px;
-    height: 44px;
-    flex-basis: 128px;
-  }
-
-  .privacy-nav {
-    gap: 4px;
-  }
-
-  .privacy-nav a {
-    padding: 0 4px;
-    font-size: .78rem;
-  }
+  .brand__long-logo { width: 128px; height: 44px; flex-basis: 128px; }
+  .privacy-nav { gap: 4px; }
+  .privacy-nav a { padding: 0 4px; font-size: .78rem; }
 }
 
 @media (max-width: 360px) {
-  .brand__long-logo {
-    width: 96px;
-    flex-basis: 96px;
-  }
-
-  .privacy-nav a {
-    padding: 0 2px;
-    font-size: .72rem;
-  }
+  .brand__long-logo { width: 96px; flex-basis: 96px; }
+  .privacy-nav a { padding: 0 2px; font-size: .72rem; }
 }

@@ -1,4 +1,4 @@
-name: Phase 6 live acceptance
+name: Live website acceptance
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ env:
 
 jobs:
   acceptance:
-    name: Verify live launch
+    name: Verify live website
     if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' && vars.NOITIS_SITE_URL != '' }}
     runs-on: ubuntu-latest
 
@@ -45,11 +45,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Phase 6 browser tooling
+      - name: Install browser tooling
         run: npm install --no-save --package-lock=false playwright@1.62.1
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run Phase 6 acceptance gate
-        run: npm run check:phase6
+      - name: Run live acceptance gate
+        run: npm run check:release

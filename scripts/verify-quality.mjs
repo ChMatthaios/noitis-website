@@ -34,7 +34,7 @@ for (const [name, foreground, background, minimum] of contrastChecks) {
 
 const sourceCss = [
   readFileSync('src/styles/site.css', 'utf8'),
-  readFileSync('src/styles/phase3.css', 'utf8'),
+  readFileSync('src/styles/quality.css', 'utf8'),
 ].join('\n')
 
 if (/@font-face|fonts\.googleapis\.com|fonts\.gstatic\.com/i.test(sourceCss)) {

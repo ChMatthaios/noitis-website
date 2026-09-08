@@ -9,13 +9,13 @@ The Noitis website remains intentionally small. Current React ownership is:
 - `BrandMark.tsx` — shared Noitis brand rendering;
 - `PrivacyPage.tsx`, `TermsPage.tsx`, `TrademarkPage.tsx` — public legal-page presentation;
 - entry files (`main.tsx`, `privacy.tsx`, `terms.tsx`, `trademark.tsx`);
-- `styles.css` / `styles/site.css` — stable stylesheet boundary.
+- `styles.css` / `styles/site.css` / `styles/quality.css` — stable stylesheet boundary.
 
 Do not split every section into components merely to mirror larger Noitis applications.
 
 ## Product catalogue boundary
 
-`productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations. It does **not** become authoritative for product business behavior; accepted product repositories remain the implementation authority.
+`productCatalog.ts` owns names, categories, conservative descriptions, `In development` status, safety notes, logos, and optional public/pricing destinations. It does **not** become authoritative for product business behavior; product repositories remain the implementation authority.
 
 Public URLs arrive through `VITE_*` variables. Development links are generated into ignored `.env.development.local`, so local convenience is isolated from production-mode configuration.
 
@@ -33,7 +33,7 @@ Canonical/social metadata lives in the HTML entry points and is parameterized by
 
 ## Accessibility rules
 
-Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation requires clear control semantics. Theme/logo variants should not duplicate meaningful alternative text. Phase 3 owns formal browser/accessibility validation.
+Interactive controls must remain keyboard-operable and visibly focusable. Mobile navigation requires clear control semantics. Theme/logo variants should not duplicate meaningful alternative text. Browser/accessibility validation remains part of the release gate.
 
 ## Growth path
 

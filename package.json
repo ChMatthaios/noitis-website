@@ -10,15 +10,15 @@
     "dev": "node scripts/ensure-local-env.mjs && vite",
     "build": "node scripts/generate-publication-files.mjs && tsc -b && vite build",
     "preview": "vite preview",
-    "check:scripts": "node --check scripts/browser-smoke.mjs && node --check scripts/phase6-live-smoke.mjs && node --check scripts/verify-publication-health.mjs",
+    "check:scripts": "node --check scripts/browser-smoke.mjs && node --check scripts/live-smoke.mjs && node --check scripts/verify-publication-health.mjs",
     "check:content": "node scripts/verify-content.mjs",
     "check:links": "node scripts/verify-links.mjs",
     "check:quality": "node scripts/verify-quality.mjs",
     "check:browser": "node scripts/browser-smoke.mjs",
-    "check:browser:live": "node scripts/phase6-live-smoke.mjs",
+    "check:browser:live": "node scripts/live-smoke.mjs",
     "check:production": "node scripts/verify-production-config.mjs",
     "check:live": "node scripts/verify-publication-health.mjs",
-    "check:phase6": "npm run check:production && npm run check && npm run check:live && npm run check:browser:live",
+    "check:release": "npm run check:production && npm run check && npm run check:live && npm run check:browser:live",
     "check": "npm run check:scripts && npm run build && npm run check:content && npm run check:links && npm run check:quality"
   },
   "dependencies": {

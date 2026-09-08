@@ -1,8 +1,8 @@
 const rawSiteUrl = (process.env.SITE_URL || process.env.VITE_SITE_URL || process.env.NOITIS_SITE_URL || '').trim()
-if (!rawSiteUrl) throw new Error('Set SITE_URL, VITE_SITE_URL, or NOITIS_SITE_URL before running the Phase 6 live browser smoke test.')
+if (!rawSiteUrl) throw new Error('Set SITE_URL, VITE_SITE_URL, or NOITIS_SITE_URL before running the live browser smoke test.')
 
 const siteUrl = new URL(rawSiteUrl)
-if (siteUrl.protocol !== 'https:') throw new Error(`Phase 6 live browser smoke requires HTTPS. Received ${siteUrl.protocol}`)
+if (siteUrl.protocol !== 'https:') throw new Error(`Live browser smoke requires HTTPS. Received ${siteUrl.protocol}`)
 if (!siteUrl.pathname.endsWith('/')) siteUrl.pathname += '/'
 
 const customDomain = (process.env.NOITIS_CUSTOM_DOMAIN || '').trim().toLowerCase()
@@ -52,21 +52,14 @@ async function verifyHome(page, label) {
     const pricing = card.querySelector('a[aria-label$=" pricing"]')
     const unavailable = [...card.querySelectorAll('.product-card__status')]
       .some((element) => element.textContent?.trim() === 'Public access not configured')
-
-    return {
-      name,
-      productHref: product?.href || null,
-      pricingHref: pricing?.href || null,
-      unavailable,
-    }
+    return { name, productHref: product?.href || null, pricingHref: pricing?.href || null, unavailable }
   }))
 
   assert(cards.length === expectedProducts.length, `${label}: expected six product cards.`)
-  assert(JSON.stringify(cards.map((card) => card.name)) === JSON.stringify(expectedProducts), `${label}: product catalogue names/order do not match the accepted launch candidate.`)
+  assert(JSON.stringify(cards.map((card) => card.name)) === JSON.stringify(expectedProducts), `${label}: product catalogue names/order do not match the accepted public catalogue.`)
 
   for (const card of cards) {
     assert(Boolean(card.productHref) !== card.unavailable, `${label}: ${card.name} must have exactly one public-access state.`)
-
     for (const [kind, href] of [['product', card.productHref], ['pricing', card.pricingHref]]) {
       if (!href) continue
       const url = new URL(href)
@@ -111,29 +104,18 @@ try {
     { name: 'mobile', width: 375, height: 812 },
     { name: 'desktop', width: 1440, height: 900 },
   ]) {
-    const context = await browser.newContext({
-      viewport: { width: viewport.width, height: viewport.height },
-      colorScheme: 'light',
-      reducedMotion: 'reduce',
-    })
+    const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height }, colorScheme: 'light', reducedMotion: 'reduce' })
     const page = await context.newPage()
     const label = `chromium/${viewport.name}`
-
     const consoleErrors = []
-    page.on('console', (message) => {
-      if (message.type() === 'error') consoleErrors.push(message.text())
-    })
+    page.on('console', (message) => { if (message.type() === 'error') consoleErrors.push(message.text()) })
     page.on('pageerror', (error) => consoleErrors.push(error.message))
 
     await reviewPage(page, '', label)
     await verifyHome(page, label)
     if (viewport.name === 'mobile') await verifyMobile(page, label)
     if (viewport.name === 'desktop') await verifyDesktop(page, label)
-
-    for (const route of ['privacy.html', 'terms.html', 'trademark.html']) {
-      await reviewPage(page, route, label)
-    }
-
+    for (const route of ['privacy.html', 'terms.html', 'trademark.html']) await reviewPage(page, route, label)
     assert(consoleErrors.length === 0, `${label}: browser console/page errors detected: ${consoleErrors.join(' | ')}`)
     await context.close()
   }
@@ -141,4 +123,4 @@ try {
   await browser.close()
 }
 
-console.log(`Phase 6 live desktop/mobile browser smoke passed for ${siteUrl.toString()}.`)
+console.log(`Live desktop/mobile browser smoke passed for ${siteUrl.toString()}.`)
