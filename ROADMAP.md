@@ -2,13 +2,14 @@
 
 This roadmap is the implementation sequence for the public Noitis company website. The site remains static-first unless a real website requirement justifies additional infrastructure. The final phase is the official Noitis website launch on its production domain.
 
-## Implementation audit — 2026-09-03
+## Implementation audit — 2026-09-08
 
 - **Phases 1–3 are complete and accepted.** The website has the static-first React/TypeScript/Vite foundation, reviewed publication content, product catalogue, legal/publication controls, accessibility/SEO/quality checks, and cross-browser smoke coverage required for the accepted pre-production milestone.
 - **Phase 4 repository-side production operations are complete and accepted.** The accepted Phase-4 milestone contains fail-closed production URL/domain validation, a hardened GitHub Pages deployment workflow, daily live-site health monitoring, weekly dependency update automation, explicit CODEOWNERS ownership, an analytics/privacy decision, and documented DNS/canonical/redirect/rollback/emergency procedures. Actual production-domain activation is intentionally performed at official launch in Phase 6 rather than being treated as repository implementation work.
-- **Phase 5 launch-candidate readiness is complete and accepted on `phase-5`.** The launch copy/product catalogue was re-audited on 3 September 2026 against the accepted Phase-4 milestones for AgentGate, AutoPaylot, Business Resource Scheduler, EarnLogic, FamilyOS, and LegacyCI. Clean GitHub Actions checkout validation passes production configuration, launch-script syntax, build/content/link/quality checks, and the pinned Playwright Chromium/Firefox/WebKit production-preview gate. The browser gate verifies navigation, legal pages, responsive states, theme persistence, and safe intentional linked-vs-unconfigured product-card states.
-- **The Noitis PNG logo remains the approved browser-tab favicon.** The Phase-5 branch uses `media/Noitis Logo - Light.png` as the Vite source asset for the public-page favicon rather than substituting the lightweight manifest SVG mark.
-- **Phase 6 owns the real public launch.** Final domain activation, Pages/DNS/TLS verification, live-host security/metadata checks, production product destinations, deployment from `main`, monitoring, and the public launch announcement remain Phase-6 work.
+- **Phase 5 launch-candidate readiness is complete and accepted.** The launch copy/product catalogue was re-audited against the accepted product milestones. Clean GitHub Actions checkout validation covers production configuration, launch-script syntax, build/content/link/quality checks, and the pinned Playwright Chromium/Firefox/WebKit production-preview gate. The browser gate verifies navigation, legal pages, responsive states, theme persistence, and safe intentional linked-vs-unconfigured product-card states.
+- **The Noitis PNG logo remains the approved browser-tab favicon.** The accepted site uses `media/Noitis Logo - Light.png` as the Vite source asset for the public-page favicon rather than substituting the lightweight manifest SVG mark.
+- **Phase 6 repository launch-readiness tooling is implemented on `phase-6`.** The Phase-6 branch starts from the exact accepted Phase-5 milestone and adds a deterministic live Chromium desktop/mobile smoke test, stronger canonical-domain/default-Pages/optional apex-or-www redirect verification, approved live PNG-favicon verification, the combined `npm run check:phase6` gate, a manual GitHub Actions Phase-6 live-acceptance workflow, and `docs/PHASE-6-LAUNCH.md`.
+- **Phase 6 itself is not marked complete before real launch evidence exists.** Final domain ownership/activation, Pages settings, DNS/TLS, deployment from `main`, live checks, manual UI acceptance, monitoring confirmation, and the intentional public launch announcement are external/runtime launch actions and remain open until actually verified.
 - Production builds continue to enforce public-safe product destinations and publication metadata. Permanent local product links remain a development concern rather than leaking into production output.
 - Phase branches are milestone branches. Once a phase is accepted and merged, its branch is kept at that completed phase and is not advanced with later-phase implementation.
 
@@ -68,18 +69,21 @@ This roadmap is the implementation sequence for the public Noitis company websit
 - [x] Confirm that every currently configured product destination is intentional and publicly safe; products without an approved public HTTPS destination remain intentionally unconfigured
 - [x] Complete the Phase-5 go/no-go review with no unresolved repository-side critical issues
 
-**Phase 5 evidence:** `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the release-candidate contract. `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` were re-audited and frozen on 3 September 2026. The Phase-5 branch fixes the favicon to use the approved Noitis PNG source, strengthens `scripts/browser-smoke.mjs` to verify navigation/product-link/legal/theme/responsive behavior, strengthens `scripts/verify-publication-health.mjs` to verify the live social preview, manifest, favicon, canonical/sitemap/robots output and expose hosting/security headers, and validates launch scripts through `npm run check`. GitHub Actions run 104 on commit `af639a5a56aeb9cb857c819f042f8163076b33d2` passed from a clean checkout through production configuration, build/content/link/quality checks, Playwright 1.62.1 browser installation, and Chromium/Firefox/WebKit smoke review. The repository-side launch candidate was visually accepted on 3 September 2026. Actual public-domain deployment and live production verification are Phase-6 launch work.
+**Phase 5 evidence:** `docs/PHASE-5-LAUNCH-CANDIDATE.md` defines the release-candidate contract. `src/productCatalog.ts` and `docs/content/PRODUCT_CATALOG.md` were re-audited and frozen for the accepted launch candidate. The accepted branch keeps the approved PNG favicon, verifies navigation/product-link/legal/theme/responsive behavior, verifies the live social preview, manifest, favicon, canonical/sitemap/robots output, and exposes hosting/security headers. Actual public-domain deployment and live production verification are Phase-6 launch work.
 
-## Phase 6 — Official Noitis website launch — Not started
+## Phase 6 — Official Noitis website launch — Launch tooling ready / live activation pending
+- [x] Prepare deterministic Phase-6 launch acceptance tooling and runbook on top of the exact accepted Phase-5 baseline
 - [ ] Deploy the approved release from `main`
 - [ ] Register/confirm and activate the final Noitis production domain
 - [ ] Enable GitHub Pages with GitHub Actions as the source and configure final publication variables
 - [ ] Configure/verify custom-domain DNS, domain ownership, certificate provisioning, and HTTPS enforcement
 - [ ] Verify canonical/default-domain/apex-or-www redirect behavior against the real domain
-- [ ] Run `npm run check:live` successfully against the final public URL
+- [ ] Run `npm run check:phase6` successfully against the final public URL
 - [ ] Run production smoke tests on desktop and mobile
 - [ ] Verify HTTPS, legal pages, product links, metadata, sitemap/robots, manifest/favicon, and social previews
 - [ ] Review every configured production product/pricing destination as intentional and publicly safe
 - [ ] Monitor availability, build/deployment health, broken links, and user-facing errors
 - [ ] Announce the official Noitis website only after production verification succeeds
 - [ ] Mark the Noitis company website launched
+
+**Phase 6 repository evidence:** `scripts/phase6-live-smoke.mjs` provides the real-site desktop/mobile browser gate; `scripts/verify-publication-health.mjs` verifies the canonical custom-domain host, live PNG favicon, public metadata/assets, and optional default-Pages/apex-or-www redirects; `npm run check:phase6` combines production configuration, build/content/link/quality, live-health, and live-browser checks; `.github/workflows/phase6-live-acceptance.yml` runs the final gate from GitHub Actions; and `docs/PHASE-6-LAUNCH.md` defines the external launch procedure. The remaining unchecked items must stay unchecked until the real domain and deployed production site prove them.
