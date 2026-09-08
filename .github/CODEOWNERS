@@ -1,0 +1,12 @@
+# Phase 4 production/content ownership
+* @ChMatthaios
+
+# Publication and legal surfaces require explicit owner review.
+/PRIVACY.md @ChMatthaios
+/TERMS.md @ChMatthaios
+/TRADEMARK.md @ChMatthaios
+/privacy.html @ChMatthaios
+/terms.html @ChMatthaios
+/trademark.html @ChMatthaios
+/.github/workflows/ @ChMatthaios
+/docs/operations/ @ChMatthaios

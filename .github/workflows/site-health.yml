@@ -1,0 +1,35 @@
+name: Website health
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: ${{ vars.NOITIS_SITE_URL }}
+
+jobs:
+  health:
+    name: Check live Noitis website
+    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' && vars.NOITIS_SITE_URL != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.0'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify live publication
+        run: npm run check:live

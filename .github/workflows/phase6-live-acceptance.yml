@@ -1,22 +1,17 @@
-name: Deploy Noitis to GitHub Pages
+name: Phase 6 live acceptance
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 env:
+  SITE_URL: ${{ vars.NOITIS_SITE_URL }}
   VITE_SITE_URL: ${{ vars.NOITIS_SITE_URL }}
   NOITIS_CUSTOM_DOMAIN: ${{ vars.NOITIS_CUSTOM_DOMAIN }}
+  PAGES_DEFAULT_URL: https://noitis-mc.github.io/noitis-website/
+  ALTERNATE_SITE_URL: ${{ vars.NOITIS_ALTERNATE_SITE_URL }}
   VITE_AGENTGATE_PUBLIC_URL: ${{ vars.AGENTGATE_PUBLIC_URL }}
   VITE_AUTOPAYLOT_PUBLIC_URL: ${{ vars.AUTOPAYLOT_PUBLIC_URL }}
   VITE_BRS_PUBLIC_URL: ${{ vars.BRS_PUBLIC_URL }}
@@ -31,9 +26,9 @@ env:
   VITE_LEGACYCI_PRICING_URL: ${{ vars.LEGACYCI_PRICING_URL }}
 
 jobs:
-  build:
-    name: Build website
-    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' }}
+  acceptance:
+    name: Verify live launch
+    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' && vars.NOITIS_SITE_URL != '' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -50,30 +45,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate production publication configuration
-        run: npm run check:production
+      - name: Install Phase 6 browser tooling
+        run: npm install --no-save --package-lock=false playwright@1.62.1
 
-      - name: Validate and build
-        run: npm run check
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
 
-      - name: Set up Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./dist
-
-  deploy:
-    name: Deploy website
-    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' }}
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Run Phase 6 acceptance gate
+        run: npm run check:phase6
