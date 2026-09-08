@@ -1,0 +1,55 @@
+name: Phase 6 live acceptance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: ${{ vars.NOITIS_SITE_URL }}
+  VITE_SITE_URL: ${{ vars.NOITIS_SITE_URL }}
+  NOITIS_CUSTOM_DOMAIN: ${{ vars.NOITIS_CUSTOM_DOMAIN }}
+  PAGES_DEFAULT_URL: https://noitis-mc.github.io/noitis-website/
+  ALTERNATE_SITE_URL: ${{ vars.NOITIS_ALTERNATE_SITE_URL }}
+  VITE_AGENTGATE_PUBLIC_URL: ${{ vars.AGENTGATE_PUBLIC_URL }}
+  VITE_AUTOPAYLOT_PUBLIC_URL: ${{ vars.AUTOPAYLOT_PUBLIC_URL }}
+  VITE_BRS_PUBLIC_URL: ${{ vars.BRS_PUBLIC_URL }}
+  VITE_EARNLOGIC_PUBLIC_URL: ${{ vars.EARNLOGIC_PUBLIC_URL }}
+  VITE_FAMILYOS_PUBLIC_URL: ${{ vars.FAMILYOS_PUBLIC_URL }}
+  VITE_LEGACYCI_PUBLIC_URL: ${{ vars.LEGACYCI_PUBLIC_URL }}
+  VITE_AGENTGATE_PRICING_URL: ${{ vars.AGENTGATE_PRICING_URL }}
+  VITE_AUTOPAYLOT_PRICING_URL: ${{ vars.AUTOPAYLOT_PRICING_URL }}
+  VITE_BRS_PRICING_URL: ${{ vars.BRS_PRICING_URL }}
+  VITE_EARNLOGIC_PRICING_URL: ${{ vars.EARNLOGIC_PRICING_URL }}
+  VITE_FAMILYOS_PRICING_URL: ${{ vars.FAMILYOS_PRICING_URL }}
+  VITE_LEGACYCI_PRICING_URL: ${{ vars.LEGACYCI_PRICING_URL }}
+
+jobs:
+  acceptance:
+    name: Verify live launch
+    if: ${{ vars.NOITIS_PAGES_ENABLED == 'true' && vars.NOITIS_SITE_URL != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.0'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Phase 6 browser tooling
+        run: npm install --no-save --package-lock=false playwright@1.62.1
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Phase 6 acceptance gate
+        run: npm run check:phase6
