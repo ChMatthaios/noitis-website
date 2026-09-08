@@ -3,6 +3,12 @@ if (!rawSiteUrl) throw new Error('Set SITE_URL, VITE_SITE_URL, or NOITIS_SITE_UR
 
 const siteUrl = new URL(rawSiteUrl)
 if (!siteUrl.pathname.endsWith('/')) siteUrl.pathname += '/'
+if (siteUrl.protocol !== 'https:') throw new Error(`Live publication must use HTTPS. Received ${siteUrl.protocol}`)
+
+const customDomain = (process.env.NOITIS_CUSTOM_DOMAIN || '').trim().toLowerCase()
+if (customDomain && siteUrl.hostname.toLowerCase() !== customDomain) {
+  throw new Error(`NOITIS_CUSTOM_DOMAIN (${customDomain}) does not match live site host (${siteUrl.hostname}).`)
+}
 
 const publicPages = ['', 'privacy.html', 'terms.html', 'trademark.html']
 const textAssets = ['robots.txt', 'sitemap.xml', 'site.webmanifest']
@@ -39,10 +45,42 @@ function internalLinks(html, sourceUrl) {
   return links
 }
 
+function findLinkTag(html, rel) {
+  return (html.match(/<link\b[^>]*>/gi) || []).find((tag) => {
+    const relMatch = tag.match(/\brel=["']([^"']+)["']/i)
+    return relMatch?.[1].split(/\s+/).some((value) => value.toLowerCase() === rel)
+  }) || null
+}
+
+function attribute(tag, name) {
+  return tag?.match(new RegExp(`\\b${name}=["']([^"']+)["']`, 'i'))?.[1] || null
+}
+
+async function verifyCanonicalRedirect(rawUrl, label) {
+  const value = (rawUrl || '').trim()
+  if (!value) return
+
+  const source = new URL(value)
+  if (source.origin === siteUrl.origin) return
+
+  const { response } = await fetchResource(source.toString(), { readText: false })
+  const finalUrl = new URL(response.url)
+  if (finalUrl.origin !== siteUrl.origin) {
+    throw new Error(`${label} did not resolve to the canonical site origin. ${source.origin} ended at ${finalUrl.origin}.`)
+  }
+
+  console.log(`Verified ${label}: ${source.origin} -> ${finalUrl.origin}`)
+}
+
 for (const page of publicPages) {
   const url = new URL(page, siteUrl).toString()
   const { response, text } = await fetchResource(url)
   checked.add(url)
+
+  const finalUrl = new URL(response.url)
+  if (finalUrl.origin !== siteUrl.origin) {
+    throw new Error(`${url} resolved outside the canonical site origin: ${response.url}`)
+  }
 
   const contentType = response.headers.get('content-type') || ''
   if (!contentType.toLowerCase().includes('text/html')) {
@@ -57,6 +95,21 @@ for (const page of publicPages) {
       csp: response.headers.get('content-security-policy'),
       referrerPolicy: response.headers.get('referrer-policy'),
     }
+
+    const faviconTag = findLinkTag(text, 'icon')
+    if (!faviconTag) throw new Error('Live home page is missing the browser-tab favicon link.')
+    if (attribute(faviconTag, 'type') !== 'image/png') {
+      throw new Error('The approved Noitis browser-tab favicon must remain image/png.')
+    }
+    const faviconHref = attribute(faviconTag, 'href')
+    if (!faviconHref) throw new Error('Live favicon link is missing its href.')
+    const faviconUrl = new URL(faviconHref, url).toString()
+    const { response: faviconResponse } = await fetchResource(faviconUrl, { readText: false })
+    const faviconType = (faviconResponse.headers.get('content-type') || '').toLowerCase()
+    if (!faviconType.includes('image/png')) {
+      throw new Error(`Live favicon returned unexpected content type ${faviconType || '(missing)'}.`)
+    }
+    checked.add(faviconUrl)
   }
 
   const expectedCanonical = new URL(page, siteUrl).toString()
@@ -129,7 +182,11 @@ for (const asset of binaryAssets) {
   }
 }
 
+await verifyCanonicalRedirect(process.env.PAGES_DEFAULT_URL, 'default GitHub Pages redirect')
+await verifyCanonicalRedirect(process.env.ALTERNATE_SITE_URL, 'alternate apex/www redirect')
+
 console.log(`Live publication health check passed for ${siteUrl.toString()} (${checked.size} URLs checked).`)
+if (customDomain) console.log(`Verified canonical custom-domain host ${customDomain}.`)
 if (hostingHeaders) {
   console.log('Observed hosting/security headers for final manual review:', JSON.stringify(hostingHeaders))
 }
